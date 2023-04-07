@@ -1,22 +1,47 @@
 {
-    "name": "frontend",
-    "private": true,
-    "version": "0.0.0",
-    "type": "module",
-    "scripts": {
-        "dev": "vite --port=3000",
-        "build": "tsc && vite build",
-        "preview": "vite preview"
-    },
-    "dependencies": {
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
-    },
-    "devDependencies": {
-        "@types/react": "^18.0.28",
-        "@types/react-dom": "^18.0.11",
-        "@vitejs/plugin-react": "^3.1.0",
-        "typescript": "^4.9.3",
-        "vite": "^4.2.0"
-    }
+	"name": "frontend",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite --port=3000",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"lint": "eslint './src/**/*.{js,jsx,ts,tsx,json}'",
+		"lint:fix": "eslint --fix './src/**/*.{js,jsx,ts,tsx,json}'",
+		"format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 2 chrome version",
+			"last 2 firefox version",
+			"last 2 safari version"
+		]
+	},
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.0.28",
+		"@types/react-dom": "^18.0.11",
+		"@typescript-eslint/eslint-plugin": "^5.57.1",
+		"@typescript-eslint/parser": "^5.57.1",
+		"@vitejs/plugin-react": "^3.1.0",
+		"eslint": "^8.37.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-import-resolver-typescript": "^3.5.5",
+		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"prettier": "^2.8.7",
+		"typescript": "^4.9.3",
+		"vite": "^4.2.0"
+	}
 }
