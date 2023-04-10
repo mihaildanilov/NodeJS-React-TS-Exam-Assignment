@@ -1,31 +1,37 @@
-import { Fragment } from 'react';
+import { Fragment, MouseEvent } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Outlet, NavLink, Navigate } from 'react-router-dom';
+import { useUserState } from '../context/ContextProvider';
 
-const user = {
-	name: 'Tom Cook',
-	email: 'tom@example.com',
-	imageUrl:
-		'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-};
 const navigation = [
-	{ name: 'Dashboard', href: '#', current: true },
-	{ name: 'Team', href: '#', current: false },
-	{ name: 'Projects', href: '#', current: false },
-	{ name: 'Calendar', href: '#', current: false },
-	{ name: 'Reports', href: '#', current: false },
+	{ name: 'Dashboard', to: '/dashboard' },
+	{ name: 'Surveys', to: '/surveys' },
+	{ name: 'Store', to: '/store' },
+	{ name: 'Contact Us', to: '/contact' },
 ];
-const userNavigation = [
-	{ name: 'Your Profile', href: '#' },
-	{ name: 'Settings', href: '#' },
-	{ name: 'Sign out', href: '#' },
-];
+// const userNavigation = [
+// 	{ name: 'Your Profile', href: '/profile' },
+// 	{ name: 'Settings', href: '/setting' },
+// 	{ name: 'Sign out', href: '#' },
+// ];
 
 function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(' ');
 }
 
 const DefaultLayout = () => {
+	const { currentUser, userToken } = useUserState();
+
+	if (!userToken) {
+		return <Navigate to="login" />;
+	}
+
+	const logout = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
+		e.preventDefault();
+		console.log('Logout');
+	};
+
 	return (
 		<>
 			<div className="min-h-full">
@@ -45,20 +51,20 @@ const DefaultLayout = () => {
 										<div className="hidden md:block">
 											<div className="ml-10 flex items-baseline space-x-4">
 												{navigation.map((item) => (
-													<a
+													<NavLink
 														key={item.name}
-														href={item.href}
-														className={classNames(
-															item.current
-																? 'bg-gray-900 text-white'
-																: 'text-gray-300 hover:bg-gray-700 hover:text-white',
-															'rounded-md px-3 py-2 text-sm font-medium'
-														)}
-														aria-current={
-															item.current ? 'page' : undefined
+														// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+														to={item.to!}
+														className={({ isActive }) =>
+															classNames(
+																isActive
+																	? 'bg-gray-900 text-white'
+																	: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+																'rounded-md px-3 py-2 text-sm font-medium'
+															)
 														}>
 														{item.name}
-													</a>
+													</NavLink>
 												))}
 											</div>
 										</div>
@@ -81,7 +87,7 @@ const DefaultLayout = () => {
 														</span>
 														<img
 															className="h-8 w-8 rounded-full"
-															src={user.imageUrl}
+															src={currentUser.imageUrl}
 															alt=""
 														/>
 													</Menu.Button>
@@ -95,22 +101,43 @@ const DefaultLayout = () => {
 													leaveFrom="transform opacity-100 scale-100"
 													leaveTo="transform opacity-0 scale-95">
 													<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-														{userNavigation.map((item) => (
-															<Menu.Item key={item.name}>
-																{({ active }) => (
-																	<a
-																		href={item.href}
-																		className={classNames(
-																			active
-																				? 'bg-gray-100'
-																				: '',
-																			'block px-4 py-2 text-sm text-gray-700'
-																		)}>
-																		{item.name}
-																	</a>
-																)}
-															</Menu.Item>
-														))}
+														<Menu.Item>
+															{({ active }) => (
+																<NavLink
+																	to="/profile"
+																	className={classNames(
+																		active ? 'bg-gray-100' : '',
+																		'block px-4 py-2 text-sm text-gray-700'
+																	)}>
+																	<p>Your Profile</p>
+																</NavLink>
+															)}
+														</Menu.Item>
+														<Menu.Item>
+															{({ active }) => (
+																<NavLink
+																	to="/settings"
+																	className={classNames(
+																		active ? 'bg-gray-100' : '',
+																		'block px-4 py-2 text-sm text-gray-700'
+																	)}>
+																	<p>Setting</p>
+																</NavLink>
+															)}
+														</Menu.Item>
+														<Menu.Item>
+															{({ active }) => (
+																<NavLink
+																	to="#"
+																	onClick={(e) => logout(e)}
+																	className={classNames(
+																		active ? 'bg-gray-100' : '',
+																		'block px-4 py-2 text-sm text-gray-700'
+																	)}>
+																	<p>Sign out</p>
+																</NavLink>
+															)}
+														</Menu.Item>
 													</Menu.Items>
 												</Transition>
 											</Menu>
@@ -139,19 +166,20 @@ const DefaultLayout = () => {
 							<Disclosure.Panel className="md:hidden">
 								<div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
 									{navigation.map((item) => (
-										<Disclosure.Button
+										<NavLink
 											key={item.name}
-											as="a"
-											href={item.href}
-											className={classNames(
-												item.current
-													? 'bg-gray-900 text-white'
-													: 'text-gray-300 hover:bg-gray-700 hover:text-white',
-												'block rounded-md px-3 py-2 text-base font-medium'
-											)}
-											aria-current={item.current ? 'page' : undefined}>
+											// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+											to={item.to!}
+											className={({ isActive }) =>
+												classNames(
+													isActive
+														? 'bg-gray-900 text-white'
+														: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+													'block rounded-md px-3 py-2 text-base font-medium'
+												)
+											}>
 											{item.name}
-										</Disclosure.Button>
+										</NavLink>
 									))}
 								</div>
 								<div className="border-t border-gray-700 pb-3 pt-4">
@@ -159,16 +187,16 @@ const DefaultLayout = () => {
 										<div className="flex-shrink-0">
 											<img
 												className="h-10 w-10 rounded-full"
-												src={user.imageUrl}
+												src={currentUser.imageUrl}
 												alt=""
 											/>
 										</div>
 										<div className="ml-3">
 											<div className="text-base font-medium leading-none text-white">
-												{user.name}
+												{currentUser.name}
 											</div>
 											<div className="text-sm font-medium leading-none text-gray-400">
-												{user.email}
+												{currentUser.email}
 											</div>
 										</div>
 										<button
@@ -179,34 +207,30 @@ const DefaultLayout = () => {
 										</button>
 									</div>
 									<div className="mt-3 space-y-1 px-2">
-										{userNavigation.map((item) => (
-											<Disclosure.Button
-												key={item.name}
-												as="a"
-												href={item.href}
-												className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
-												{item.name}
-											</Disclosure.Button>
-										))}
+										<NavLink
+											to="/profile"
+											className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+											<p>Your Profile</p>
+										</NavLink>
+										<NavLink
+											to="/settings"
+											className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+											<p>Setting</p>
+										</NavLink>
+										<NavLink
+											to="#"
+											onClick={(e) => logout(e)}
+											className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+											<p>Sign out</p>
+										</NavLink>
 									</div>
 								</div>
 							</Disclosure.Panel>
 						</>
 					)}
 				</Disclosure>
-
-				<header className="bg-white shadow">
-					<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-						<h1 className="text-3xl font-bold tracking-tight text-gray-900">
-							Dashboard
-						</h1>
-					</div>
-				</header>
-				<main>
-					<div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-						{/* Your content */}
-					</div>
-				</main>
+				<Outlet />
+				{userToken}
 			</div>
 		</>
 	);

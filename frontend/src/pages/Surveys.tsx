@@ -1,7 +1,9 @@
+import PageComponent from '../components/PageComponent';
+
 const Surveys = () => {
 	return (
 		<>
-			<p>Surveys</p>
+			<PageComponent title="Surveys"> Surveys content</PageComponent>
 		</>
 	);
 };
