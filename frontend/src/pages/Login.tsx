@@ -9,8 +9,8 @@ const Login = () => {
 			</h2>
 			<p className="mt-2 text-center text-sm text-gray-600">
 				Or{' '}
-				<a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-					start your 14-day free trial
+				<a href="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+					or register a new one
 				</a>
 			</p>
 			<form className="mt-8 space-y-6" action="#" method="POST">
