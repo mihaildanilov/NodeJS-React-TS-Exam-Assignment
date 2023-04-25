@@ -1,10 +1,11 @@
 import PageComponent from '../components/PageComponent';
+import ProductList from '../components/ProductList';
 
 const Store = () => {
 	return (
 		<>
 			<PageComponent title="Store">
-				<p>Store Content</p>
+				<ProductList />
 			</PageComponent>
 		</>
 	);

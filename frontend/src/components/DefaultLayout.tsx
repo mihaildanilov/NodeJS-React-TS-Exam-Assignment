@@ -2,26 +2,25 @@ import { Fragment, MouseEvent } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Outlet, NavLink, Navigate } from 'react-router-dom';
-import { useUserState } from '../context/ContextProvider';
+import { useStateContext } from '../context/ContextProvider';
+import NotificationMenu from './NotificationMenu';
 
 const navigation = [
-	{ name: 'Dashboard', to: '/dashboard' },
-	{ name: 'Surveys', to: '/surveys' },
+	// { name: 'Dashboard', to: '/dashboard' },
+	// { name: 'Surveys', to: '/surveys' },
+	{ name: 'Main page', to: '/main' },
+
 	{ name: 'Store', to: '/store' },
 	{ name: 'Contact Us', to: '/contact' },
+	{ name: 'Wishlist', to: '/wishlist' },
 ];
-// const userNavigation = [
-// 	{ name: 'Your Profile', href: '/profile' },
-// 	{ name: 'Settings', href: '/setting' },
-// 	{ name: 'Sign out', href: '#' },
-// ];
 
 function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(' ');
 }
 
 const DefaultLayout = () => {
-	const { currentUser, userToken } = useUserState();
+	const { currentUser, userToken } = useStateContext();
 
 	if (!userToken) {
 		return <Navigate to="login" />;
@@ -35,12 +34,12 @@ const DefaultLayout = () => {
 	return (
 		<>
 			<div className="min-h-full">
-				<Disclosure as="nav" className="bg-gray-800">
+				<Disclosure as="nav" className="bg-gray-800 fixed w-full z-40 ">
 					{({ open }) => (
-						<>
-							<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+						<div>
+							<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8  ">
 								<div className="flex h-16 items-center justify-between">
-									<div className="flex items-center">
+									<div className="flex items-center ">
 										<div className="flex-shrink-0">
 											<img
 												className="h-8 w-8"
@@ -49,7 +48,7 @@ const DefaultLayout = () => {
 											/>
 										</div>
 										<div className="hidden md:block">
-											<div className="ml-10 flex items-baseline space-x-4">
+											<div className="ml-10 flex items-baseline space-x-4 ">
 												{navigation.map((item) => (
 													<NavLink
 														key={item.name}
@@ -71,13 +70,13 @@ const DefaultLayout = () => {
 									</div>
 									<div className="hidden md:block">
 										<div className="ml-4 flex items-center md:ml-6">
-											<button
+											{/* <button
 												type="button"
 												className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
 												<span className="sr-only">View notifications</span>
 												<BellIcon className="h-6 w-6" aria-hidden="true" />
-											</button>
-
+											</button> */}
+											<NotificationMenu />
 											{/* Profile dropdown */}
 											<Menu as="div" className="relative ml-3">
 												<div>
@@ -226,7 +225,7 @@ const DefaultLayout = () => {
 									</div>
 								</div>
 							</Disclosure.Panel>
-						</>
+						</div>
 					)}
 				</Disclosure>
 				<Outlet />

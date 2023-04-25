@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, Dispatch, SetStateAction } from 'react';
 import ChildrenProps from '../types/ChildrenProps';
+import { TmpSurveys, TmpSurveysProps } from '../data/TmpSurveys';
 
 interface StateContextProps {
 	currentUser: {
@@ -16,6 +17,7 @@ interface StateContextProps {
 		}>
 	>;
 	setUserToken: Dispatch<SetStateAction<string | null>>;
+	surveys: TmpSurveysProps[];
 }
 
 const StateContext = createContext<StateContextProps>({
@@ -27,6 +29,7 @@ const StateContext = createContext<StateContextProps>({
 	userToken: null,
 	setCurrentUser: () => {},
 	setUserToken: () => {},
+	surveys: [],
 });
 
 export const ContextProvider = (props: ChildrenProps) => {
@@ -37,6 +40,7 @@ export const ContextProvider = (props: ChildrenProps) => {
 			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 	});
 	const [userToken, setUserToken] = useState<string | null>('112');
+	const [surveys, setSurveys] = useState(TmpSurveys);
 	return (
 		<StateContext.Provider
 			value={{
@@ -44,10 +48,11 @@ export const ContextProvider = (props: ChildrenProps) => {
 				setCurrentUser,
 				userToken,
 				setUserToken,
+				surveys,
 			}}>
 			{props.children}
 		</StateContext.Provider>
 	);
 };
 
-export const useUserState = () => useContext(StateContext);
+export const useStateContext = () => useContext(StateContext);
