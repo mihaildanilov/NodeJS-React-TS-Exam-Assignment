@@ -9,26 +9,30 @@ import Store from '../pages/Store';
 import ContactUS from '../pages/ContactUS';
 import MainPage from '../pages/MainPage';
 import PageNotFound from '../pages/PageNotFound';
+import ProductPage from '../pages/ProductPage';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
-
 	{
 		path: '/',
 		element: <DefaultLayout />,
 		children: [
 			{
 				path: '/',
-				element: <MainPage />, //TODO in futere will be as main page of the store
+				element: <MainPage />,
 			},
 			{
 				path: '/main',
-				element: <MainPage />, //TODO in futere will be as main page of the store
+				element: <MainPage />,
 			},
 
 			{
 				path: 'store',
 				element: <Store />,
+			},
+			{
+				path: '/store/product/:slug',
+				element: <ProductPage />,
 			},
 			{
 				path: 'contact',
@@ -42,7 +46,6 @@ const router = createBrowserRouter([
 				path: 'settings',
 				element: <Settings />,
 			},
-			{},
 		],
 	},
 	{
