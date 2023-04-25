@@ -1,7 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Login from '../pages/Login';
-import Dashboard from '../pages/Dashboard';
-import Surveys from '../pages/Surveys';
 import SignUp from '../pages/SignUp';
 import GuestLayout from '../components/GuestLayout';
 import DefaultLayout from '../components/DefaultLayout';
@@ -9,20 +7,25 @@ import Settings from '../pages/Settings';
 import Profile from '../pages/Profile';
 import Store from '../pages/Store';
 import ContactUS from '../pages/ContactUS';
+import MainPage from '../pages/MainPage';
+import PageNotFound from '../pages/PageNotFound';
 
 const router = createBrowserRouter([
+	{ path: '*', element: <PageNotFound /> },
+
 	{
 		path: '/',
 		element: <DefaultLayout />,
 		children: [
 			{
 				path: '/',
-				element: <Dashboard />, //TODO in futere will be as main page of the store
+				element: <MainPage />, //TODO in futere will be as main page of the store
 			},
 			{
-				path: '/dashboard',
-				element: <Dashboard />,
+				path: '/main',
+				element: <MainPage />, //TODO in futere will be as main page of the store
 			},
+
 			{
 				path: 'store',
 				element: <Store />,
@@ -32,10 +35,6 @@ const router = createBrowserRouter([
 				element: <ContactUS />,
 			},
 			{
-				path: 'surveys',
-				element: <Surveys />,
-			},
-			{
 				path: 'profile',
 				element: <Profile />,
 			},
@@ -43,6 +42,7 @@ const router = createBrowserRouter([
 				path: 'settings',
 				element: <Settings />,
 			},
+			{},
 		],
 	},
 	{

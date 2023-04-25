@@ -3,16 +3,11 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Outlet, NavLink, Navigate } from 'react-router-dom';
 import { useStateContext } from '../context/ContextProvider';
-import NotificationMenu from './NotificationMenu';
 
 const navigation = [
-	// { name: 'Dashboard', to: '/dashboard' },
-	// { name: 'Surveys', to: '/surveys' },
-	{ name: 'Main page', to: '/main' },
-
+	{ name: 'Home', to: '/main' },
 	{ name: 'Store', to: '/store' },
 	{ name: 'Contact Us', to: '/contact' },
-	{ name: 'Wishlist', to: '/wishlist' },
 ];
 
 function classNames(...classes: string[]) {
@@ -70,13 +65,6 @@ const DefaultLayout = () => {
 									</div>
 									<div className="hidden md:block">
 										<div className="ml-4 flex items-center md:ml-6">
-											{/* <button
-												type="button"
-												className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-												<span className="sr-only">View notifications</span>
-												<BellIcon className="h-6 w-6" aria-hidden="true" />
-											</button> */}
-											<NotificationMenu />
 											{/* Profile dropdown */}
 											<Menu as="div" className="relative ml-3">
 												<div>
@@ -120,7 +108,7 @@ const DefaultLayout = () => {
 																		active ? 'bg-gray-100' : '',
 																		'block px-4 py-2 text-sm text-gray-700'
 																	)}>
-																	<p>Setting</p>
+																	<p>Settings</p>
 																</NavLink>
 															)}
 														</Menu.Item>
@@ -214,7 +202,7 @@ const DefaultLayout = () => {
 										<NavLink
 											to="/settings"
 											className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
-											<p>Setting</p>
+											<p>Settings</p>
 										</NavLink>
 										<NavLink
 											to="#"
