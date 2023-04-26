@@ -1,7 +1,7 @@
 export interface ProductListItemProps {
 	name: string;
 	slug: string;
-	href: string; //!TODO change href to to so it would redirect to store item.
+
 	category: string;
 	brand: string;
 	imageSrc: string;
@@ -19,13 +19,12 @@ export const ProductListData: ProductListItemProps[] = [
 		name: 'Nike Air VaporMax 2021 “Air Pressure”',
 		slug: 'nike-vapormax-air-pressure',
 		category: 'Sneakers',
-		href: '#',
 		imageSrc: './images/air-pressure.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2021 “Air Pressure”',
 		price: 210,
 		countInStock: 10,
 		brand: 'Nike',
-		rating: 4.5,
+		rating: 3.5,
 		numberOfReviews: 10,
 		description: 'High quality sneakers',
 		color: 'White/Old Royal-Yellow Ochre',
@@ -34,7 +33,6 @@ export const ProductListData: ProductListItemProps[] = [
 		name: 'Nike Air VaporMax 2023 Flyknit “Baltic Blue”',
 		slug: 'nike-vapormax-baltic-blue',
 		category: 'Sneakers',
-		href: '#',
 		imageSrc: './images/baltic-blue.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2023 Flyknit “Baltic Blue”',
 		price: 210,
@@ -49,7 +47,6 @@ export const ProductListData: ProductListItemProps[] = [
 		name: 'Nike Air VaporMax 2023 Flyknit',
 		slug: 'nike-vapormax-flyknit-black',
 		category: 'Sneakers',
-		href: '#',
 		imageSrc: './images/flyknit-black.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2023 Flyknit',
 		price: 210,
@@ -64,7 +61,6 @@ export const ProductListData: ProductListItemProps[] = [
 		name: 'Nike Air VaporMax 2023 Flyknit “Pure Platinum”',
 		slug: 'nike-vapormax-pure-platinum',
 		category: 'Sneakers',
-		href: '#',
 		imageSrc: './images/pure-platinum.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2023 Flyknit “Pure Platinum”',
 		price: 210,
@@ -79,7 +75,6 @@ export const ProductListData: ProductListItemProps[] = [
 		name: 'Nike Air VaporMax 2021 “Air Pressure”',
 		slug: 'nike-vapormax-air-pressure',
 		category: 'Sneakers',
-		href: '#',
 		imageSrc: './images/air-pressure.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2021 “Air Pressure”',
 		price: 210,
@@ -94,7 +89,6 @@ export const ProductListData: ProductListItemProps[] = [
 		name: 'Nike Air VaporMax 2023 Flyknit “Baltic Blue”',
 		slug: 'nike-vapormax-baltic-blue',
 		category: 'Sneakers',
-		href: '#',
 		imageSrc: './images/baltic-blue.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2023 Flyknit “Baltic Blue”',
 		price: 210,
@@ -109,7 +103,6 @@ export const ProductListData: ProductListItemProps[] = [
 		name: 'Nike Air VaporMax 2023 Flyknit',
 		slug: 'nike-vapormax-flyknit-black',
 		category: 'Sneakers',
-		href: '#',
 		imageSrc: './images/flyknit-black.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2023 Flyknit',
 		price: 210,
@@ -124,7 +117,6 @@ export const ProductListData: ProductListItemProps[] = [
 		name: 'Nike Air VaporMax 2023 Flyknit “Pure Platinum”',
 		slug: 'nike-vapormax-pure-platinum',
 		category: 'Sneakers',
-		href: '#',
 		imageSrc: './images/pure-platinum.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2023 Flyknit “Pure Platinum”',
 		price: 210,
