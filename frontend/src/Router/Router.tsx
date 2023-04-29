@@ -10,6 +10,7 @@ import ContactUS from '../pages/ContactUS';
 import MainPage from '../pages/MainPage';
 import PageNotFound from '../pages/PageNotFound';
 import ProductPage from '../pages/ProductPage';
+import Cart from '../pages/Cart';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
 			{
 				path: 'settings',
 				element: <Settings />,
+			},
+			{
+				path: 'cart',
+				element: <Cart />,
 			},
 		],
 	},

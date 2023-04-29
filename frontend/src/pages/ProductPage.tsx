@@ -2,19 +2,40 @@ import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent';
 import MessageBox from '../components/MessageBox';
 import { ApiError } from '../types/ApiError';
-import { getError } from '../utils/utils';
+import { convertProductToCartItem, getError } from '../utils/utils';
 import LoadingBox from '../components/LoadingBox';
 import { useGetProductDetailsBySlugQuery } from '../hooks/productHook';
 import PageNotFound from './PageNotFound';
 
 import Rating from '../components/Rating';
 import StatusToast from './StatusToast';
+import { useStateContext } from '../context/ContextProvider';
+import { CartItem } from '../types/Cart';
 
 const ProductPage = () => {
-	const params = useParams();
-	const { slug } = params;
+	const { state, dispatch } = useStateContext();
+	const {
+		cart: { cartItems },
+	} = state;
+	const { slug } = useParams<{ slug: string }>();
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const { data: product, isLoading, error } = useGetProductDetailsBySlugQuery(slug!);
+
+	const addToCartHandler = (item: CartItem) => {
+		if (!product) {
+			return;
+		}
+		const existItem = cartItems.find((x) => x._id === product?._id);
+		const quantity = existItem ? existItem.quantity + 1 : 1;
+		if (product.countInStock < quantity) {
+			alert('Sorry. Product is out of stock');
+			return;
+		}
+		dispatch({
+			type: 'CART_ADD_ITEM',
+			payload: { ...item, quantity },
+		});
+	};
 
 	return isLoading ? (
 		<LoadingBox text="Action in progress" />
@@ -55,6 +76,10 @@ const ProductPage = () => {
 										<StatusToast message="In stock" />
 										<button
 											type="button"
+											onClick={() => {
+												addToCartHandler(convertProductToCartItem(product));
+												console.log('added');
+											}}
 											className="py-3 mt-4 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600   transition-all text-sm ">
 											Add to cart
 											<svg

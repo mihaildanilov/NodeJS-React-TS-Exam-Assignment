@@ -17,6 +17,9 @@ function classNames(...classes: string[]) {
 const DefaultLayout = () => {
 	const { currentUser, userToken } = useStateContext();
 
+	const {
+		state: { cart },
+	} = useStateContext();
 	if (!userToken) {
 		return <Navigate to="login" />;
 	}
@@ -64,7 +67,34 @@ const DefaultLayout = () => {
 										</div>
 									</div>
 									<div className="hidden md:block">
-										<div className="ml-4 flex items-center md:ml-6">
+										<div className="ml-4 flex items-center gap-5 md:ml-6">
+											<div className="relative pb-3">
+												<NavLink to="/cart" className="t-0 absolute left-3">
+													{cart.cartItems.length > 0 ? (
+														<p className="flex h-2 w-2 items-center justify-center rounded-full bg-blue-500 p-3 text-xs text-white">
+															{cart.cartItems.reduce(
+																(a, c) => a + c.quantity,
+																0
+															)}
+														</p>
+													) : (
+														''
+													)}
+												</NavLink>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													fill="none"
+													viewBox="0 0 24 24"
+													strokeWidth="2"
+													stroke="#ffffff"
+													className="file: mt-4 h-6 w-6">
+													<path
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+													/>
+												</svg>
+											</div>
 											{/* Profile dropdown */}
 											<Menu as="div" className="relative ml-3">
 												<div>
@@ -168,6 +198,24 @@ const DefaultLayout = () => {
 											{item.name}
 										</NavLink>
 									))}
+									<NavLink
+										to="/cart"
+										className={({ isActive }) =>
+											classNames(
+												isActive
+													? 'bg-gray-900 text-white'
+													: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+												'block rounded-md px-3 py-2 text-base font-medium'
+											)
+										}>
+										{(cart.cartItems.length as number) == 0 ? (
+											<p>Cart:</p>
+										) : (cart.cartItems.length as number) == 1 ? (
+											<p>Cart: {cart.cartItems.length} item</p>
+										) : (
+											<p>Cart: {cart.cartItems.length} items</p>
+										)}
+									</NavLink>
 								</div>
 								<div className="border-t border-gray-700 pb-3 pt-4">
 									<div className="flex items-center px-5">
