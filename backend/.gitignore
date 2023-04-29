@@ -13,6 +13,7 @@ dist
 dist-ssr
 *.local
 Thumbs.db
+.env
 
 # Editor directories and files
 .vscode/*
