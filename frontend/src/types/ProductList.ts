@@ -1,7 +1,7 @@
 export interface ProductListItemProps {
+	_id: string;
 	name: string;
 	slug: string;
-	href: string; //!TODO change href to to so it would redirect to store item.
 	category: string;
 	brand: string;
 	imageSrc: string;
