@@ -11,6 +11,8 @@ import Rating from '../components/Rating';
 import StatusToast from './StatusToast';
 import { useStateContext } from '../context/ContextProvider';
 import { CartItem } from '../types/Cart';
+import { useState } from 'react';
+import ModalOutOfStock from '../components/ModalOutOfStock';
 
 const ProductPage = () => {
 	const { state, dispatch } = useStateContext();
@@ -20,15 +22,13 @@ const ProductPage = () => {
 	const { slug } = useParams<{ slug: string }>();
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const { data: product, isLoading, error } = useGetProductDetailsBySlugQuery(slug!);
+	const [isOutOfStock, setIsOutOfStock] = useState(false);
 
 	const addToCartHandler = (item: CartItem) => {
-		if (!product) {
-			return;
-		}
-		const existItem = cartItems.find((x) => x._id === product?._id);
+		const existItem = cartItems.find((x) => x._id === item._id);
 		const quantity = existItem ? existItem.quantity + 1 : 1;
-		if (product.countInStock < quantity) {
-			alert('Sorry. Product is out of stock');
+		if (item.countInStock < quantity) {
+			setIsOutOfStock(true);
 			return;
 		}
 		dispatch({
@@ -78,7 +78,6 @@ const ProductPage = () => {
 											type="button"
 											onClick={() => {
 												addToCartHandler(convertProductToCartItem(product));
-												console.log('added');
 											}}
 											className="py-3 mt-4 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600   transition-all text-sm ">
 											Add to cart
@@ -92,6 +91,11 @@ const ProductPage = () => {
 												<path d="M5.071 1.243a.5.5 0 0 1 .858.514L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 6h1.717L5.07 1.243zM3.5 10.5a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3zm2.5 0a.5.5 0 1 0-1 0v3a.5.5 0 0 0 1 0v-3z" />
 											</svg>
 										</button>
+										<ModalOutOfStock
+											isOpen={isOutOfStock}
+											onClose={() => setIsOutOfStock(false)}
+											itemName={product.name}
+										/>
 									</>
 								) : (
 									<StatusToast message="Out stock" />

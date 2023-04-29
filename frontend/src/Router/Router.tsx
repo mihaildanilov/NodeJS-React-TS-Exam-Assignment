@@ -10,7 +10,7 @@ import ContactUS from '../pages/ContactUS';
 import MainPage from '../pages/MainPage';
 import PageNotFound from '../pages/PageNotFound';
 import ProductPage from '../pages/ProductPage';
-import Cart from '../pages/Cart';
+import Cart from '../pages/CartPage';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
