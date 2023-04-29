@@ -27,10 +27,15 @@ const initialState = () => ({
 		totalPrice: 0,
 	},
 });
-interface CartAddItemAction {
-	type: 'CART_ADD_ITEM';
-	payload: CartItem;
-}
+type CartAddItemAction =
+	| {
+			type: 'CART_ADD_ITEM';
+			payload: CartItem;
+	  }
+	| {
+			type: 'CART_REMOVE_ITEM';
+			payload: CartItem;
+	  };
 
 const reducer = (state: AppState, action: CartAddItemAction) => {
 	switch (action.type) {
@@ -47,11 +52,19 @@ const reducer = (state: AppState, action: CartAddItemAction) => {
 			localStorage.setItem('cartItems', JSON.stringify(cartItems));
 			return { ...state, cart: { ...state.cart, cartItems } };
 		}
+		case 'CART_REMOVE_ITEM': {
+			const cartItems = state.cart.cartItems.filter(
+				(item: CartItem) => item._id !== action.payload._id
+			);
+			localStorage.setItem('cartItems', JSON.stringify(cartItems));
+			return { ...state, cart: { ...state.cart, cartItems } };
+		}
 		default: {
 			return state;
 		}
 	}
 };
+
 const defaultDispatch: Dispatch<CartAddItemAction> = () => initialState;
 
 interface StateContextProps {
