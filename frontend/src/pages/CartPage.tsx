@@ -29,6 +29,13 @@ const Cart = () => {
 		navigate('/signin?redirect=/shipping');
 	};
 
+	const removeItemHandler = (item: CartItem) => {
+		dispatch({
+			type: 'CART_REMOVE_ITEM',
+			payload: item,
+		});
+	};
+
 	let subTotal = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
 	const tax = subTotal * 0.21;
 	subTotal = subTotal - tax;
@@ -68,6 +75,7 @@ const Cart = () => {
 												xmlns="http://www.w3.org/2000/svg"
 												fill="none"
 												viewBox="0 0 24 24"
+												onClick={() => removeItemHandler(item)}
 												strokeWidth="1.5"
 												stroke="currentColor"
 												className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
@@ -136,8 +144,10 @@ const Cart = () => {
 						<button
 							onClick={checkoutHandler}
 							disabled={cartItems.length === 0}
-							className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-							Check out
+							className={`mt-6 w-full rounded-md bg-blue-600 py-1.5 font-medium text-blue-50 hover:bg-blue-500 ${
+								cartItems.length === 0 ? 'disabled:cursor-not-allowed' : ''
+							}`}>
+							Check Out
 						</button>
 					</div>
 				</div>
