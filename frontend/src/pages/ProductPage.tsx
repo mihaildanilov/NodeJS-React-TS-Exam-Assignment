@@ -22,12 +22,9 @@ const ProductPage = () => {
 	const { data: product, isLoading, error } = useGetProductDetailsBySlugQuery(slug!);
 
 	const addToCartHandler = (item: CartItem) => {
-		if (!product) {
-			return;
-		}
-		const existItem = cartItems.find((x) => x._id === product?._id);
+		const existItem = cartItems.find((x) => x._id === item._id);
 		const quantity = existItem ? existItem.quantity + 1 : 1;
-		if (product.countInStock < quantity) {
+		if (item.countInStock < quantity) {
 			alert('Sorry. Product is out of stock');
 			return;
 		}

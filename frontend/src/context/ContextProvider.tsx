@@ -18,8 +18,7 @@ interface AppState {
 
 const initialState = () => ({
 	cart: {
-		// cartItems: JSON.parse(localStorage.getItem('cartItems') || '[]'),
-		cartItems: [],
+		cartItems: JSON.parse(localStorage.getItem('cartItems') || '[]'),
 		shippingAddress: JSON.parse(localStorage.getItem('shippingAdress') || '{}'),
 		paymentMethod: localStorage.getItem('paymentMethod') || 'PayPal',
 		itemsPrice: 0,
@@ -88,6 +87,7 @@ const StateContext = createContext<StateContextProps>({
 });
 
 export const ContextProvider = (props: ChildrenProps) => {
+	// localStorage.removeItem('cartItems');//!IF need to delete all data from local storage
 	const [currentUser, setCurrentUser] = useState({
 		name: 'Mihail Danilov',
 		email: 'mihaildanilov793@gmail.com',
