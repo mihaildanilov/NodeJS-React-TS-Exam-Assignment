@@ -5,6 +5,8 @@ import router from './Router/Router';
 import { ContextProvider } from './context/ContextProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import './assets/index.css';
+import 'react-toastify/dist/ReactToastify.css';
 // import axios from 'axios';
 
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/';
