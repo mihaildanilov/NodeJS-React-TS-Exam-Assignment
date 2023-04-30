@@ -11,7 +11,7 @@ import {
 } from 'react';
 import ChildrenProps from '../types/ChildrenProps';
 
-import { Cart, CartItem } from '../types/Cart';
+import { Cart, CartItem, ShippingAddress } from '../types/Cart';
 import { UserInfo } from '../types/UserInfo';
 
 interface AppState {
@@ -47,7 +47,8 @@ type CartAddItemAction =
 			type: 'USER_SIGNIN';
 			payload: UserInfo;
 	  }
-	| { type: 'USER_SIGNOUT' };
+	| { type: 'USER_SIGNOUT' }
+	| { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress };
 
 const reducer = (state: AppState, action: CartAddItemAction) => {
 	switch (action.type) {
@@ -74,7 +75,7 @@ const reducer = (state: AppState, action: CartAddItemAction) => {
 		case 'USER_SIGNIN': {
 			return { ...state, userInfo: action.payload };
 		}
-		case 'USER_SIGNOUT':
+		case 'USER_SIGNOUT': {
 			return {
 				cart: {
 					cartItems: [],
@@ -92,6 +93,16 @@ const reducer = (state: AppState, action: CartAddItemAction) => {
 					totalPrice: 0,
 				},
 			};
+		}
+		case 'SAVE_SHIPPING_ADDRESS': {
+			return {
+				...state,
+				cart: {
+					...state.cart,
+					shippingAddress: action.payload,
+				},
+			};
+		}
 		default: {
 			return state;
 		}
