@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable indent */
 import {
 	createContext,
@@ -11,12 +12,18 @@ import {
 import ChildrenProps from '../types/ChildrenProps';
 
 import { Cart, CartItem } from '../types/Cart';
+import { UserInfo } from '../types/UserInfo';
 
 interface AppState {
 	cart: Cart;
+	userInfo?: UserInfo;
 }
 
 const initialState = () => ({
+	userInfo: localStorage.getItem('userInfo')
+		? JSON.parse(localStorage.getItem('userInfo')!)
+		: null,
+
 	cart: {
 		cartItems: JSON.parse(localStorage.getItem('cartItems') || '[]'),
 		shippingAddress: JSON.parse(localStorage.getItem('shippingAdress') || '{}'),
@@ -35,7 +42,12 @@ type CartAddItemAction =
 	| {
 			type: 'CART_REMOVE_ITEM';
 			payload: CartItem;
-	  };
+	  }
+	| {
+			type: 'USER_SIGNIN';
+			payload: UserInfo;
+	  }
+	| { type: 'USER_SIGNOUT' };
 
 const reducer = (state: AppState, action: CartAddItemAction) => {
 	switch (action.type) {
@@ -59,6 +71,27 @@ const reducer = (state: AppState, action: CartAddItemAction) => {
 			localStorage.setItem('cartItems', JSON.stringify(cartItems));
 			return { ...state, cart: { ...state.cart, cartItems } };
 		}
+		case 'USER_SIGNIN': {
+			return { ...state, userInfo: action.payload };
+		}
+		case 'USER_SIGNOUT':
+			return {
+				cart: {
+					cartItems: [],
+					paymentMethod: 'PayPal',
+					shippingAddress: {
+						fullName: '',
+						address: '',
+						postalCode: '',
+						city: '',
+						country: '',
+					},
+					itemsPrice: 0,
+					shippingPrice: 0,
+					taxPrice: 0,
+					totalPrice: 0,
+				},
+			};
 		default: {
 			return state;
 		}
@@ -100,14 +133,14 @@ const StateContext = createContext<StateContextProps>({
 });
 
 export const ContextProvider = (props: ChildrenProps) => {
-	// localStorage.removeItem('cartItems');//!IF need to delete all data from local storage
+	// localStorage.clear(); //!IF need to delete all data from local storage
 	const [currentUser, setCurrentUser] = useState({
 		name: 'Mihail Danilov',
 		email: 'mihaildanilov793@gmail.com',
 		imageUrl:
 			'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 	});
-	const [userToken, setUserToken] = useState<string | null>('123');
+	const [userToken, setUserToken] = useState<string | null>('');
 	const [state, dispatch] = useReducer<Reducer<AppState, CartAddItemAction>>(
 		reducer,
 		initialState()
