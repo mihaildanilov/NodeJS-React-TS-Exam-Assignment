@@ -2,14 +2,16 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/20/solid';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { useStateContext } from '../context/ContextProvider';
-// import { useSignInMutation } from '../hooks/userHooks';
+
 import { getError } from '../utils/utils';
 import { ApiError } from '../types/ApiError';
-import axios from 'axios';
+
+import { signIn } from '../hooks/userHooks';
+import { ToastContainer, toast } from 'react-toastify';
 const SignInPage = () => {
 	const navigate = useNavigate();
 	const { search } = useLocation();
-	const redirectInUrl = new URLSearchParams(search).get('redicrect');
+	const redirectInUrl = new URLSearchParams(search).get('redirect');
 	const redirect = redirectInUrl ? redirectInUrl : '/';
 
 	const [email, setEmail] = useState('');
@@ -18,28 +20,21 @@ const SignInPage = () => {
 	const { state, dispatch } = useStateContext();
 	const { userInfo } = state;
 
-	// const { mutateAsync } = useSignInMutation(); //!Solve this issue
-
-	const signIn = async (email: string, password: string) => {
-		//TODO: implement in diffrent file
-		const data = { email, password };
-		const response = await axios.post('http://localhost:4000/api/users/signin', data);
-		return response.data;
-	};
-
 	const submitHandler = async (e: SyntheticEvent) => {
 		e.preventDefault();
-		console.log('Submited');
 		try {
-			// const data = await mutateAsync({ email, password }); //!Solve this issue
 			const data = await signIn(email, password);
 			dispatch({ type: 'USER_SIGNIN', payload: data });
 			localStorage.setItem('userInfo', JSON.stringify(data));
 			navigate(redirect);
-			console.log(data);
+			toast.success('Successful logi!', {
+				position: toast.POSITION.TOP_CENTER,
+			});
 		} catch (err) {
-			console.log(getError(err as ApiError));
-			console.log('Sign-in unsuccessful. Data:', err as string);
+			toast.error(getError(err as ApiError), {
+				position: toast.POSITION.TOP_CENTER,
+			});
+			// console.log('Sign-in unsuccessful. Data:', err as string);
 		}
 	};
 
@@ -51,7 +46,7 @@ const SignInPage = () => {
 
 	return (
 		<div>
-			<div className="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+			<div className="flex min-h-full items-center justify-center px-4 pt-[7rem] sm:px-6 lg:px-8">
 				<div className="w-full max-w-md space-y-8">
 					<h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
 						Sign in to your account
@@ -137,6 +132,7 @@ const SignInPage = () => {
 							</button>
 						</div>
 					</form>
+					<ToastContainer />
 				</div>
 			</div>
 		</div>

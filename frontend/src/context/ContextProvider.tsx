@@ -133,7 +133,7 @@ const StateContext = createContext<StateContextProps>({
 });
 
 export const ContextProvider = (props: ChildrenProps) => {
-	// localStorage.clear(); //!IF need to delete all data from local storage
+	// localStorage.clear(); //BUGIF need to delete all data from local storage
 	const [currentUser, setCurrentUser] = useState({
 		name: 'Mihail Danilov',
 		email: 'mihaildanilov793@gmail.com',

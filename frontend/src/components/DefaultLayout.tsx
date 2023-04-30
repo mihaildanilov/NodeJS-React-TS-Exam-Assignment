@@ -31,7 +31,7 @@ const DefaultLayout = () => {
 		localStorage.removeItem('paymentMethod');
 		window.location.href = '/signin';
 	};
-	console.log(cart.cartItems);
+	// console.log(cart.cartItems);
 	return (
 		<>
 			<div className="min-h-full">
@@ -45,7 +45,7 @@ const DefaultLayout = () => {
 											<img
 												className="h-8 w-8"
 												src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-												alt="Your Company"
+												alt="Kicks Avenue"
 											/>
 										</div>
 										<div className="hidden md:block">
@@ -70,9 +70,9 @@ const DefaultLayout = () => {
 										</div>
 									</div>
 									<div className="hidden md:block">
-										<div className="ml-4 flex items-center gap-5 md:ml-6">
+										<div className="ml-4 flex items-center gap-3 md:ml-6">
 											<NavLink to="/cart" className="relative pb-3">
-												<div className="t-0 absolute left-3">
+												<div className="t-0 absolute left-3 ">
 													{cart.cartItems.length > 0 ? (
 														<p className="flex h-2 w-2 items-center justify-center rounded-full bg-blue-500 p-3 text-xs text-white">
 															{cart.cartItems.reduce(
@@ -84,13 +84,14 @@ const DefaultLayout = () => {
 														''
 													)}
 												</div>
+
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													fill="none"
 													viewBox="0 0 24 24"
 													strokeWidth="2"
 													stroke="#ffffff"
-													className="file: mt-4 h-6 w-6">
+													className="file: mt-4 h-6 w-6 ">
 													<path
 														strokeLinecap="round"
 														strokeLinejoin="round"
@@ -101,15 +102,13 @@ const DefaultLayout = () => {
 											{/* Profile dropdown */}
 											{userInfo ? (
 												<Menu as="div" className="relative ml-3">
-													<div>
-														<Menu.Button className="flex max-w-xs items-center rounded-full  bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-8 focus:ring-offset-gray-800">
+													<div className={'text-gray-300 '}>
+														<Menu.Button className="flex max-w-xs items-center rounded-full hover:bg-gray-700 hover:text-white p-2 text-sm ">
 															<span className="sr-only">
 																Open user menu
 															</span>
-															<FontAwesomeIcon
-																className={'text-gray-300'}
-																icon={faUser}
-															/>
+															<p className="pr-2">{userInfo.name}</p>
+															<FontAwesomeIcon icon={faUser} />
 														</Menu.Button>
 													</div>
 													<Transition
