@@ -11,6 +11,7 @@ import MainPage from '../pages/MainPage';
 import PageNotFound from '../pages/PageNotFound';
 import ProductPage from '../pages/ProductPage';
 import Cart from '../pages/CartPage';
+import ShippingPage from '../pages/ShippingPage';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
@@ -22,7 +23,6 @@ const router = createBrowserRouter([
 				path: '/',
 				element: <MainPage />,
 			},
-
 			{
 				path: 'store',
 				element: <Store />,
@@ -54,6 +54,10 @@ const router = createBrowserRouter([
 			{
 				path: 'signin',
 				element: <SignInPage />,
+			},
+			{
+				path: 'shipping',
+				element: <ShippingPage />,
 			},
 		],
 	},

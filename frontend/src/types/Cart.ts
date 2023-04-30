@@ -9,7 +9,7 @@ export interface CartItem {
 	quantity: number;
 }
 
-export interface ShippingAdress {
+export interface ShippingAddress {
 	fullName: string;
 	address: string;
 	city: string;
@@ -23,6 +23,6 @@ export interface Cart {
 	taxPrice: number;
 	totalPrice: number;
 	cartItems: CartItem[];
-	shippingAddress: ShippingAdress;
+	shippingAddress: ShippingAddress;
 	paymentMethod: string;
 }
