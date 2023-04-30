@@ -48,7 +48,8 @@ type CartAddItemAction =
 			payload: UserInfo;
 	  }
 	| { type: 'USER_SIGNOUT' }
-	| { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress };
+	| { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress }
+	| { type: 'SAVE_PAYMENT_METHOD'; payload: string };
 
 const reducer = (state: AppState, action: CartAddItemAction) => {
 	switch (action.type) {
@@ -101,6 +102,12 @@ const reducer = (state: AppState, action: CartAddItemAction) => {
 					...state.cart,
 					shippingAddress: action.payload,
 				},
+			};
+		}
+		case 'SAVE_PAYMENT_METHOD': {
+			return {
+				...state,
+				cart: { ...state.cart, paymentMethod: action.payload },
 			};
 		}
 		default: {
