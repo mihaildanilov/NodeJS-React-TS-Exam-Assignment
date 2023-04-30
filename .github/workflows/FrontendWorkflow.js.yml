@@ -1,4 +1,4 @@
-name: ReactTS Workflow
+name: Frontend Workflow
 
 on:
   push:
@@ -26,11 +26,12 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./frontend
-
-      - name: Lint
-        run: npm run lint
-        working-directory: ./frontend
-
+        
       - name: Format
         run: npm run format
         working-directory: ./frontend
+        
+      - name: Lint
+        run: npm run lint
+        working-directory: ./frontend
+        
