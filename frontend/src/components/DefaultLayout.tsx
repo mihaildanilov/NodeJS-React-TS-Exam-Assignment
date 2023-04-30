@@ -1,11 +1,14 @@
-import { Fragment, MouseEvent } from 'react';
+/* eslint-disable indent */
+import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Outlet, NavLink, Navigate } from 'react-router-dom';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Outlet, NavLink } from 'react-router-dom';
 import { useStateContext } from '../context/ContextProvider';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const navigation = [
-	{ name: 'Home', to: '/main' },
+	{ name: 'Home', to: '/' },
 	{ name: 'Store', to: '/store' },
 	{ name: 'Contact Us', to: '/contact' },
 ];
@@ -15,20 +18,20 @@ function classNames(...classes: string[]) {
 }
 
 const DefaultLayout = () => {
-	const { currentUser, userToken } = useStateContext();
-
 	const {
-		state: { cart },
+		state: { cart, userInfo },
+		dispatch,
 	} = useStateContext();
-	if (!userToken) {
-		return <Navigate to="login" />;
-	}
 
-	const logout = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
-		e.preventDefault();
-		console.log('Logout');
+	const signoutHandler = () => {
+		dispatch({ type: 'USER_SIGNOUT' });
+		localStorage.removeItem('userInfo');
+		localStorage.removeItem('cartItems');
+		localStorage.removeItem('shippingAddress');
+		localStorage.removeItem('paymentMethod');
+		window.location.href = '/signin';
 	};
-
+	console.log(cart.cartItems);
 	return (
 		<>
 			<div className="min-h-full">
@@ -96,68 +99,88 @@ const DefaultLayout = () => {
 												</svg>
 											</NavLink>
 											{/* Profile dropdown */}
-											<Menu as="div" className="relative ml-3">
-												<div>
-													<Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-														<span className="sr-only">
-															Open user menu
-														</span>
-														<img
-															className="h-8 w-8 rounded-full"
-															src={currentUser.imageUrl}
-															alt=""
-														/>
-													</Menu.Button>
-												</div>
-												<Transition
-													as={Fragment}
-													enter="transition ease-out duration-100"
-													enterFrom="transform opacity-0 scale-95"
-													enterTo="transform opacity-100 scale-100"
-													leave="transition ease-in duration-75"
-													leaveFrom="transform opacity-100 scale-100"
-													leaveTo="transform opacity-0 scale-95">
-													<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-														<Menu.Item>
-															{({ active }) => (
-																<NavLink
-																	to="/profile"
-																	className={classNames(
-																		active ? 'bg-gray-100' : '',
-																		'block px-4 py-2 text-sm text-gray-700'
-																	)}>
-																	<p>Your Profile</p>
-																</NavLink>
-															)}
-														</Menu.Item>
-														<Menu.Item>
-															{({ active }) => (
-																<NavLink
-																	to="/settings"
-																	className={classNames(
-																		active ? 'bg-gray-100' : '',
-																		'block px-4 py-2 text-sm text-gray-700'
-																	)}>
-																	<p>Settings</p>
-																</NavLink>
-															)}
-														</Menu.Item>
-														<Menu.Item>
-															{({ active }) => (
-																<NavLink
-																	to="#"
-																	onClick={(e) => logout(e)}
-																	className={classNames(
-																		active ? 'bg-gray-100' : '',
-																		'block px-4 py-2 text-sm text-gray-700'
-																	)}>
-																	<p>Sign out</p>
-																</NavLink>
-															)}
-														</Menu.Item>
-													</Menu.Items>
-												</Transition>
-											</Menu>
+											{userInfo ? (
+												<Menu as="div" className="relative ml-3">
+													<div>
+														<Menu.Button className="flex max-w-xs items-center rounded-full  bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-8 focus:ring-offset-gray-800">
+															<span className="sr-only">
+																Open user menu
+															</span>
+															<FontAwesomeIcon
+																className={'text-gray-300'}
+																icon={faUser}
+															/>
+														</Menu.Button>
+													</div>
+													<Transition
+														as={Fragment}
+														enter="transition ease-out duration-100"
+														enterFrom="transform opacity-0 scale-95"
+														enterTo="transform opacity-100 scale-100"
+														leave="transition ease-in duration-75"
+														leaveFrom="transform opacity-100 scale-100"
+														leaveTo="transform opacity-0 scale-95">
+														<Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+															<Menu.Item>
+																{({ active }) => (
+																	<NavLink
+																		to="/profile"
+																		className={classNames(
+																			active
+																				? 'bg-gray-100'
+																				: '',
+																			'block px-4 py-2 text-sm text-gray-700'
+																		)}>
+																		<p>Your Profile</p>
+																	</NavLink>
+																)}
+															</Menu.Item>
+															<Menu.Item>
+																{({ active }) => (
+																	<NavLink
+																		to="/settings"
+																		className={classNames(
+																			active
+																				? 'bg-gray-100'
+																				: '',
+																			'block px-4 py-2 text-sm text-gray-700'
+																		)}>
+																		<p>Settings</p>
+																	</NavLink>
+																)}
+															</Menu.Item>
+															<Menu.Item>
+																{({ active }) => (
+																	<NavLink
+																		to="#signout"
+																		onClick={signoutHandler}
+																		className={classNames(
+																			active
+																				? 'bg-gray-100'
+																				: '',
+																			'block px-4 py-2 text-sm text-gray-700'
+																		)}>
+																		<p>Sign out</p>
+																	</NavLink>
+																)}
+															</Menu.Item>
+														</Menu.Items>
+													</Transition>
+												</Menu>
+											) : (
+												<NavLink
+													className={({ isActive }) =>
+														classNames(
+															isActive
+																? 'bg-gray-900 text-white'
+																: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+															'rounded-md px-3 py-2 text-sm font-medium'
+														)
+													}
+													to="signin">
+													Sign In
+												</NavLink>
+											)}
 										</div>
 									</div>
 									<div className="-mr-2 flex md:hidden">
@@ -208,64 +231,86 @@ const DefaultLayout = () => {
 												'block rounded-md px-3 py-2 text-base font-medium'
 											)
 										}>
-										{(cart.cartItems.length as number) == 0 ? (
-											<p>Cart:</p>
-										) : (cart.cartItems.length as number) == 1 ? (
-											<p>Cart: {cart.cartItems.length} item</p>
+										{(cart.cartItems.reduce(
+											(a, c) => a + c.quantity,
+											0
+										) as number) === 0 ? (
+											<p>Cart</p>
+										) : (cart.cartItems.reduce(
+												(a, c) => a + c.quantity,
+												0
+										  ) as number) === 1 ? (
+											<p>
+												Cart:{' '}
+												{cart.cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
+												item
+											</p>
 										) : (
-											<p>Cart: {cart.cartItems.length} items</p>
+											<p>
+												Cart:{' '}
+												{cart.cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
+												items
+											</p>
 										)}
 									</NavLink>
-								</div>
-								<div className="border-t border-gray-700 pb-3 pt-4">
-									<div className="flex items-center px-5">
-										<div className="flex-shrink-0">
-											<img
-												className="h-10 w-10 rounded-full"
-												src={currentUser.imageUrl}
-												alt=""
-											/>
-										</div>
-										<div className="ml-3">
-											<div className="text-base font-medium leading-none text-white">
-												{currentUser.name}
+
+									{userInfo ? (
+										<div className="border-t border-gray-700 pb-3 pt-4">
+											<div className="flex items-center px-5">
+												<div className="flex-shrink-0">
+													<FontAwesomeIcon
+														className={'text-gray-300'}
+														icon={faUser}
+													/>
+												</div>
+												<div className="ml-3">
+													<div className="text-base font-medium leading-none text-white">
+														{userInfo.name}
+													</div>
+													<div className="text-sm font-medium leading-none text-gray-400">
+														{userInfo.email}
+													</div>
+												</div>
 											</div>
-											<div className="text-sm font-medium leading-none text-gray-400">
-												{currentUser.email}
+											<div className="mt-3 space-y-1 px-2">
+												<NavLink
+													to="/profile"
+													className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+													<p>Your Profile</p>
+												</NavLink>
+												<NavLink
+													to="/settings"
+													className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+													<p>Settings</p>
+												</NavLink>
+												<NavLink
+													to="#"
+													onClick={signoutHandler}
+													className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
+													<p>Sign out</p>
+												</NavLink>
 											</div>
 										</div>
-										<button
-											type="button"
-											className="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-											<span className="sr-only">View notifications</span>
-											<BellIcon className="h-6 w-6" aria-hidden="true" />
-										</button>
-									</div>
-									<div className="mt-3 space-y-1 px-2">
+									) : (
 										<NavLink
-											to="/profile"
-											className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
-											<p>Your Profile</p>
+											className={({ isActive }) =>
+												classNames(
+													isActive
+														? 'bg-gray-900 text-white'
+														: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+													'block rounded-md px-3 py-2 text-base font-medium'
+												)
+											}
+											to="/signin">
+											Sign In
 										</NavLink>
-										<NavLink
-											to="/settings"
-											className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
-											<p>Settings</p>
-										</NavLink>
-										<NavLink
-											to="#"
-											onClick={(e) => logout(e)}
-											className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
-											<p>Sign out</p>
-										</NavLink>
-									</div>
+									)}
 								</div>
 							</Disclosure.Panel>
 						</div>
 					)}
 				</Disclosure>
 				<Outlet />
-				{userToken}
 			</div>
 		</>
 	);

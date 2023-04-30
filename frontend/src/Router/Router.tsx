@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Login from '../pages/Login';
+import SignInPage from '../pages/SignInPage';
 import SignUp from '../pages/SignUp';
-import GuestLayout from '../components/GuestLayout';
+
 import DefaultLayout from '../components/DefaultLayout';
 import Settings from '../pages/Settings';
 import Profile from '../pages/Profile';
@@ -20,10 +20,6 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <MainPage />,
-			},
-			{
-				path: '/main',
 				element: <MainPage />,
 			},
 
@@ -51,19 +47,13 @@ const router = createBrowserRouter([
 				path: 'cart',
 				element: <Cart />,
 			},
-		],
-	},
-	{
-		path: '/',
-		element: <GuestLayout />,
-		children: [
-			{
-				path: 'login',
-				element: <Login />,
-			},
 			{
 				path: 'signup',
 				element: <SignUp />,
+			},
+			{
+				path: 'signin',
+				element: <SignInPage />,
 			},
 		],
 	},
