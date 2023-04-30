@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { productRouter } from './routes/productRouter';
 import { seedRouter } from './routes/seedRouter';
+import { userRouter } from './routes/userRouter';
 
 dotenv.config();
 
@@ -26,8 +27,12 @@ app.use(
 	})
 );
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/api/products', productRouter);
-// app.use('/api/seed', seedRouter);
+app.use('/api/seed', seedRouter);
+app.use('/api/users', userRouter);
 
 const PORT = 4000;
 app.listen(PORT, () => {

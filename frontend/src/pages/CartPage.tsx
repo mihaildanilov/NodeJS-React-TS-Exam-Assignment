@@ -119,18 +119,18 @@ const Cart = () => {
 
 					<div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
 						<div className="mb-2 flex justify-between">
-							<p className="text-gray-700">Subtotal</p>
+							<p className="text-gray-700">Subtotal:</p>
 							<p className="text-gray-700">
 								({cartItems.reduce((a, c) => a + c.quantity, 0)} items) : $
 								{subTotal.toFixed(2)}
 							</p>
 						</div>
 						<div className="flex justify-between">
-							<p className="text-gray-700">Tax</p>
+							<p className="text-gray-700">Tax:</p>
 							<p className="text-gray-700">${tax.toFixed(2)}</p>
 						</div>
 						<div className="flex justify-between">
-							<p className="text-gray-700">Shipping</p>
+							<p className="text-gray-700">Shipping:</p>
 							<p className="text-gray-700">${shipping}</p>
 						</div>
 						<hr className="my-4" />
