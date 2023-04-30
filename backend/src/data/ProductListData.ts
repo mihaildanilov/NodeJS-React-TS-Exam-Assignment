@@ -1,19 +1,8 @@
-export interface ProductListItemProps {
-	name: string;
-	slug: string;
-	category: string;
-	brand: string;
-	imageSrc: string;
-	imageAlt: string;
-	price: number;
-	color: string;
-	countInStock: number;
-	description: string;
-	rating: number;
-	numberOfReviews: number;
-}
+import bcrypt from 'bcryptjs';
+import { User } from '../models/UserModel';
+import { Product } from '../models/ProductModel';
 
-export const ProductListData: ProductListItemProps[] = [
+export const ProductListData: Product[] = [
 	{
 		name: 'Nike Air VaporMax 2021 “Air Pressure”',
 		slug: 'nike-vapormax-air-pressure',
@@ -21,7 +10,7 @@ export const ProductListData: ProductListItemProps[] = [
 		imageSrc: '/images/air-pressure.jpeg',
 		imageAlt: 'Side view of Nike Air VaporMax 2021 “Air Pressure”',
 		price: 210,
-		countInStock: 0,
+		countInStock: 10,
 		brand: 'Nike',
 		rating: 3.5,
 		numberOfReviews: 10,
@@ -70,5 +59,20 @@ export const ProductListData: ProductListItemProps[] = [
 		numberOfReviews: 10,
 		description: 'High quality sneakers',
 		color: 'Pure Platinum/White-Pure Platinum',
+	},
+];
+
+export const Users: User[] = [
+	{
+		name: 'MihailAdmin',
+		email: 'admin@gmail.com',
+		password: bcrypt.hashSync('123456'),
+		isAdmin: true,
+	},
+	{
+		name: 'Mihail',
+		email: 'mihaildanilov793@gmail.com',
+		password: bcrypt.hashSync('123456'),
+		isAdmin: false,
 	},
 ];
