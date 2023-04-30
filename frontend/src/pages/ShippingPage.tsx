@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageComponent from '../components/PageComponent';
 import { useStateContext } from '../context/ContextProvider';
@@ -52,6 +52,7 @@ const ShippingPage = () => {
 	return (
 		<PageComponent title="Shipping page">
 			<div className="isolate bg-white px-6 sm:py-8 lg:px-8 h-screen lg:h-[calc(100vh-12.5rem)]   ">
+
 				<h1 className="text-2xl font-bold mb-6 ">Shipping Address</h1>
 				<CheckoutSteps step1 step2 />
 				<form className="pt-7" onSubmit={submitHandler}>
