@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 
 interface CheckoutStepsProps {
 	step1?: boolean;
@@ -16,29 +17,32 @@ const CheckoutSteps: FC<CheckoutStepsProps> = ({
 	return (
 		<div className="checkout-steps flex">
 			<div
-				className={`w-1/4 border-b-2 ${
+				className={`w-1/4 border-b-2 cursor-not-allowed  ${
 					step1 ? 'border-blue-500 text-blue-500' : 'border-gray-500 text-gray-500'
 				}`}>
 				Sign-In
 			</div>
-			<div
+			<NavLink
+				to="/shipping"
 				className={`w-1/4 border-b-2 ${
 					step2 ? 'border-blue-500 text-blue-500' : 'border-gray-500 text-gray-500'
 				}`}>
 				Shipping
-			</div>
-			<div
+			</NavLink>
+			<NavLink
+				to="/payment"
 				className={`w-1/4 border-b-2 ${
 					step3 ? 'border-blue-500 text-blue-500' : 'border-gray-500 text-gray-500'
 				}`}>
 				Payment
-			</div>
-			<div
+			</NavLink>
+			<NavLink
+				to="/placeorder"
 				className={`w-1/4 border-b-2 ${
 					step4 ? 'border-blue-500 text-blue-500' : 'border-gray-500 text-gray-500'
 				}`}>
 				Place Order
-			</div>
+			</NavLink>
 		</div>
 	);
 };
