@@ -7,7 +7,7 @@ import { getError } from '../utils/utils';
 import { ApiError } from '../types/ApiError';
 
 import { signIn } from '../hooks/userHooks';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 const SignInPage = () => {
 	const navigate = useNavigate();
 	const { search } = useLocation();
@@ -27,7 +27,7 @@ const SignInPage = () => {
 			dispatch({ type: 'USER_SIGNIN', payload: data });
 			localStorage.setItem('userInfo', JSON.stringify(data));
 			navigate(redirect);
-			toast.success('Successful logi!', {
+			toast.success('Successful login!', {
 				position: toast.POSITION.TOP_CENTER,
 			});
 		} catch (err) {
@@ -132,7 +132,6 @@ const SignInPage = () => {
 							</button>
 						</div>
 					</form>
-					<ToastContainer />
 				</div>
 			</div>
 		</div>

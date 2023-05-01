@@ -1,17 +1,95 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent';
-import { useGetOrderDetailsQuery } from '../hooks/orderHook';
+import {
+	useGetOrderDetailsQuery,
+	useGetPaypalClientIdQuery,
+	usePayOrderMutation,
+} from '../hooks/orderHook';
 import LoadingBox from '../components/LoadingBox';
 import { MessageBoxError, MessageBoxSuccess, MessageBoxWarning } from '../components/MessageBox';
 import { getError } from '../utils/utils';
 import { ApiError } from '../types/ApiError';
+import {
+	usePayPalScriptReducer,
+	SCRIPT_LOADING_STATE,
+	PayPalButtonsComponentProps,
+	PayPalButtons,
+} from '@paypal/react-paypal-js';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const OrderPage = () => {
 	const params = useParams();
 	const { id: orderId } = params;
 
+	const { data: order, isLoading, error, refetch } = useGetOrderDetailsQuery(orderId!);
+
+	const { mutateAsync: payOrder, isLoading: loadingPay } = usePayOrderMutation();
+
+	const testPayHandler = async () => {
+		await payOrder({ orderId: orderId! });
+		refetch();
+		toast.success('Order is paid');
+	};
+
+	const [{ isPending, isRejected }, paypalDispatch] = usePayPalScriptReducer();
+
+	const { data: paypalConfig } = useGetPaypalClientIdQuery();
+
+	useEffect(() => {
+		if (paypalConfig && paypalConfig.clientId) {
+			const loadPaypalScript = async () => {
+				paypalDispatch({
+					type: 'resetOptions',
+					value: {
+						'client-id': paypalConfig!.clientId,
+						currency: 'USD',
+					},
+				});
+				paypalDispatch({
+					type: 'setLoadingStatus',
+					value: SCRIPT_LOADING_STATE.PENDING,
+				});
+			};
+			loadPaypalScript();
+		}
+	}, [paypalConfig]);
+
+	const paypalbuttonTransactionProps: PayPalButtonsComponentProps = {
+		style: { layout: 'vertical' },
+		createOrder(data, actions) {
+			return actions.order
+				.create({
+					purchase_units: [
+						{
+							amount: {
+								value: order!.totalPrice.toString(),
+							},
+						},
+					],
+				})
+				.then((orderID: string) => {
+					return orderID;
+				});
+		},
+		onApprove(data, actions) {
+			return actions.order!.capture().then(async (details) => {
+				try {
+					await payOrder({ orderId: orderId!, ...details });
+					refetch();
+					toast.success('Order is paid successfully');
+				} catch (err) {
+					toast.error(getError(err as ApiError));
+				}
+			});
+		},
+		onError: (err) => {
+			toast.error(getError(err as unknown as ApiError));
+		},
+	};
+
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const { data: order, isLoading, error } = useGetOrderDetailsQuery(orderId!);
 
 	return isLoading ? (
 		<LoadingBox text="Loading"></LoadingBox>
@@ -36,9 +114,9 @@ const OrderPage = () => {
 									, {order.shippingAddress.country}
 								</p>
 							</div>
-							{order.isPaid ? (
+							{order.isDelivered ? (
 								<MessageBoxSuccess
-									message={`Paid at ${order.deliveredAt}`}></MessageBoxSuccess>
+									message={`Delivered at ${order.deliveredAt}`}></MessageBoxSuccess>
 							) : (
 								<MessageBoxWarning message="Not Delivered"></MessageBoxWarning>
 							)}
@@ -85,7 +163,7 @@ const OrderPage = () => {
 						</div>
 					</div>
 
-					<div className="bg-white rounded-lg shadow-md p-6 space-y-4 h-[42%]">
+					<div className="bg-white rounded-lg shadow-md p-6 space-y-4 ">
 						<h2 className="text-lg font-medium mb-4">Order Summary</h2>
 						<ul className="divide-y divide-gray-200">
 							<li className="py-2 flex justify-between items-center">
@@ -107,6 +185,28 @@ const OrderPage = () => {
 								<span>
 									<strong>${order.totalPrice.toFixed(2)}</strong>
 								</span>
+							</li>
+							<li className="py-2 flex justify-between flex-col items-center">
+								{!order.isPaid && (
+									<div>
+										{isPending ? (
+											<LoadingBox text="Loading..." />
+										) : isRejected ? (
+											<MessageBoxError message="Error in connecting to PayPal" />
+										) : (
+											<div>
+												<PayPalButtons
+													{...paypalbuttonTransactionProps}></PayPalButtons>
+												<button
+													className="px-4 py-2 bg-indigo-500 text-white rounded-md disabled:opacity-50"
+													onClick={testPayHandler}>
+													Test Pay
+												</button>
+											</div>
+										)}
+										{loadingPay && <LoadingBox text="Loading..." />}
+									</div>
+								)}
 							</li>
 						</ul>
 					</div>
