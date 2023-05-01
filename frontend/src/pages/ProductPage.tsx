@@ -8,7 +8,7 @@ import { useGetProductDetailsBySlugQuery } from '../hooks/productHook';
 import PageNotFound from './PageNotFound';
 
 import Rating from '../components/Rating';
-import StatusToast from './StatusToast';
+import StatusToast from '../components/StatusToast';
 import { useStateContext } from '../context/ContextProvider';
 import { CartItem } from '../types/Cart';
 import { useState } from 'react';
