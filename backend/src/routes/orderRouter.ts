@@ -3,8 +3,17 @@ import asyncHandler from 'express-async-handler';
 
 import { Product } from '../models/ProductModel';
 import { isAuth } from '../utils/utils';
-import { OrderModel } from '../models/OrderModel';
+import { Order, OrderModel } from '../models/OrderModel';
 export const orderRouter = express.Router();
+
+orderRouter.get(
+	'/mine',
+	isAuth,
+	asyncHandler(async (req: Request, res: Response) => {
+		const orders = await OrderModel.find({ user: req.user._id });
+		res.json(orders);
+	})
+);
 
 orderRouter.get(
 	'/:id',
@@ -39,7 +48,7 @@ orderRouter.post(
 				taxPrice: req.body.taxPrice,
 				totalPrice: req.body.totalPrice,
 				user: req.user._id,
-			});
+			} as Order);
 			res.status(201).json({ message: 'Order Created', order: createdOrder });
 		}
 	})
