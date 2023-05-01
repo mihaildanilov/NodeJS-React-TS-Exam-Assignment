@@ -2,6 +2,13 @@ import { useCallback } from 'react';
 import apiClient from '../api/apiClient';
 import { CartItem, ShippingAddress } from '../types/Cart';
 import { Order } from '../types/Order';
+import { useQuery } from '@tanstack/react-query';
+
+export const useGetOrderDetailsQuery = (id: string) =>
+	useQuery({
+		queryKey: ['orders', id],
+		queryFn: async () => (await apiClient.get<Order>(`api/orders/${id}`)).data,
+	});
 
 export const useCreateOrder = () => {
 	const createOrder = useCallback(

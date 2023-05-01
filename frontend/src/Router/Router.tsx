@@ -15,6 +15,7 @@ import ShippingPage from '../pages/ShippingPage';
 import PaymentPage from '../pages/PaymentPage';
 import ProtectedRoute from './ProtectedRoute';
 import PlaceOrderPage from '../pages/PlaceOrderPage';
+import OrderPage from '../pages/OrderPage';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
 			{
 				path: 'placeorder',
 				element: <ProtectedRoute component={PlaceOrderPage} />,
+			},
+			{
+				path: '/order/:id',
+				element: <ProtectedRoute component={OrderPage} />,
 			},
 		],
 	},

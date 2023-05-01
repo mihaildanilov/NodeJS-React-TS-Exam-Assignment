@@ -52,7 +52,7 @@ const PlaceOrderPage = () => {
 		}
 	}, [cart, navigate]);
 	return (
-		<PageComponent title="Pr order">
+		<PageComponent title="Preview order">
 			<div className="h-screen bg-gray-100 px-6 pt-16 sm:px-8 lg:px-12">
 				<CheckoutSteps step1 step2 step3 step4 />
 				<div className="max-w-7xl mx-auto mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -115,7 +115,7 @@ const PlaceOrderPage = () => {
 						</div>
 					</div>
 
-					<div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+					<div className="bg-white rounded-lg shadow-md p-6 space-y-4 h-[65%]">
 						<h2 className="text-lg font-medium mb-4">Order Summary</h2>
 						<ul className="divide-y divide-gray-200">
 							<li className="py-2 flex justify-between items-center">
@@ -127,16 +127,16 @@ const PlaceOrderPage = () => {
 								<span>${cart.shippingPrice.toFixed(2)}</span>
 							</li>
 							<li className="py-2 flex justify-between items-center">
+								<span>Tax</span>
+								<span>${cart.taxPrice.toFixed(2)}</span>
+							</li>
+							<li className="py-2 flex justify-between items-center">
 								<span>
 									<strong>Order Total</strong>
 								</span>
 								<span>
 									<strong>${cart.totalPrice.toFixed(2)}</strong>
 								</span>
-							</li>
-							<li className="py-2 flex justify-between items-center">
-								<span>Tax</span>
-								<span>${cart.taxPrice.toFixed(2)}</span>
 							</li>
 							<li className="py-2">
 								<div className="flex justify-center">
