@@ -6,6 +6,7 @@ import { Outlet, NavLink } from 'react-router-dom';
 import { useStateContext } from '../context/ContextProvider';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ToastContainer, toast } from 'react-toastify';
 
 const navigation = [
 	{ name: 'Home', to: '/' },
@@ -283,7 +284,7 @@ const DefaultLayout = () => {
 													<p>Settings</p>
 												</NavLink>
 												<NavLink
-													to="#"
+													to=""
 													onClick={signoutHandler}
 													className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
 													<p>Sign out</p>
@@ -310,6 +311,7 @@ const DefaultLayout = () => {
 					)}
 				</Disclosure>
 				<Outlet />
+				<ToastContainer />
 			</div>
 		</>
 	);

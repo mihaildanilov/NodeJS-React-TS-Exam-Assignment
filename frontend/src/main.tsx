@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './assets/index.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 // import axios from 'axios';
 
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/';
@@ -15,10 +16,12 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
 		<ContextProvider>
-			<QueryClientProvider client={queryClient}>
-				<RouterProvider router={router} />
-				<ReactQueryDevtools initialIsOpen={false} />
-			</QueryClientProvider>
+			<PayPalScriptProvider options={{ 'client-id': 'sb' }} deferLoading={true}>
+				<QueryClientProvider client={queryClient}>
+					<RouterProvider router={router} />
+					<ReactQueryDevtools initialIsOpen={false} />
+				</QueryClientProvider>
+			</PayPalScriptProvider>
 		</ContextProvider>
 	</React.StrictMode>
 );
