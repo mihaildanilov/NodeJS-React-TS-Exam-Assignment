@@ -25,7 +25,9 @@ class Item {
 	@prop({ required: true })
 	public quantity!: string;
 	@prop({ required: true })
-	public image!: number;
+	public imageSrc!: string;
+	@prop({ required: true })
+	public imageAlt!: string;
 	@prop({ required: true })
 	public price!: number;
 	@prop({ ref: Product })

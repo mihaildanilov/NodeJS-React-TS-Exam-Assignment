@@ -41,7 +41,8 @@ type CartAddItemAction =
 	  }
 	| { type: 'USER_SIGNOUT' }
 	| { type: 'SAVE_SHIPPING_ADDRESS'; payload: ShippingAddress }
-	| { type: 'SAVE_PAYMENT_METHOD'; payload: string };
+	| { type: 'SAVE_PAYMENT_METHOD'; payload: string }
+	| { type: 'CART_CLEAR' };
 
 const reducer = (state: AppState, action: CartAddItemAction) => {
 	switch (action.type) {
@@ -101,6 +102,9 @@ const reducer = (state: AppState, action: CartAddItemAction) => {
 				...state,
 				cart: { ...state.cart, paymentMethod: action.payload },
 			};
+		}
+		case 'CART_CLEAR': {
+			return { ...state, cart: { ...state.cart, cartItems: [] } };
 		}
 		default: {
 			return state;

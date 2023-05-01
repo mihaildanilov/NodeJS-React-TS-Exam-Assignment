@@ -13,6 +13,8 @@ import ProductPage from '../pages/ProductPage';
 import Cart from '../pages/CartPage';
 import ShippingPage from '../pages/ShippingPage';
 import PaymentPage from '../pages/PaymentPage';
+import ProtectedRoute from './ProtectedRoute';
+import PlaceOrderPage from '../pages/PlaceOrderPage';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
@@ -38,11 +40,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'profile',
-				element: <Profile />,
+				element: <ProtectedRoute component={Profile} />,
 			},
 			{
 				path: 'settings',
-				element: <Settings />,
+				element: <ProtectedRoute component={Settings} />,
 			},
 			{
 				path: 'cart',
@@ -56,13 +58,18 @@ const router = createBrowserRouter([
 				path: 'signin',
 				element: <SignInPage />,
 			},
+
 			{
 				path: 'shipping',
-				element: <ShippingPage />,
+				element: <ProtectedRoute component={ShippingPage} />,
 			},
 			{
 				path: 'payment',
-				element: <PaymentPage />,
+				element: <ProtectedRoute component={PaymentPage} />,
+			},
+			{
+				path: 'placeorder',
+				element: <ProtectedRoute component={PlaceOrderPage} />,
 			},
 		],
 	},
