@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent';
-import MessageBox from '../components/MessageBox';
+import { MessageBoxError } from '../components/MessageBox';
 import { ApiError } from '../types/ApiError';
 import { convertProductToCartItem, getError } from '../utils/utils';
 import LoadingBox from '../components/LoadingBox';
@@ -40,7 +40,7 @@ const ProductPage = () => {
 	return isLoading ? (
 		<LoadingBox text="Action in progress" />
 	) : error ? (
-		<MessageBox message={getError(error as ApiError)} />
+		<MessageBoxError message={getError(error as ApiError)} />
 	) : !product ? (
 		<PageNotFound />
 	) : (

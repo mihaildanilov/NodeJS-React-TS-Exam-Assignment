@@ -1,5 +1,5 @@
 import LoadingBox from './LoadingBox';
-import MessageBox from './MessageBox';
+import { MessageBoxError } from './MessageBox';
 import { ProductListItem } from './ProductListItem';
 import { useGetProductQuery } from '../hooks/productHook';
 import { getError } from '../utils/utils';
@@ -10,7 +10,7 @@ const ProductList = () => {
 	return isLoading ? (
 		<LoadingBox text="Action in progress" />
 	) : error ? (
-		<MessageBox message={getError(error as ApiError)}></MessageBox>
+		<MessageBoxError message={getError(error as ApiError)}></MessageBoxError>
 	) : (
 		<div className="bg-white">
 			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
