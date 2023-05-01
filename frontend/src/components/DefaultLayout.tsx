@@ -6,7 +6,7 @@ import { Outlet, NavLink } from 'react-router-dom';
 import { useStateContext } from '../context/ContextProvider';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const navigation = [
 	{ name: 'Home', to: '/' },

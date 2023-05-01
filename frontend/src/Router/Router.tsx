@@ -16,6 +16,7 @@ import PaymentPage from '../pages/PaymentPage';
 import ProtectedRoute from './ProtectedRoute';
 import PlaceOrderPage from '../pages/PlaceOrderPage';
 import OrderPage from '../pages/OrderPage';
+import InvoicePage from '../pages/InvoicePage';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
 			{
 				path: '/order/:id',
 				element: <ProtectedRoute component={OrderPage} />,
+			},
+			{
+				path: '/invoice/:id',
+				element: <ProtectedRoute component={InvoicePage} />,
 			},
 		],
 	},
