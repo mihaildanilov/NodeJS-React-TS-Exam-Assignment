@@ -77,3 +77,11 @@ orderRouter.put(
 		}
 	})
 );
+
+orderRouter.get(
+	'/',
+	asyncHandler(async (req, res) => {
+		const orders: Order[] = await OrderModel.find({});
+		res.json(orders);
+	})
+);

@@ -17,9 +17,47 @@ import ProtectedRoute from './ProtectedRoute';
 import PlaceOrderPage from '../pages/PlaceOrderPage';
 import OrderPage from '../pages/OrderPage';
 import InvoicePage from '../pages/InvoicePage';
+import ProtectedAdminRoute from './ProtectedAdminRoute';
+import AdminLayout from '../components/AdminLayout';
+import Dashboard from '../pages/admin/Dashboard';
+import UsersManagment from '../pages/admin/UserManagment';
+import ProductManagment from '../pages/admin/ProductManagment';
+import ContactUsManagment from '../pages/admin/ContactUsManagment';
+import OrderManagment from '../pages/admin/OrderManagment';
+import WebsiteManagment from '../pages/admin/WebsiteManagment';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
+	{
+		path: '/admin',
+		element: <AdminLayout />,
+		children: [
+			{
+				path: '/admin',
+				element: <ProtectedAdminRoute component={Dashboard} />,
+			},
+			{
+				path: 'users',
+				element: <ProtectedAdminRoute component={UsersManagment} />,
+			},
+			{
+				path: 'products',
+				element: <ProtectedAdminRoute component={ProductManagment} />,
+			},
+			{
+				path: 'inbox',
+				element: <ProtectedAdminRoute component={ContactUsManagment} />,
+			},
+			{
+				path: 'orders',
+				element: <ProtectedAdminRoute component={OrderManagment} />,
+			},
+			{
+				path: 'settings',
+				element: <ProtectedAdminRoute component={WebsiteManagment} />,
+			},
+		],
+	},
 	{
 		path: '/',
 		element: <DefaultLayout />,
