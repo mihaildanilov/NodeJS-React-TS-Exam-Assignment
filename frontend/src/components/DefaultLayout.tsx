@@ -72,6 +72,35 @@ const DefaultLayout = () => {
 									</div>
 									<div className="hidden md:block">
 										<div className="ml-4 flex flex-row items-center gap-3 md:ml-6">
+											<NavLink
+												to="/cart"
+												className={({ isActive }) =>
+													classNames(
+														isActive
+															? 'bg-gray-900 text-white'
+															: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+														cart.cartItems.length > 0
+															? 'pl-[0.8rem]'
+															: 'pl-[1.175rem]',
+														'rounded-md  pr-3  py-2 text-sm font-medium'
+													)
+												}>
+												<div className="flex flex-row">
+													{cart.cartItems.length > 0 ? (
+														<div className="flex flex-row">
+															<p className="pr-2">Cart:</p>
+															<p>
+																{cart.cartItems.reduce(
+																	(a, c) => a + c.quantity,
+																	0
+																)}
+															</p>
+														</div>
+													) : (
+														<p className="pr-2">Cart</p>
+													)}
+												</div>
+											</NavLink>
 											{userInfo ? (
 												<Menu as="div" className="relative ml-3">
 													<div className=" flex items-baseline space-x-4">
@@ -89,38 +118,6 @@ const DefaultLayout = () => {
 																Admin Dashboard
 															</NavLink>
 														) : null}
-														<NavLink
-															to="/cart"
-															className={({ isActive }) =>
-																classNames(
-																	isActive
-																		? 'bg-gray-900 text-white'
-																		: 'text-gray-300 hover:bg-gray-700 hover:text-white',
-																	cart.cartItems.length > 0
-																		? 'pl-[0.8rem]'
-																		: 'pl-[1.175rem]',
-																	'rounded-md  pr-3  py-2 text-sm font-medium'
-																)
-															}>
-															<div className="flex flex-row">
-																{cart.cartItems.length > 0 ? (
-																	<div className="flex flex-row">
-																		<p className="pr-2">
-																			Cart:
-																		</p>
-																		<p>
-																			{cart.cartItems.reduce(
-																				(a, c) =>
-																					a + c.quantity,
-																				0
-																			)}
-																		</p>
-																	</div>
-																) : (
-																	<p className="pr-2">Cart</p>
-																)}
-															</div>
-														</NavLink>
 
 														{/* Profile dropdown */}
 
