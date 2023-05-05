@@ -5,7 +5,7 @@ import { MessageBoxError } from '../../components/MessageBox';
 import { ApiError } from '../../types/ApiError';
 import { getError } from '../../utils/utils';
 
-const UsersManagment = () => {
+const UsersManagement = () => {
 	const { data: users, isLoading, error } = useGetAllUsersQuery();
 
 	return isLoading ? (
@@ -18,7 +18,15 @@ const UsersManagment = () => {
 		</div>
 	) : (
 		<div className="p-4 sm:ml-64">
-			<div className="flex flex-col mt-8">
+			<div className="border-gray-200 pt-3 p-4 bg-gray-50 border-b rounded-md">
+				<h1 className="text-2xl font-bold tracking-tight  text-gray-500 sm:text-3xl">
+					User management
+				</h1>
+				<p className="mt-2 text-lg  text-gray-500">
+					Track users of your website and change user info.
+				</p>
+			</div>
+			<div className="flex flex-col mt-3">
 				<div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
 					<div className="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
 						<table className="min-w-full">
@@ -95,4 +103,4 @@ const UsersManagment = () => {
 	);
 };
 
-export default UsersManagment;
+export default UsersManagement;

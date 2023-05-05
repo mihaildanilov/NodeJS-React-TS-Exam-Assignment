@@ -2,6 +2,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const AdminLayout = () => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -200,6 +201,7 @@ const AdminLayout = () => {
 				</div>
 			</aside>
 			<Outlet />
+			<ToastContainer />
 		</div>
 	);
 };

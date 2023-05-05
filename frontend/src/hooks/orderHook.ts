@@ -60,3 +60,15 @@ export const useGetAllOrdersQuery = () =>
 		queryKey: ['all-orders'],
 		queryFn: async () => (await apiClient.get<Order[]>('/api/orders/')).data,
 	});
+
+interface DeliverOrderMutationDetails {
+	orderId: string;
+}
+export const useDeliverOrderMutation = () =>
+	useMutation<Order, Error, DeliverOrderMutationDetails>(async (details) => {
+		const { data } = await apiClient.put<{ message: string; order: Order }>(
+			`/api/orders/${details.orderId}/deliver`,
+			{}
+		);
+		return data.order;
+	});

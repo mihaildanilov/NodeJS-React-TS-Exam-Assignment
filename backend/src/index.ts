@@ -22,6 +22,7 @@ mongoose
 	});
 
 const app = express();
+app.use(express.json({ limit: '500mb' }));
 app.use(
 	cors({
 		credentials: true,
