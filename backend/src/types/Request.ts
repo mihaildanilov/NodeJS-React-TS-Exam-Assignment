@@ -8,5 +8,20 @@ declare namespace Express {
 			isAdmin: boolean;
 			token: string;
 		};
+		file?: Express.Multer.File;
+		body: {
+			name: string;
+			slug: string;
+			image: string;
+			imageAlt: string;
+			price: number;
+			brand: string;
+			category: string;
+			description: string;
+			countInStock: number;
+			rating: number;
+			numberOfReviews: number;
+			color: string;
+		} & Record<string, unknown>;
 	}
 }

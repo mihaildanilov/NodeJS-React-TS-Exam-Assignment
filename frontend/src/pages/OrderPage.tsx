@@ -2,6 +2,7 @@
 import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent';
 import {
+	useDeliverOrderMutation,
 	useGetOrderDetailsQuery,
 	useGetPaypalClientIdQuery,
 	usePayOrderMutation,
@@ -27,6 +28,14 @@ const OrderPage = () => {
 
 	const { mutateAsync: payOrder, isLoading: loadingPay } = usePayOrderMutation();
 
+	const { mutate: deliverOrder, isLoading: isLoadingDelivery } = useDeliverOrderMutation();
+
+	const handleDeliverOrder = async () => {
+		await deliverOrder({ orderId: orderId! });
+		refetch();
+		toast.success('Order is Delivered');
+	};
+
 	const testPayHandler = async () => {
 		await payOrder({ orderId: orderId! });
 		refetch();
@@ -36,6 +45,21 @@ const OrderPage = () => {
 	const [{ isPending, isRejected }, paypalDispatch] = usePayPalScriptReducer();
 
 	const { data: paypalConfig } = useGetPaypalClientIdQuery();
+
+	const formatDate = (dateString: string): string => {
+		const date = new Date(dateString);
+		const options: Intl.DateTimeFormatOptions = {
+			day: 'numeric',
+			month: 'numeric',
+			year: 'numeric',
+		};
+		const formattedDate = date.toLocaleDateString('lv-LV', options);
+		const formattedTime = date.toLocaleTimeString('lv-LV', {
+			hour: '2-digit',
+			minute: '2-digit',
+		});
+		return `${formattedTime} on ${formattedDate}`;
+	};
 
 	useEffect(() => {
 		if (paypalConfig && paypalConfig.clientId) {
@@ -54,7 +78,7 @@ const OrderPage = () => {
 			};
 			loadPaypalScript();
 		}
-	}, [paypalConfig]);
+	}, [paypalConfig, paypalDispatch]);
 
 	const paypalbuttonTransactionProps: PayPalButtonsComponentProps = {
 		style: { layout: 'vertical' },
@@ -99,7 +123,7 @@ const OrderPage = () => {
 		<MessageBoxError message="Order Not Found" />
 	) : (
 		<PageComponent title={`Order ${orderId}`}>
-			<div className="h-screen bg-gray-100 px-6 pt-16 sm:px-8 lg:px-12">
+			<div className="pb-3 bg-gray-100 px-6 pt-16 sm:px-8 lg:px-12">
 				<div className="max-w-7xl mx-auto mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
 					<div className="col-span-2 space-y-6">
 						<div className="bg-white rounded-lg shadow-md p-6">
@@ -116,7 +140,9 @@ const OrderPage = () => {
 							</div>
 							{order.isDelivered ? (
 								<MessageBoxSuccess
-									message={`Delivered at ${order.deliveredAt}`}></MessageBoxSuccess>
+									message={`Delivered at ${formatDate(
+										order.deliveredAt
+									)}`}></MessageBoxSuccess>
 							) : (
 								<MessageBoxWarning message="Not Delivered"></MessageBoxWarning>
 							)}
@@ -131,7 +157,9 @@ const OrderPage = () => {
 							</div>
 							{order.isPaid ? (
 								<MessageBoxSuccess
-									message={`Paid at ${order.paidAt}`}></MessageBoxSuccess>
+									message={`Paid at ${formatDate(
+										order.paidAt
+									)}`}></MessageBoxSuccess>
 							) : (
 								<MessageBoxWarning message="Not Paid"></MessageBoxWarning>
 							)}
@@ -207,6 +235,15 @@ const OrderPage = () => {
 										{loadingPay && <LoadingBox text="Loading..." />}
 									</div>
 								)}
+								{!order.isDelivered && (
+									<button
+										className="px-4 py-2 bg-indigo-500 text-white rounded-md disabled:opacity-50"
+										onClick={handleDeliverOrder}
+										disabled={isLoading}>
+										{isLoading ? 'Loading...' : 'Deliver Order'}
+									</button>
+								)}
+								{isLoadingDelivery && <LoadingBox text="Loading..." />}
 							</li>
 						</ul>
 					</div>

@@ -80,8 +80,28 @@ orderRouter.put(
 
 orderRouter.get(
 	'/',
+	isAuth,
 	asyncHandler(async (req, res) => {
 		const orders: Order[] = await OrderModel.find({});
 		res.json(orders);
+	})
+);
+
+orderRouter.put(
+	'/:id/deliver',
+	isAuth,
+	asyncHandler(async (req: Request, res: Response) => {
+		const order = await OrderModel.findById(req.params.id);
+
+		if (order) {
+			order.isDelivered = true;
+			order.deliveredAt = new Date(Date.now());
+
+			const updatedOrder = await order.save();
+
+			res.send({ order: updatedOrder, message: 'Order Delivered Successfully' });
+		} else {
+			res.status(404).json({ message: 'Order Not Found' });
+		}
 	})
 );

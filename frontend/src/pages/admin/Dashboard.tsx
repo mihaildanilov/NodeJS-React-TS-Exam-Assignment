@@ -28,7 +28,13 @@ const Dashboard = () => {
 		</div>
 	) : (
 		<div className="p-4 sm:ml-64">
-			<h1 className="text-gray-700 pb-2 text-4xl font-bold">Dashboard</h1>
+			<div className="border-gray-200 pt-3 p-4 bg-gray-50 border-b rounded-md mb-6">
+				<h1 className=" text-gray-500 pb-1 text-4xl font-bold">Dashboard</h1>
+				<p className="mt-2 text-lg pb-2 text-gray-500">
+					Welcome to the dashboard of your e-commerce store! Here, you can easily track
+					your store&apos;s performance and make informed decisions.
+				</p>
+			</div>
 			<div>
 				<div className="flex flex-wrap -mx-6">
 					<div className="w-full px-6 sm:w-1/2 xl:w-1/3">

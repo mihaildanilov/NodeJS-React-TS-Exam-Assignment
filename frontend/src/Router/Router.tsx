@@ -20,11 +20,12 @@ import InvoicePage from '../pages/InvoicePage';
 import ProtectedAdminRoute from './ProtectedAdminRoute';
 import AdminLayout from '../components/AdminLayout';
 import Dashboard from '../pages/admin/Dashboard';
-import UsersManagment from '../pages/admin/UserManagment';
-import ProductManagment from '../pages/admin/ProductManagment';
-import ContactUsManagment from '../pages/admin/ContactUsManagment';
-import OrderManagment from '../pages/admin/OrderManagment';
-import WebsiteManagment from '../pages/admin/WebsiteManagment';
+import UsersManagement from '../pages/admin/UserManagement';
+import ProductManagement from '../pages/admin/ProductManagement';
+import ContactUsManagement from '../pages/admin/ContactUsManagement';
+import OrderManagement from '../pages/admin/OrderManagement';
+import WebsiteManagement from '../pages/admin/WebsiteManagement';
+import UpdateProductInfo from '../pages/admin/UpdateProductInfo';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
@@ -38,23 +39,27 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'users',
-				element: <ProtectedAdminRoute component={UsersManagment} />,
+				element: <ProtectedAdminRoute component={UsersManagement} />,
 			},
 			{
 				path: 'products',
-				element: <ProtectedAdminRoute component={ProductManagment} />,
+				element: <ProtectedAdminRoute component={ProductManagement} />,
 			},
 			{
 				path: 'inbox',
-				element: <ProtectedAdminRoute component={ContactUsManagment} />,
+				element: <ProtectedAdminRoute component={ContactUsManagement} />,
 			},
 			{
 				path: 'orders',
-				element: <ProtectedAdminRoute component={OrderManagment} />,
+				element: <ProtectedAdminRoute component={OrderManagement} />,
 			},
 			{
 				path: 'settings',
-				element: <ProtectedAdminRoute component={WebsiteManagment} />,
+				element: <ProtectedAdminRoute component={WebsiteManagement} />,
+			},
+			{
+				path: '/admin/products/:slug',
+				element: <UpdateProductInfo />,
 			},
 		],
 	},
