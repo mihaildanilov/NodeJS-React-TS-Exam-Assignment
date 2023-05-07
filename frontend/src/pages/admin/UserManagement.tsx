@@ -1,11 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { useGetAllUsersQuery } from '../../hooks/userHooks';
-import LoadingBox from '../../components/LoadingBox';
-import { MessageBoxError } from '../../components/MessageBox';
-import { ApiError } from '../../types/ApiError';
-import { getError } from '../../utils/utils';
+import { LoadingBox, MessageBoxError } from '../../components/toasts';
+import { useGetAllUsersQuery } from '../../hooks';
+import { ApiError } from '../../types';
+import { getError } from '../../utils';
 
-const UsersManagement = () => {
+const UserManagement = () => {
 	const { data: users, isLoading, error } = useGetAllUsersQuery();
 
 	return isLoading ? (
@@ -103,4 +102,4 @@ const UsersManagement = () => {
 	);
 };
 
-export default UsersManagement;
+export default UserManagement;

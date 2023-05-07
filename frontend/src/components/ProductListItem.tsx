@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ProductListItemProps } from '../types/ProductList';
+import { ProductListItemProps } from '../types';
 import Rating from './Rating';
 
 export const ProductListItem = ({ index, item }: { index: number; item: ProductListItemProps }) => {

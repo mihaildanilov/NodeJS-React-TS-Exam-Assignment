@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable indent */
 import { createContext, useContext, Dispatch, useReducer, Reducer } from 'react';
-import ChildrenProps from '../types/ChildrenProps';
-
-import { Cart, CartItem, ShippingAddress } from '../types/Cart';
-import { UserInfo } from '../types/UserInfo';
+import { Cart, UserInfo, CartItem, ShippingAddress, ChildrenProps } from '../types';
 
 interface AppState {
 	cart: Cart;

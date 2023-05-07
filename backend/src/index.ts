@@ -3,7 +3,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { productRouter } from './routes/productRouter';
-import { seedRouter } from './routes/seedRouter';
 import { userRouter } from './routes/userRouter';
 import { orderRouter } from './routes/orderRouter';
 import { keyRouter } from './routes/keyRouter';
@@ -34,7 +33,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/products', productRouter);
-app.use('/api/seed', seedRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/keys', keyRouter);

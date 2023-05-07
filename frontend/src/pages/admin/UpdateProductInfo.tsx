@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import apiClient from '../../api/apiClient';
-import { ApiError } from '../../types/ApiError';
-import { getError, toBase64 } from '../../utils/utils';
-import { useParams } from 'react-router-dom';
+import { LoadingBox, MessageBoxError } from '../../components/toasts';
 import { useGetProductDetailsBySlugQuery } from '../../hooks/productHook';
-import LoadingBox from '../../components/LoadingBox';
-import { MessageBoxError } from '../../components/MessageBox';
-import PageNotFound from '../PageNotFound';
+import { ApiError } from '../../types';
+import { getError, toBase64 } from '../../utils';
+import { PageNotFound } from '../main';
 
 const UpdateProductInfo = () => {
 	const { slug } = useParams<{ slug: string }>();

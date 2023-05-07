@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import apiClient from '../../api/apiClient';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import LoadingBox from '../../components/LoadingBox';
-import { MessageBoxError } from '../../components/MessageBox';
-import { ApiError } from '../../types/ApiError';
-import { getError, toBase64 } from '../../utils/utils';
-import { useGetProductQuery } from '../../hooks/productHook';
 import { toast } from 'react-toastify';
+import apiClient from '../../api/apiClient';
+import { LoadingBox, MessageBoxError } from '../../components/toasts';
+import { useGetProductQuery } from '../../hooks';
+import { ApiError } from '../../types';
+import { getError, toBase64 } from '../../utils';
 
 const ProductManagement = () => {
 	const [name, setName] = useState('');
@@ -236,13 +235,9 @@ const ProductManagement = () => {
 				) : null}
 			</div>
 			{isLoading ? (
-				<div className="pt-[3.25rem] sm:ml-[20rem]">
-					<LoadingBox text="Action in progress" />
-				</div>
+				<LoadingBox text="Action in progress" />
 			) : error ? (
-				<div className="pt-[3.25rem] sm:ml-[20rem]">
-					<MessageBoxError message={getError(error as unknown as ApiError)} />
-				</div>
+				<MessageBoxError message={getError(error as unknown as ApiError)} />
 			) : (
 				<div>
 					<div className="flex flex-col mt-8">

@@ -1,9 +1,8 @@
-import LoadingBox from './LoadingBox';
-import { MessageBoxError } from './MessageBox';
-import { ProductListItem } from './ProductListItem';
-import { useGetProductQuery } from '../hooks/productHook';
-import { getError } from '../utils/utils';
-import { ApiError } from '../types/ApiError';
+import { useGetProductQuery } from '../hooks';
+import { ApiError } from '../types';
+import { getError } from '../utils';
+import ProductListItem from './ProductListItem';
+import { LoadingBox, MessageBoxError } from './toasts';
 
 const ProductList = () => {
 	const { data: products, isLoading, error } = useGetProductQuery();

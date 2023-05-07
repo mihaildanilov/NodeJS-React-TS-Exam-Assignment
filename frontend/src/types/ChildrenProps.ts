@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
 
-interface ChildrenProps {
+export interface ChildrenProps {
 	children?: ReactNode;
 }
-
-export default ChildrenProps;

@@ -1,5 +1,5 @@
 import apiClient from '../api/apiClient';
-import { ProductListItemProps } from '../types/ProductList';
+import { ProductListItemProps } from '../types';
 import { useQuery } from '@tanstack/react-query';
 
 export const useGetProductQuery = () =>

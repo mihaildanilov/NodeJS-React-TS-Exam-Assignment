@@ -1,11 +1,5 @@
-import { Line } from 'react-chartjs-2';
-import { useGetAllOrdersQuery } from '../../hooks/orderHook';
-import { ApiError } from '../../types/ApiError';
-import { getError } from '../../utils/utils';
-import LoadingBox from '../LoadingBox';
-import { MessageBoxError } from '../MessageBox';
 import {
-	Chart as ChartJS,
+	Chart,
 	CategoryScale,
 	LinearScale,
 	PointElement,
@@ -14,10 +8,14 @@ import {
 	Tooltip,
 	Legend,
 } from 'chart.js';
-import { Order } from '../../types/Order';
+import { Line } from 'react-chartjs-2';
+import { useGetAllOrdersQuery } from '../../hooks';
+import { Order, ApiError } from '../../types';
+import { getError } from '../../utils';
+import { LoadingBox, MessageBoxError } from '../toasts';
 
 const AverageOrderValueChart = () => {
-	ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+	Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 	const { data: orders, isLoading: isLoadingOrders, error: errorOrders } = useGetAllOrdersQuery();
 	const calculateAOV = (orders: Order[]) => {
 		const totalRevenue = orders.reduce((acc, order) => acc + order.totalPrice, 0);
