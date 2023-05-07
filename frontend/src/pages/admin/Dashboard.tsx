@@ -1,13 +1,14 @@
-import LoadingBox from '../../components/LoadingBox';
-import { MessageBoxError } from '../../components/MessageBox';
-import AverageOrderValueChart from '../../components/charts/AverageOrderValueChart';
-import TotalOrdersChart from '../../components/charts/OrdersPerDayChart';
-import TotalSalesChart from '../../components/charts/TotalSalesChart';
-import { useGetAllOrdersQuery } from '../../hooks/orderHook';
-import { useGetProductQuery } from '../../hooks/productHook';
-import { useGetAllUsersQuery } from '../../hooks/userHooks';
-import { ApiError } from '../../types/ApiError';
-import { getError } from '../../utils/utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	TotalSalesChart,
+	OrdersPerDayChart,
+	AverageOrderValueChart,
+} from '../../components/charts';
+import { LoadingBox, MessageBoxError } from '../../components/toasts';
+import { useGetAllUsersQuery, useGetAllOrdersQuery, useGetProductQuery } from '../../hooks';
+import { ApiError } from '../../types';
+import { getError } from '../../utils';
+import { faBoxesPacking, faChalkboardUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
 	const { data: users, isLoading: isLoadingUsers, error: errorUsers } = useGetAllUsersQuery();
@@ -17,6 +18,9 @@ const Dashboard = () => {
 		isLoading: isLoadingProducts,
 		error: errorProducts,
 	} = useGetProductQuery();
+
+	const deliveredOrderCount = orders?.filter((order) => order.isDelivered === true).length;
+	const undeliveredOrderCount = orders?.filter((order) => order.isDelivered === false).length;
 
 	return isLoadingUsers || isLoadingOrders || isLoadingProducts ? (
 		<div className="pt-[3.25rem] sm:ml-[20rem]">
@@ -37,6 +41,37 @@ const Dashboard = () => {
 			</div>
 			<div>
 				<div className="flex flex-wrap -mx-6">
+					<div className="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
+							<div className="p-3 rounded-full bg-pink-600 bg-opacity-75">
+								<svg
+									className="h-8 w-8 text-white"
+									viewBox="0 0 28 28"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M6.99998 11.2H21L22.4 23.8H5.59998L6.99998 11.2Z"
+										fill="currentColor"
+										stroke="currentColor"
+										strokeWidth="2"
+										strokeLinejoin="round"
+									/>
+									<path
+										d="M9.79999 8.4C9.79999 6.08041 11.6804 4.2 14 4.2C16.3196 4.2 18.2 6.08041 18.2 8.4V12.6C18.2 14.9197 16.3196 16.8 14 16.8C11.6804 16.8 9.79999 14.9197 9.79999 12.6V8.4Z"
+										stroke="currentColor"
+										strokeWidth="2"
+									/>
+								</svg>
+							</div>
+
+							<div className="mx-5">
+								<h4 className="text-2xl font-semibold text-gray-700">
+									{products?.length}
+								</h4>
+								<div className="text-gray-500">Available Products</div>
+							</div>
+						</div>
+					</div>
 					<div className="w-full px-6 sm:w-1/2 xl:w-1/3">
 						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
 							<div className="p-3 rounded-full bg-indigo-600 bg-opacity-75">
@@ -83,9 +118,9 @@ const Dashboard = () => {
 
 					<div className="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
 						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-							<div className="p-3 rounded-full bg-orange-600 bg-opacity-75">
+							<div className="flex items-center justify-center p-3 rounded-full bg-orange-600 bg-opacity-75">
 								<svg
-									className="h-8 w-8 text-white"
+									className="h-8 w-8 text-white pt-1"
 									viewBox="0 0 28 28"
 									fill="none"
 									xmlns="http://www.w3.org/2000/svg">
@@ -113,34 +148,54 @@ const Dashboard = () => {
 						</div>
 					</div>
 
-					<div className="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+					<div className="w-full pt-6 px-6 sm:w-1/2 xl:w-1/3">
 						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-							<div className="p-3 rounded-full bg-pink-600 bg-opacity-75">
-								<svg
-									className="h-8 w-8 text-white"
-									viewBox="0 0 28 28"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg">
-									<path
-										d="M6.99998 11.2H21L22.4 23.8H5.59998L6.99998 11.2Z"
-										fill="currentColor"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinejoin="round"
-									/>
-									<path
-										d="M9.79999 8.4C9.79999 6.08041 11.6804 4.2 14 4.2C16.3196 4.2 18.2 6.08041 18.2 8.4V12.6C18.2 14.9197 16.3196 16.8 14 16.8C11.6804 16.8 9.79999 14.9197 9.79999 12.6V8.4Z"
-										stroke="currentColor"
-										strokeWidth="2"
-									/>
-								</svg>
+							<div className="p-3 w-14 h-14 rounded-full bg-emerald-500 bg-opacity-75">
+								<FontAwesomeIcon
+									className="text-white text-[23px] pt-1"
+									icon={faBoxesPacking}
+								/>
 							</div>
 
 							<div className="mx-5">
 								<h4 className="text-2xl font-semibold text-gray-700">
-									{products?.length}
+									{deliveredOrderCount}
 								</h4>
-								<div className="text-gray-500">Available Products</div>
+								<div className="text-gray-500">Total shipped orders</div>
+							</div>
+						</div>
+					</div>
+					<div className="w-full pt-6 px-6 sm:w-1/2 xl:w-1/3">
+						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
+							<div className="flex items-center justify-center p-3 w-14 h-14 rounded-full bg-amber-300 bg-opacity-75">
+								<FontAwesomeIcon
+									className="text-white text-[23px]"
+									icon={faChalkboardUser}
+								/>
+							</div>
+
+							<div className="mx-5">
+								<h4 className="text-2xl font-semibold text-gray-700">
+									{undeliveredOrderCount}
+								</h4>
+								<div className="text-gray-500">Unfulfilled orders</div>
+							</div>
+						</div>
+					</div>
+					<div className="w-full pt-6 px-6 sm:w-1/2 xl:w-1/3">
+						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
+							<div className=" flex items-center justify-center p-3 w-14 h-14 rounded-full bg-cyan-400 bg-opacity-75">
+								<FontAwesomeIcon
+									className="text-white text-[27px] "
+									icon={faEnvelope}
+								/>
+							</div>
+
+							<div className="mx-5">
+								<h4 className="text-2xl font-semibold text-gray-700">
+									{undeliveredOrderCount}
+								</h4>
+								<div className="text-gray-500">New letters</div>
 							</div>
 						</div>
 					</div>
@@ -148,7 +203,7 @@ const Dashboard = () => {
 						<TotalSalesChart />
 					</div>
 					<div className="pt-6 px-6 sm:w-1/2 xl:w-1/3">
-						<TotalOrdersChart />
+						<OrdersPerDayChart />
 					</div>
 					<div className="pt-6 px-6 sm:w-1/2 xl:w-1/3">
 						<AverageOrderValueChart />

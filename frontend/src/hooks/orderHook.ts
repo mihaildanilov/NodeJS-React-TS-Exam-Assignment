@@ -1,8 +1,7 @@
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import apiClient from '../api/apiClient';
-import { CartItem, ShippingAddress } from '../types/Cart';
-import { Order } from '../types/Order';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { Order, CartItem, ShippingAddress } from '../types';
 
 export const useGetOrderDetailsQuery = (id: string) =>
 	useQuery({

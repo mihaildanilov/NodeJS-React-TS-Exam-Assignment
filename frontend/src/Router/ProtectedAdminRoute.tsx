@@ -1,6 +1,6 @@
-import { useStateContext } from '../context/ContextProvider';
 import { ComponentType, ReactNode } from 'react';
-import PageNotFound from '../pages/PageNotFound';
+import { useStateContext } from '../context/ContextProvider';
+import { PageNotFound } from '../pages/main';
 
 type ProtectedRouteProps = {
 	component: ComponentType<unknown>;

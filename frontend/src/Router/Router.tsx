@@ -1,37 +1,40 @@
 import { createBrowserRouter } from 'react-router-dom';
-import SignInPage from '../pages/SignInPage';
-import SignUp from '../pages/SignUp';
-
-import DefaultLayout from '../components/DefaultLayout';
-import Settings from '../pages/Settings';
-import Profile from '../pages/Profile';
-import Store from '../pages/Store';
-import ContactUS from '../pages/ContactUS';
-import MainPage from '../pages/MainPage';
-import PageNotFound from '../pages/PageNotFound';
-import ProductPage from '../pages/ProductPage';
-import Cart from '../pages/CartPage';
-import ShippingPage from '../pages/ShippingPage';
-import PaymentPage from '../pages/PaymentPage';
-import ProtectedRoute from './ProtectedRoute';
-import PlaceOrderPage from '../pages/PlaceOrderPage';
-import OrderPage from '../pages/OrderPage';
-import InvoicePage from '../pages/InvoicePage';
+import {
+	Dashboard,
+	UserManagement,
+	ProductManagement,
+	ContactUsManagement,
+	OrderManagement,
+	UpdateProductInfo,
+} from '../pages/admin';
+import {
+	Profile,
+	Settings,
+	CartPage,
+	ShippingPage,
+	PaymentPage,
+	PlaceOrderPage,
+	OrderPage,
+	InvoicePage,
+} from '../pages/customer';
+import { AdminLayout, DefaultLayout } from '../pages/layouts';
+import {
+	PageNotFound,
+	MainPage,
+	Store,
+	ProductPage,
+	ContactUS,
+	SignUp,
+	SignInPage,
+} from '../pages/main';
 import ProtectedAdminRoute from './ProtectedAdminRoute';
-import AdminLayout from '../components/AdminLayout';
-import Dashboard from '../pages/admin/Dashboard';
-import UsersManagement from '../pages/admin/UserManagement';
-import ProductManagement from '../pages/admin/ProductManagement';
-import ContactUsManagement from '../pages/admin/ContactUsManagement';
-import OrderManagement from '../pages/admin/OrderManagement';
-import WebsiteManagement from '../pages/admin/WebsiteManagement';
-import UpdateProductInfo from '../pages/admin/UpdateProductInfo';
+import ProtectedRoute from './ProtectedRoute';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
 	{
 		path: '/admin',
-		element: <AdminLayout />,
+		element: <ProtectedAdminRoute component={AdminLayout} />,
 		children: [
 			{
 				path: '/admin',
@@ -39,7 +42,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'users',
-				element: <ProtectedAdminRoute component={UsersManagement} />,
+				element: <ProtectedAdminRoute component={UserManagement} />,
 			},
 			{
 				path: 'products',
@@ -52,10 +55,6 @@ const router = createBrowserRouter([
 			{
 				path: 'orders',
 				element: <ProtectedAdminRoute component={OrderManagement} />,
-			},
-			{
-				path: 'settings',
-				element: <ProtectedAdminRoute component={WebsiteManagement} />,
 			},
 			{
 				path: '/admin/products/:slug',
@@ -93,7 +92,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: 'cart',
-				element: <Cart />,
+				element: <CartPage />,
 			},
 			{
 				path: 'signup',

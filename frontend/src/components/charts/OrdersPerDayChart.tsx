@@ -1,11 +1,5 @@
-import { Line } from 'react-chartjs-2';
-import { useGetAllOrdersQuery } from '../../hooks/orderHook';
-import { ApiError } from '../../types/ApiError';
-import { getError } from '../../utils/utils';
-import LoadingBox from '../LoadingBox';
-import { MessageBoxError } from '../MessageBox';
 import {
-	Chart as ChartJS,
+	Chart,
 	CategoryScale,
 	LinearScale,
 	PointElement,
@@ -14,9 +8,14 @@ import {
 	Tooltip,
 	Legend,
 } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import { useGetAllOrdersQuery } from '../../hooks';
+import { ApiError } from '../../types';
+import { getError } from '../../utils';
+import { LoadingBox, MessageBoxError } from '../toasts';
 
-const TotalOrdersChart = () => {
-	ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+const OrdersPerDayChart = () => {
+	Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 	const { data: orders, isLoading: isLoadingOrders, error: errorOrders } = useGetAllOrdersQuery();
 
 	const data = {
@@ -70,4 +69,4 @@ const TotalOrdersChart = () => {
 	);
 };
 
-export default TotalOrdersChart;
+export default OrdersPerDayChart;

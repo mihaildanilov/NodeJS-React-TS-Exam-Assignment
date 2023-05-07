@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useGetOrderHistoryQuery } from '../hooks/orderHook';
+import { useGetOrderHistoryQuery } from '../hooks/';
 import { Fragment, useState } from 'react';
 
 import { Menu, Transition } from '@headlessui/react';
