@@ -4,11 +4,11 @@ interface MessageBoxProps {
 
 export const MessageBoxError = (props: MessageBoxProps) => {
 	return (
-		<div className="max-w-xs bg-white border rounded-md border-gray-300" role="alert">
+		<div className="max-w-xs rounded-md border border-gray-300 bg-white" role="alert">
 			<div className="flex p-4">
 				<div className="flex-shrink-0">
 					<svg
-						className="h-4 w-4 text-red-500 mt-0.5"
+						className="mt-0.5 h-4 w-4 text-red-500"
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
 						height="16"
@@ -26,11 +26,11 @@ export const MessageBoxError = (props: MessageBoxProps) => {
 };
 export const MessageBoxSuccess = (props: MessageBoxProps) => {
 	return (
-		<div className="max-w-xs bg-white border rounded-md border-gray-300" role="alert">
+		<div className="max-w-xs rounded-md border border-gray-300 bg-white" role="alert">
 			<div className="flex p-4">
 				<div className="flex-shrink-0">
 					<svg
-						className="h-4 w-4 text-green-500 mt-0.5"
+						className="mt-0.5 h-4 w-4 text-green-500"
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
 						height="16"
@@ -49,11 +49,11 @@ export const MessageBoxSuccess = (props: MessageBoxProps) => {
 
 export const MessageBoxWarning = (props: MessageBoxProps) => {
 	return (
-		<div className="max-w-xs bg-white border rounded-md  border-gray-300" role="alert">
+		<div className="max-w-xs rounded-md border border-gray-300  bg-white" role="alert">
 			<div className="flex p-4">
 				<div className="flex-shrink-0">
 					<svg
-						className="h-4 w-4 text-orange-500 mt-0.5"
+						className="mt-0.5 h-4 w-4 text-orange-500"
 						xmlns="http://www.w3.org/2000/svg"
 						width="16"
 						height="16"

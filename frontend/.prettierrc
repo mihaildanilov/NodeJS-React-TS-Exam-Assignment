@@ -1,7 +1,12 @@
 {
-    "bracketSameLine": true,
-    "singleQuote": true,
-    "printWidth": 100,
-    "tabWidth": 4,
-    "useTabs": true
+	"overrides": [
+		{
+			"files": ["*.tsx"]
+		}
+	],
+	"bracketSameLine": true,
+	"singleQuote": true,
+	"printWidth": 100,
+	"tabWidth": 4,
+	"useTabs": true
 }

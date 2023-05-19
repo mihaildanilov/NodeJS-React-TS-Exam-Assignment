@@ -9,7 +9,7 @@ const ProductList = () => {
 	return isLoading ? (
 		<LoadingBox text="Action in progress" />
 	) : error ? (
-		<MessageBoxError message={getError(error as ApiError)}></MessageBoxError>
+		<MessageBoxError message={getError(error as ApiError)} />
 	) : (
 		<div className="bg-white">
 			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

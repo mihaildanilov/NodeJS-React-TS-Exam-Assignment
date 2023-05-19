@@ -1,27 +1,6 @@
 import { CalendarDaysIcon, HandRaisedIcon } from '@heroicons/react/24/outline';
-import axios from 'axios';
-import { useState } from 'react';
 
 const NewsletterSection = () => {
-	const [email, setEmail] = useState('');
-	const handleSubmit = async (event: { preventDefault: () => void }) => {
-		event.preventDefault();
-		const formData = {
-			email,
-		};
-		console.log(formData);
-
-		try {
-			const response = await axios.post(
-				'https://jsonplaceholder.typicode.com/posts',
-				// '/api/newsletter',
-				formData
-			);
-			console.log(response);
-		} catch (error) {
-			console.log(error);
-		}
-	};
 	return (
 		<div
 			id="newsletter"
@@ -30,33 +9,12 @@ const NewsletterSection = () => {
 				<div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
 					<div className="max-w-xl lg:max-w-lg">
 						<h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-							Subscribe to our newsletter.
+							Subscribe to our newsletter by registering your account.
 						</h2>
 						<p className="mt-4 text-lg leading-8 text-gray-300">
 							Nostrud amet eu ullamco nisi aute in ad minim nostrud adipisicing velit
 							quis. Duis tempor incididunt dolore.
 						</p>
-						<form onSubmit={handleSubmit} className="mt-6 flex max-w-md gap-x-4">
-							<label htmlFor="email-address" className="sr-only">
-								Email address
-							</label>
-							<input
-								id="email-address"
-								name="email"
-								type="email"
-								autoComplete="email"
-								value={email}
-								onChange={(event) => setEmail(event.target.value)}
-								required
-								className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
-								placeholder="Enter your email"
-							/>
-							<button
-								type="submit"
-								className="flex-none rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-								Subscribe
-							</button>
-						</form>
 					</div>
 					<dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
 						<div className="flex flex-col items-start">

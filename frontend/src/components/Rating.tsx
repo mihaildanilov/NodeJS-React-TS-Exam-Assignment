@@ -1,5 +1,6 @@
-/* eslint-disable indent */
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStarRegular } from '@fortawesome/free-regular-svg-icons';
 interface RatingProps {
 	rating: number;
 	numberOfReviews?: number;
@@ -11,58 +12,28 @@ const Rating = (props: RatingProps) => {
 	return (
 		<div className="">
 			<span>
-				<i
-					className={
-						rating >= 1
-							? 'fas fa-star'
-							: rating >= 0.5
-							? 'fas fa-star-half-alt'
-							: 'far fa-star'
-					}
+				<FontAwesomeIcon
+					icon={rating >= 1 ? faStar : rating >= 0.5 ? faStarHalfAlt : farStarRegular}
 				/>
 			</span>
 			<span>
-				<i
-					className={
-						rating >= 2
-							? 'fas fa-star'
-							: rating >= 1.5
-							? 'fas fa-star-half-alt'
-							: 'far fa-star'
-					}
+				<FontAwesomeIcon
+					icon={rating >= 2 ? faStar : rating >= 1.5 ? faStarHalfAlt : farStarRegular}
 				/>
 			</span>
 			<span>
-				<i
-					className={
-						rating >= 3
-							? 'fas fa-star'
-							: rating >= 2.5
-							? 'fas fa-star-half-alt'
-							: 'far fa-star'
-					}
+				<FontAwesomeIcon
+					icon={rating >= 3 ? faStar : rating >= 2.5 ? faStarHalfAlt : farStarRegular}
 				/>
 			</span>
 			<span>
-				<i
-					className={
-						rating >= 4
-							? 'fas fa-star'
-							: rating >= 3.5
-							? 'fas fa-star-half-alt'
-							: 'far fa-star'
-					}
+				<FontAwesomeIcon
+					icon={rating >= 4 ? faStar : rating >= 3.5 ? faStarHalfAlt : farStarRegular}
 				/>
 			</span>
 			<span>
-				<i
-					className={
-						rating >= 5
-							? 'fas fa-star'
-							: rating >= 4.5
-							? 'fas fa-star-half-alt'
-							: 'far fa-star'
-					}
+				<FontAwesomeIcon
+					icon={rating >= 5 ? faStar : rating >= 4.5 ? faStarHalfAlt : farStarRegular}
 				/>
 			</span>
 			{caption ? (

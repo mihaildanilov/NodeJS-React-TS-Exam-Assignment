@@ -43,10 +43,6 @@ const AverageOrderValueChart = () => {
 				title: {
 					display: true,
 					text: 'Amount ($)',
-					font: {
-						size: 14,
-						weight: 'bold',
-					},
 				},
 				beginAtZero: true,
 			},
@@ -63,7 +59,7 @@ const AverageOrderValueChart = () => {
 		</div>
 	) : (
 		<div className="">
-			<div className="bg-white rounded-lg shadow p-4">
+			<div className="rounded-lg bg-white p-4 shadow">
 				<Line data={data} options={options} />
 			</div>
 		</div>

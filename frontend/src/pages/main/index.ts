@@ -1,4 +1,3 @@
-export { default as ContactUS } from './ContactUS';
 export { default as MainPage } from './MainPage';
 export { default as PageNotFound } from './PageNotFound';
 export { default as ProductPage } from './ProductPage';

@@ -51,13 +51,13 @@ const ShippingPage = () => {
 	};
 	return (
 		<PageComponent title="Shipping page">
-			<div className="isolate bg-white px-6 sm:py-8 lg:px-8 h-screen lg:h-[calc(100vh-12.5rem)]">
-				<h1 className="text-2xl font-bold mb-6 ">Shipping Address</h1>
+			<div className="isolate h-screen bg-white px-6 sm:py-8 lg:h-[calc(100vh-12.5rem)] lg:px-8">
+				<h1 className="mb-6 text-2xl font-bold ">Shipping Address</h1>
 				<CheckoutSteps step1 step2 />
 				<form className="pt-7" onSubmit={submitHandler}>
 					<div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 						<div>
-							<label htmlFor="fullName" className="block mb-2 font-bold">
+							<label htmlFor="fullName" className="mb-2 block font-bold">
 								Full Name
 							</label>
 							<input
@@ -70,7 +70,7 @@ const ShippingPage = () => {
 							/>
 						</div>
 						<div>
-							<label htmlFor="address" className="block mb-2 font-bold">
+							<label htmlFor="address" className="mb-2 block font-bold">
 								Address
 							</label>
 							<input
@@ -83,7 +83,7 @@ const ShippingPage = () => {
 							/>
 						</div>
 						<div>
-							<label htmlFor="city" className="block mb-2 font-bold">
+							<label htmlFor="city" className="mb-2 block font-bold">
 								City
 							</label>
 							<input
@@ -96,7 +96,7 @@ const ShippingPage = () => {
 							/>
 						</div>
 						<div>
-							<label htmlFor="postalCode" className="block mb-2 font-bold">
+							<label htmlFor="postalCode" className="mb-2 block font-bold">
 								Postal Code
 							</label>
 							<input
@@ -109,7 +109,7 @@ const ShippingPage = () => {
 							/>
 						</div>
 						<div>
-							<label htmlFor="country" className="block mb-2 font-bold">
+							<label htmlFor="country" className="mb-2 block font-bold">
 								Country
 							</label>
 							<input
@@ -124,7 +124,7 @@ const ShippingPage = () => {
 						<div className="mb-6">
 							<button
 								type="submit"
-								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+								className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
 								Continue
 							</button>
 						</div>

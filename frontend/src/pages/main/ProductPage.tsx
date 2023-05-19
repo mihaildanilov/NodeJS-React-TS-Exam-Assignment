@@ -44,13 +44,13 @@ const ProductPage = () => {
 			<div className="bg-white">
 				<div className="pt-6">
 					{/* Product Image */}
-					<div className="max-w-2xl  lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+					<div className="max-w-2xl lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
 						<img
 							src={product.imageSrc}
 							alt={product.imageAlt}
 							className="h-full w-full object-cover object-center"
 						/>
-						<div className="mt-4 lg:row-span-3 lg:mt-0 mx-[100px]">
+						<div className="mx-[100px] mt-4 lg:row-span-3 lg:mt-0">
 							<h2 className="sr-only">Product information</h2>
 							<p className="text-3xl  text-gray-900">Price: {product.price}$</p>
 							{/* Reviews */}
@@ -66,7 +66,7 @@ const ProductPage = () => {
 									</p>
 								</div>
 							</div>
-							<form className="pt-">
+							<form>
 								{product.countInStock > 0 ? (
 									<>
 										<StatusToast message="In stock" />
@@ -75,10 +75,10 @@ const ProductPage = () => {
 											onClick={() => {
 												addToCartHandler(convertProductToCartItem(product));
 											}}
-											className="py-3 mt-4 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600   transition-all text-sm ">
+											className="mt-4 inline-flex items-center justify-center gap-2 rounded-md border border-transparent bg-blue-500 px-4 py-3 text-sm font-semibold text-white   transition-all hover:bg-blue-600 ">
 											Add to cart
 											<svg
-												className="w-3.5 h-3.5"
+												className="h-3.5 w-3.5"
 												xmlns="http://www.w3.org/2000/svg"
 												width="16"
 												height="16"
@@ -94,7 +94,7 @@ const ProductPage = () => {
 										/>
 									</>
 								) : (
-									<StatusToast message="Out stock" />
+									<StatusToast message="Out of stock" />
 								)}
 							</form>
 						</div>

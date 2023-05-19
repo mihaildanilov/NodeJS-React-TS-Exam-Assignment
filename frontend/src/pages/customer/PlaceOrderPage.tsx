@@ -55,10 +55,10 @@ const PlaceOrderPage = () => {
 		<PageComponent title="Preview order">
 			<div className="h-screen bg-gray-100 px-6 pt-16 sm:px-8 lg:px-12">
 				<CheckoutSteps step1 step2 step3 step4 />
-				<div className="max-w-7xl mx-auto mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+				<div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-4 md:grid-cols-3">
 					<div className="col-span-2 space-y-6">
-						<div className="bg-white rounded-lg shadow-md p-6">
-							<h2 className="text-lg font-medium mb-4">Shipping</h2>
+						<div className="rounded-lg bg-white p-6 shadow-md">
+							<h2 className="mb-4 text-lg font-medium">Shipping</h2>
 							<div className="space-y-1">
 								<p>
 									<strong>Name:</strong> {cart.shippingAddress.fullName}
@@ -74,8 +74,8 @@ const PlaceOrderPage = () => {
 							</Link>
 						</div>
 
-						<div className="bg-white rounded-lg shadow-md p-6">
-							<h2 className="text-lg font-medium mb-4">Payment</h2>
+						<div className="rounded-lg bg-white p-6 shadow-md">
+							<h2 className="mb-4 text-lg font-medium">Payment</h2>
 							<div className="space-y-1">
 								<p>
 									<strong>Method:</strong> {cart.paymentMethod}
@@ -86,15 +86,15 @@ const PlaceOrderPage = () => {
 							</Link>
 						</div>
 
-						<div className="bg-white rounded-lg shadow-md p-6">
-							<h2 className="text-lg font-medium mb-4">Items</h2>
+						<div className="rounded-lg bg-white p-6 shadow-md">
+							<h2 className="mb-4 text-lg font-medium">Items</h2>
 							<ul className="space-y-4">
 								{cart.cartItems.map((item) => (
 									<li key={item._id} className="flex space-x-4">
 										<img
 											src={item.imageSrc}
 											alt={item.imageAlt}
-											className="w-full sm:w-40 rounded-lg mb-4 sm:mb-0"
+											className="mb-4 w-full rounded-lg sm:mb-0 sm:w-40"
 										/>
 										<div className="flex-1">
 											<h3 className="text-lg font-medium text-gray-900">
@@ -115,22 +115,22 @@ const PlaceOrderPage = () => {
 						</div>
 					</div>
 
-					<div className="bg-white rounded-lg shadow-md p-6 space-y-4 h-[65%]">
-						<h2 className="text-lg font-medium mb-4">Order Summary</h2>
+					<div className="h-[65%] space-y-4 rounded-lg bg-white p-6 shadow-md">
+						<h2 className="mb-4 text-lg font-medium">Order Summary</h2>
 						<ul className="divide-y divide-gray-200">
-							<li className="py-2 flex justify-between items-center">
+							<li className="flex items-center justify-between py-2">
 								<span>Sub total</span>
 								<span>${cart.itemsPrice.toFixed(2)}</span>
 							</li>
-							<li className="py-2 flex justify-between items-center">
+							<li className="flex items-center justify-between py-2">
 								<span>Shipping</span>
 								<span>${cart.shippingPrice.toFixed(2)}</span>
 							</li>
-							<li className="py-2 flex justify-between items-center">
+							<li className="flex items-center justify-between py-2">
 								<span>Tax</span>
 								<span>${cart.taxPrice.toFixed(2)}</span>
 							</li>
-							<li className="py-2 flex justify-between items-center">
+							<li className="flex items-center justify-between py-2">
 								<span>
 									<strong>Order Total</strong>
 								</span>
@@ -143,7 +143,7 @@ const PlaceOrderPage = () => {
 									<button
 										type="button"
 										onClick={placeOrderHandler}
-										className="px-4 py-2 bg-indigo-500 text-white rounded-md disabled:opacity-50">
+										className="rounded-md bg-indigo-500 px-4 py-2 text-white disabled:opacity-50">
 										Place Order
 									</button>
 								</div>

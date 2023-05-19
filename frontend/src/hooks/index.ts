@@ -9,3 +9,4 @@ export {
 } from './orderHook';
 export { useGetProductQuery } from './productHook';
 export { useGetAllUsersQuery } from './userHooks';
+export * from './contactUsHook';

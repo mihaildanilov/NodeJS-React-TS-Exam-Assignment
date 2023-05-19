@@ -55,20 +55,20 @@ const CartPage = () => {
 							return (
 								<div
 									key={index}
-									className="flex flex-col sm:flex-row items-center justify-between mb-6 rounded-lg bg-white p-6 shadow-md">
+									className="mb-6 flex flex-col items-center justify-between rounded-lg bg-white p-6 shadow-md sm:flex-row">
 									<img
 										src={item.imageSrc}
 										alt="product-image"
-										className="w-full sm:w-40 rounded-lg mb-4 sm:mb-0"
+										className="mb-4 w-full rounded-lg sm:mb-0 sm:w-40"
 									/>
-									<div className="flex flex-col justify-between ml-0 sm:ml-4 sm:w-full">
+									<div className="ml-0 flex flex-col justify-between sm:ml-4 sm:w-full">
 										<div className="mb-4 sm:mb-0">
 											<h2 className="text-lg font-bold text-gray-900">
 												{item.name}
 											</h2>
 											<p className="text-sm">Price: {item.price}$</p>
 										</div>
-										<div className="flex flex-col items-center sm:flex-row gap-4">
+										<div className="flex flex-col items-center gap-4 sm:flex-row">
 											<p className="text-sm">
 												Total price: {item.price * item.quantity}$
 											</p>
@@ -95,7 +95,7 @@ const CartPage = () => {
 														Math.max(item.quantity - 1, 1)
 													)
 												}
-												className="cursor-pointer rounded-l border-r-2 bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
+												className="cursor-pointer rounded-l border-r-2 bg-gray-100 px-3.5 py-1 duration-100 hover:bg-blue-500 hover:text-blue-50">
 												-
 											</span>
 											<ModalOutOfStock
@@ -108,7 +108,7 @@ const CartPage = () => {
 												onClick={() =>
 													updateCartHandler(item, item.quantity + 1)
 												}
-												className="cursor-pointer rounded-r border-l-[1px] bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
+												className="cursor-pointer rounded-r border-l-[1px] bg-gray-100 px-3 py-1 duration-100 hover:bg-blue-500 hover:text-blue-50">
 												+
 											</span>
 										</div>
