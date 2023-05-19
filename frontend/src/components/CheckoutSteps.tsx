@@ -15,9 +15,9 @@ const CheckoutSteps: FC<CheckoutStepsProps> = ({
 	step4 = false,
 }) => {
 	return (
-		<div className="checkout-steps flex">
+		<div className="flex">
 			<div
-				className={`w-1/4 border-b-2 cursor-not-allowed  ${
+				className={`w-1/4 cursor-not-allowed border-b-2  ${
 					step1 ? 'border-blue-500 text-blue-500' : 'border-gray-500 text-gray-500'
 				}`}>
 				Sign-In

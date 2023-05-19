@@ -3,13 +3,13 @@ interface LoadingBoxProps {
 }
 const LoadingBox = (props: LoadingBoxProps) => {
 	return (
-		<div className="pt-20 pl-[20px] ">
+		<div className="pl-[20px] pt-20 ">
 			<div
-				className="max-w-xs bg-white border rounded-md shadow-lg dark:bg-white dark:border-gray-100 "
+				className="max-w-xs rounded-md border bg-white shadow-lg dark:border-gray-100 dark:bg-white "
 				role="alert">
 				<div className="flex items-center p-4">
 					<div
-						className="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-blue-600 rounded-full"
+						className="inline-block h-4 w-4 animate-spin rounded-full border-[3px] border-current border-t-transparent text-blue-600"
 						role="status"
 						aria-label="loading">
 						<span className="sr-only">Loading...</span>

@@ -14,21 +14,19 @@ import {
 	ShippingPage,
 	PaymentPage,
 	PlaceOrderPage,
+	ContactUS,
 	OrderPage,
 	InvoicePage,
 } from '../pages/customer';
 import { AdminLayout, DefaultLayout } from '../pages/layouts';
-import {
-	PageNotFound,
-	MainPage,
-	Store,
-	ProductPage,
-	ContactUS,
-	SignUp,
-	SignInPage,
-} from '../pages/main';
+import { PageNotFound, MainPage, Store, ProductPage, SignUp, SignInPage } from '../pages/main';
 import ProtectedAdminRoute from './ProtectedAdminRoute';
 import ProtectedRoute from './ProtectedRoute';
+import AboutUs from '../pages/customer/AboutUsPage';
+import FAQPage from '../pages/customer/FAQPage';
+import ReplyToMessage from '../pages/admin/ReplyToMessage';
+import MessagePage from '../pages/customer/MessagePage';
+import NewsletterManagement from '../pages/admin/NewsletterManagement';
 
 const router = createBrowserRouter([
 	{ path: '*', element: <PageNotFound /> },
@@ -58,7 +56,15 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/admin/products/:slug',
-				element: <UpdateProductInfo />,
+				element: <ProtectedAdminRoute component={UpdateProductInfo} />,
+			},
+			{
+				path: '/admin/inbox/:id',
+				element: <ProtectedAdminRoute component={ReplyToMessage} />,
+			},
+			{
+				path: 'send-newsletter',
+				element: <ProtectedAdminRoute component={NewsletterManagement} />,
 			},
 		],
 	},
@@ -79,18 +85,6 @@ const router = createBrowserRouter([
 				element: <ProductPage />,
 			},
 			{
-				path: 'contact',
-				element: <ContactUS />,
-			},
-			{
-				path: 'profile',
-				element: <ProtectedRoute component={Profile} />,
-			},
-			{
-				path: 'settings',
-				element: <ProtectedRoute component={Settings} />,
-			},
-			{
 				path: 'cart',
 				element: <CartPage />,
 			},
@@ -101,6 +95,26 @@ const router = createBrowserRouter([
 			{
 				path: 'signin',
 				element: <SignInPage />,
+			},
+			{
+				path: 'about',
+				element: <AboutUs />,
+			},
+			{
+				path: 'faq',
+				element: <FAQPage />,
+			},
+			{
+				path: 'contact',
+				element: <ProtectedRoute component={ContactUS} />,
+			},
+			{
+				path: 'profile',
+				element: <ProtectedRoute component={Profile} />,
+			},
+			{
+				path: 'settings',
+				element: <ProtectedRoute component={Settings} />,
 			},
 
 			{
@@ -122,6 +136,10 @@ const router = createBrowserRouter([
 			{
 				path: '/invoice/:id',
 				element: <ProtectedRoute component={InvoicePage} />,
+			},
+			{
+				path: '/message/:id',
+				element: <ProtectedRoute component={MessagePage} />,
 			},
 		],
 	},

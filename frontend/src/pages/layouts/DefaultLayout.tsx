@@ -12,7 +12,8 @@ import { useStateContext } from '../../context/ContextProvider';
 const navigation = [
 	{ name: 'Home', to: '/' },
 	{ name: 'Store', to: '/store' },
-	{ name: 'Contact Us', to: '/contact' },
+	{ name: 'FAQ', to: '/faq' },
+	{ name: 'About US', to: '/about' },
 ];
 
 function classNames(...classes: string[]) {
@@ -33,11 +34,10 @@ const DefaultLayout = () => {
 		localStorage.removeItem('paymentMethod');
 		window.location.href = '/signin';
 	};
-	// console.log(cart.cartItems);
 	return (
 		<>
 			<div className="min-h-full">
-				<Disclosure as="nav" className="bg-gray-800 fixed w-full z-40 ">
+				<Disclosure as="nav" className="fixed z-40 w-full bg-gray-800 ">
 					{({ open }) => (
 						<div>
 							<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8  ">
@@ -83,7 +83,7 @@ const DefaultLayout = () => {
 														cart.cartItems.length > 0
 															? 'pl-[0.8rem]'
 															: 'pl-[1.175rem]',
-														'rounded-md  pr-3  py-2 text-sm font-medium'
+														'rounded-md  py-2  pr-3 text-sm font-medium'
 													)
 												}>
 												<div className="flex flex-row">
@@ -123,7 +123,7 @@ const DefaultLayout = () => {
 														{/* Profile dropdown */}
 
 														<div className={'text-gray-300  '}>
-															<Menu.Button className="flex max-w-xs items-center rounded-md hover:bg-gray-700 hover:text-white p-2 text-sm ">
+															<Menu.Button className="flex max-w-xs items-center rounded-md p-2 text-sm hover:bg-gray-700 hover:text-white ">
 																<span className="sr-only">
 																	Open user menu
 																</span>
@@ -157,6 +157,22 @@ const DefaultLayout = () => {
 																	</NavLink>
 																)}
 															</Menu.Item>
+															{userInfo ? (
+																<Menu.Item>
+																	{({ active }) => (
+																		<NavLink
+																			to="/contact"
+																			className={classNames(
+																				active
+																					? 'bg-gray-100'
+																					: '',
+																				'block px-4 py-2 text-sm text-gray-700'
+																			)}>
+																			<p>Contact Us</p>
+																		</NavLink>
+																	)}
+																</Menu.Item>
+															) : null}
 															<Menu.Item>
 																{({ active }) => (
 																	<NavLink

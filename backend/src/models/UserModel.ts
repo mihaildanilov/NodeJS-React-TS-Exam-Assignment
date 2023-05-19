@@ -11,6 +11,8 @@ export class User {
 	public password!: string;
 	@prop({ required: true, default: false })
 	public isAdmin!: boolean;
+	@prop({ required: true, default: true })
+	public subscribedToNewsletter!: boolean;
 	public async removeUser() {
 		return await UserModel.deleteOne({ _id: this._id }).exec();
 	}

@@ -6,3 +6,4 @@ export { default as PlaceOrderPage } from './PlaceOrderPage';
 export { default as Profile } from './Profile';
 export { default as Settings } from './Settings';
 export { default as ShippingPage } from './ShippingPage';
+export { default as ContactUS } from './ContactUS';

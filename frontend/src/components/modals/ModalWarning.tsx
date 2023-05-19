@@ -1,26 +1,24 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
-import { useDeliverOrderMutation } from '../../hooks';
 import { toast } from 'react-toastify';
 
 interface ModalDeliverPackageProps {
+	title: string;
+	warningText: string;
 	itemName: string;
+	buttonText: string;
+	successMessage: string;
+	ProceedAction: (info: string) => void;
 }
 
-const ModalDeliverPackage = (props: ModalDeliverPackageProps) => {
-	const { mutate: deliverOrder } = useDeliverOrderMutation();
-
-	const handleDeliverOrder = async () => {
-		await deliverOrder({ orderId: props.itemName });
-	};
-
+const ModalWarning = (props: ModalDeliverPackageProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
-	function closeModalAndDeliver() {
-		handleDeliverOrder();
+	function closeModalAndProceed() {
+		props.ProceedAction(props.itemName);
 		setIsOpen(false);
-		toast.success('Order is Delivered');
+		toast.success(props.successMessage);
 	}
 	function closeModal() {
 		setIsOpen(false);
@@ -36,7 +34,7 @@ const ModalDeliverPackage = (props: ModalDeliverPackageProps) => {
 					className="inline-flex items-center rounded-full bg-red-100 px-3.5 py-1.5 text-xs font-medium text-red-800 hover:bg-red-300"
 					type="button"
 					onClick={openModal}>
-					Deliver package
+					{props.buttonText}
 				</button>
 			</div>
 			<Transition appear show={isOpen} as={Fragment}>
@@ -66,11 +64,11 @@ const ModalDeliverPackage = (props: ModalDeliverPackageProps) => {
 									<Dialog.Title
 										as="h3"
 										className="text-lg font-medium leading-6 text-gray-900">
-										Package Delivery
+										{props.title}
 									</Dialog.Title>
 									<div className="mt-2">
 										<p className="text-sm text-gray-500">
-											Are you sure that you want to deliver order:
+											{props.warningText}
 											{props.itemName}
 										</p>
 									</div>
@@ -80,8 +78,8 @@ const ModalDeliverPackage = (props: ModalDeliverPackageProps) => {
 											<button
 												type="button"
 												className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 "
-												onClick={closeModalAndDeliver}>
-												Yes, deliver.
+												onClick={closeModalAndProceed}>
+												Yes, proceed.
 											</button>
 											<button
 												type="button"
@@ -101,4 +99,4 @@ const ModalDeliverPackage = (props: ModalDeliverPackageProps) => {
 	);
 };
 
-export default ModalDeliverPackage;
+export default ModalWarning;

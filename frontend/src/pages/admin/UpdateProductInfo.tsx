@@ -10,7 +10,6 @@ import { PageNotFound } from '../main';
 
 const UpdateProductInfo = () => {
 	const { slug } = useParams<{ slug: string }>();
-	console.log(slug);
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const { data: product, isLoading, error } = useGetProductDetailsBySlugQuery(slug!);
 	const [name, setName] = useState(product?.name);
@@ -39,12 +38,10 @@ const UpdateProductInfo = () => {
 		setNumberOfReviews(product?.numberOfReviews);
 		setColor(product?.color);
 	}, [slug, product]);
-	// if (!isLoading && product) {
-	// 	setName(product?.name);
-	// }
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(slug);
+
 		if (!product) {
 			return;
 		}
@@ -95,20 +92,14 @@ const UpdateProductInfo = () => {
 		}
 	};
 	return isLoading ? (
-		<div className="pt-[3.25rem] sm:ml-[20rem]">
-			<LoadingBox text="Action in progress" />
-		</div>
+		<LoadingBox text="Action in progress" />
 	) : error ? (
-		<div className="pt-[3.25rem] sm:ml-[20rem]">
-			<MessageBoxError message={getError(error as ApiError)} />
-		</div>
+		<MessageBoxError message={getError(error as ApiError)} />
 	) : !product ? (
-		<div className="pt-[3.25rem] sm:ml-[20rem]">
-			<PageNotFound />
-		</div>
+		<PageNotFound />
 	) : (
-		<div className="p-4 sm:ml-64">
-			<div className="border-gray-200 pt-3 p-4 bg-gray-50 border-b rounded-md">
+		<div>
+			<div className="rounded-md border-b border-gray-200 bg-gray-50 p-4 pt-3">
 				<h1 className="text-2xl font-bold tracking-tight  text-gray-500 sm:text-3xl">
 					Product managment
 				</h1>
@@ -120,7 +111,7 @@ const UpdateProductInfo = () => {
 					<div className="flex flex-row">
 						<div className="w-[50%]">
 							<div className="flex flex-col">
-								<label htmlFor="name" className="text-gray-600 font-medium mb-1">
+								<label htmlFor="name" className="mb-1 font-medium text-gray-600">
 									Name
 								</label>
 								<input
@@ -128,11 +119,11 @@ const UpdateProductInfo = () => {
 									type="text"
 									value={name}
 									onChange={(e) => setName(e.target.value)}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label htmlFor="slug" className="text-gray-600 font-medium mb-1">
+								<label htmlFor="slug" className="mb-1 font-medium text-gray-600">
 									Slug
 								</label>
 								<input
@@ -140,11 +131,11 @@ const UpdateProductInfo = () => {
 									type="text"
 									disabled
 									value={slug}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label htmlFor="image" className="text-gray-600 font-medium mb-1">
+								<label htmlFor="image" className="mb-1 font-medium text-gray-600">
 									Image
 								</label>
 								<input
@@ -159,13 +150,13 @@ const UpdateProductInfo = () => {
 										// eslint-disable-next-line @typescript-eslint/no-explicit-any
 										setImage(base64 as any);
 									}}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
 								<label
 									htmlFor="imageAlt"
-									className="text-gray-600 font-medium mb-1">
+									className="mb-1 font-medium text-gray-600">
 									Image Alt
 								</label>
 								<input
@@ -173,11 +164,11 @@ const UpdateProductInfo = () => {
 									type="text"
 									value={imageAlt}
 									onChange={(e) => setImageAlt(e.target.value)}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label htmlFor="price" className="text-gray-600 font-medium mb-1">
+								<label htmlFor="price" className="mb-1 font-medium text-gray-600">
 									Price
 								</label>
 								<input
@@ -185,11 +176,11 @@ const UpdateProductInfo = () => {
 									type="number"
 									value={price}
 									onChange={(e) => setPrice(parseFloat(e.target.value))}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
-								<label htmlFor="brand" className="text-gray-600 font-medium mb-1">
+								<label htmlFor="brand" className="mb-1 font-medium text-gray-600">
 									Brand
 								</label>
 								<input
@@ -197,7 +188,7 @@ const UpdateProductInfo = () => {
 									type="text"
 									value={brand}
 									onChange={(e) => setBrand(e.target.value)}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 						</div>
@@ -205,7 +196,7 @@ const UpdateProductInfo = () => {
 							<div className="flex flex-col">
 								<label
 									htmlFor="category"
-									className="text-gray-600 font-medium mb-1">
+									className="mb-1 font-medium text-gray-600">
 									Category
 								</label>
 								<input
@@ -213,7 +204,7 @@ const UpdateProductInfo = () => {
 									type="text"
 									value={category}
 									onChange={(e) => setCategory(e.target.value)}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
@@ -221,7 +212,7 @@ const UpdateProductInfo = () => {
 								<textarea
 									value={description}
 									onChange={(e) => setDescription(e.target.value)}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
@@ -230,7 +221,7 @@ const UpdateProductInfo = () => {
 									type="number"
 									value={countInStock}
 									onChange={(e) => setCountInStock(parseInt(e.target.value))}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
@@ -239,7 +230,7 @@ const UpdateProductInfo = () => {
 									type="number"
 									value={rating}
 									onChange={(e) => setRating(parseInt(e.target.value))}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
@@ -248,14 +239,14 @@ const UpdateProductInfo = () => {
 									type="number"
 									value={numberOfReviews}
 									onChange={(e) => setNumberOfReviews(parseInt(e.target.value))}
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 								/>
 							</div>
 							<div className="flex flex-col">
 								<label>Category:</label>
 								<input
 									type="text"
-									className="border border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+									className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"
 									value={color}
 									onChange={(e) => setColor(e.target.value)}
 								/>
@@ -264,7 +255,7 @@ const UpdateProductInfo = () => {
 					</div>
 					<div className="pt-4 ">
 						<button
-							className="py-2 px-4  bg-blue-500 text-white rounded hover:bg-blue-700"
+							className="rounded bg-blue-500  px-4 py-2 text-white hover:bg-blue-700"
 							type="submit">
 							Update product
 						</button>

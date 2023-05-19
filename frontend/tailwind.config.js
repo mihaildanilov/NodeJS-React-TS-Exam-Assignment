@@ -8,5 +8,7 @@ export default {
 			},
 		},
 	},
-	plugins: [require('@tailwindcss/forms', '@tailwindcss/aspect-ratio')],
+	plugins: [
+		require('@tailwindcss/forms', '@tailwindcss/aspect-ratio', 'prettier-plugin-tailwindcss'),
+	],
 };

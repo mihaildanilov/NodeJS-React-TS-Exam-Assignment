@@ -62,7 +62,7 @@ const OrdersPerDayChart = () => {
 		</div>
 	) : (
 		<div className="">
-			<div className="bg-white rounded-lg shadow p-4">
+			<div className="rounded-lg bg-white p-4 shadow">
 				<Line data={data} options={options} />
 			</div>
 		</div>

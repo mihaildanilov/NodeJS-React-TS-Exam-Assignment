@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 
-import { Product } from '../models/ProductModel';
+import { Product, ProductModel } from '../models/ProductModel';
 import { isAuth } from '../utils/utils';
 import { Order, OrderModel } from '../models/OrderModel';
 export const orderRouter = express.Router();
@@ -32,24 +32,37 @@ orderRouter.post(
 	'/',
 	isAuth,
 	asyncHandler(async (req: Request, res: Response) => {
-		console.log(req.body.orderItems);
-		if (!req.body.orderItems || req.body.orderItems.length === 0) {
-			res.status(400).json({ message: 'Cart is empty' });
-		} else {
-			const createdOrder = await OrderModel.create({
-				orderItems: req.body.orderItems.map((x: Product) => ({
-					...x,
-					product: x._id,
-				})),
-				shippingAddress: req.body.shippingAddress,
-				paymentMethod: req.body.paymentMethod,
-				itemsPrice: req.body.itemsPrice,
-				shippingPrice: req.body.shippingPrice,
-				taxPrice: req.body.taxPrice,
-				totalPrice: req.body.totalPrice,
-				user: req.user._id,
-			} as Order);
-			res.status(201).json({ message: 'Order Created', order: createdOrder });
+		try {
+			if (!req.body.orderItems || req.body.orderItems.length === 0) {
+				res.status(400).json({ message: 'Cart is empty' });
+			} else {
+				const createdOrder = await OrderModel.create({
+					orderItems: req.body.orderItems.map((x: Product) => ({
+						...x,
+						product: x._id,
+					})),
+					shippingAddress: req.body.shippingAddress,
+					paymentMethod: req.body.paymentMethod,
+					itemsPrice: req.body.itemsPrice,
+					shippingPrice: req.body.shippingPrice,
+					taxPrice: req.body.taxPrice,
+					totalPrice: req.body.totalPrice,
+					user: req.user._id,
+				} as Order);
+
+				for (const orderItem of createdOrder.orderItems) {
+					const product = await ProductModel.findById(orderItem.product);
+					if (product) {
+						product.countInStock -= Number(orderItem.quantity);
+						await product.save();
+					}
+				}
+
+				res.status(201).json({ message: 'Order Created', order: createdOrder });
+			}
+		} catch (error) {
+			console.error(error);
+			res.status(500).json({ message: 'An error occurred while processing your request' });
 		}
 	})
 );

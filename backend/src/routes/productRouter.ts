@@ -91,7 +91,6 @@ productRouter.post('/', upload.single('imageSrc'), async (req, res) => {
 			numberOfReviews: req.body.numberOfReviews,
 			color: req.body.color,
 		});
-		console.log(req.body);
 		// Save the new product to the database
 		const savedProduct = await product.save();
 
@@ -116,7 +115,9 @@ productRouter.put('/slug/:slug', async (req, res) => {
 
 		product.name = req.body.name;
 		product.slug = req.body.slug;
-		product.imageSrc = req.body.image;
+		if (req.body.imageSrc) {
+			product.imageSrc = req.body.image;
+		}
 		product.imageAlt = req.body.imageAlt;
 		product.price = req.body.price;
 		product.brand = req.body.brand;

@@ -4,12 +4,12 @@ interface StatusToastProps {
 
 const StatusToast = (props: StatusToastProps) => {
 	return (
-		<div className="max-w-xs bg-white border rounded-md " role="alert">
+		<div className="max-w-xs rounded-md border bg-white " role="alert">
 			<div className="flex p-4">
 				<div className="flex-shrink-0">
 					{props.message == 'In stock' ? (
 						<svg
-							className="h-4 w-4 text-green-500 mt-0.5"
+							className="mt-0.5 h-4 w-4 text-green-500"
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
 							height="16"
@@ -19,7 +19,7 @@ const StatusToast = (props: StatusToastProps) => {
 						</svg>
 					) : (
 						<svg
-							className="h-4 w-4 text-red-500 mt-0.5"
+							className="mt-0.5 h-4 w-4 text-red-500"
 							xmlns="http://www.w3.org/2000/svg"
 							width="16"
 							height="16"

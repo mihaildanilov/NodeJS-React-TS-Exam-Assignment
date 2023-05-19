@@ -1,119 +1,123 @@
 import { useState } from 'react';
 import { Order } from '../../types';
 import { NavLink } from 'react-router-dom';
-import { ModalDeliverPackage } from '../modals';
+
+import { formatDate } from '../../utils';
+import ModalWarning from '../modals/ModalWarning';
 
 interface OrderTableProps {
 	ordersToDisplay: Order[] | undefined;
 	tableName: string;
+	ModalProceedAction: (action: string) => void;
 }
 const OrderTable = (props: OrderTableProps) => {
-	const formatDate = (dateString: string): string => {
-		const date = new Date(dateString);
-		const options: Intl.DateTimeFormatOptions = {
-			day: 'numeric',
-			month: 'numeric',
-			year: 'numeric',
-		};
-		const formattedDate = date.toLocaleDateString('lv-LV', options);
-		const formattedTime = date.toLocaleTimeString('lv-LV', {
-			hour: '2-digit',
-			minute: '2-digit',
-		});
-		return `${formattedTime} on ${formattedDate}`;
-	};
 	let totalOrderCount = 0;
 	if (props.ordersToDisplay !== undefined) {
 		totalOrderCount = props.ordersToDisplay?.length;
 	}
+
 	const [showMore, setShowMore] = useState(false);
 
-	const orders = props.ordersToDisplay?.map((order, index) => {
-		return (
-			<tr key={index}>
-				<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-					<div className="flex items-center">
-						<div className="ml-4">
-							<div className="text-sm leading-5 font-medium text-gray-900">
-								{order._id}
+	const orders = props.ordersToDisplay
+		?.slice()
+		.reverse()
+		.map((order, index) => {
+			return (
+				<tr key={index}>
+					<td className="whitespace-nowrap border-b border-gray-200 px-6 py-4">
+						<div className="flex items-center">
+							<div className="ml-4">
+								<div className="text-sm font-medium leading-5 text-gray-500">
+									{order._id}
+								</div>
 							</div>
 						</div>
-					</div>
-				</td>
+					</td>
 
-				<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-					<div className="text-sm leading-5 text-gray-900">
-						{formatDate(order.createdAt)}
-					</div>
-				</td>
+					<td className="whitespace-nowrap border-b border-gray-200 px-6 py-4">
+						<div className="text-sm leading-5 text-gray-500">
+							{formatDate(order.createdAt)}
+						</div>
+					</td>
 
-				<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-					{order.totalPrice.toFixed(2)} $
-				</td>
+					<td className="whitespace-nowrap border-b border-gray-200 px-6 py-4">
+						<div className="text-sm leading-5 text-gray-500">
+							{order.totalPrice.toFixed(2)} $
+						</div>
+					</td>
 
-				<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
-					<span
-						className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-medium ${
-							order.isPaid ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-						}`}>
-						{order.isPaid ? 'Paid' : 'Not paid'}
-					</span>
-				</td>
-
-				{order.isDelivered ? (
-					<td className="px-4 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
+					<td className="whitespace-nowrap border-b border-gray-200 px-6 py-4 text-sm leading-5">
 						<span
-							className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-medium ${
-								order.isDelivered ? 'bg-green-100 text-green-800' : null
+							className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-medium ${
+								order.isPaid
+									? 'bg-green-100 text-green-800'
+									: 'bg-red-100 text-red-800'
 							}`}>
-							Delivered
+							{order.isPaid ? 'Paid' : 'Not paid'}
 						</span>
 					</td>
-				) : (
-					<td className=" py-4 whitespace-no-wrap border-b text-sm leading-5">
-						<ModalDeliverPackage itemName={order._id} />
-					</td>
-				)}
 
-				<td className="px-6 py-4 whitespace-no-wrap border-b  text-sm leading-5 text-gray-500">
-					<NavLink to={`/order/${order._id}`}>Details</NavLink>
-				</td>
-				<td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-					<NavLink to={`/invoice/${order._id}`}>Invoice</NavLink>
-				</td>
-			</tr>
-		);
-	});
+					{order.isDelivered ? (
+						<td className="whitespace-nowrap border-b border-gray-200 p-4 text-sm leading-5">
+							<span
+								className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-medium ${
+									order.isDelivered ? 'bg-green-100 text-green-800' : null
+								}`}>
+								Delivered
+							</span>
+						</td>
+					) : (
+						<td className=" whitespace-nowrap border-b py-4 text-sm leading-5">
+							<ModalWarning
+								title="Package delivery"
+								buttonText="Deliver package"
+								warningText="Are you sure you want to deliver package: "
+								successMessage="Package Successfully delivered!"
+								ProceedAction={props.ModalProceedAction}
+								itemName={order._id}
+							/>
+						</td>
+					)}
+
+					<td className="whitespace-nowrap border-b px-6 py-4  text-sm leading-5 text-gray-500">
+						<NavLink to={`/order/${order._id}`}>Details</NavLink>
+					</td>
+					<td className="whitespace-nowrap border-b border-gray-200 px-6 py-4 text-sm leading-5 text-gray-500">
+						<NavLink to={`/invoice/${order._id}`}>Invoice</NavLink>
+					</td>
+				</tr>
+			);
+		});
 	return (
 		<div>
-			<div className="flex flex-col mt-8">
-				<div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-					<div className="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+			<div className="mt-8 flex flex-col">
+				<div className="-my-2 overflow-x-auto py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+					<div className="inline-block min-w-full overflow-hidden border-b border-gray-200 align-middle shadow sm:rounded-lg">
 						<table className="min-w-full">
-							<caption className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+							<caption className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 								{props.tableName}
 							</caption>
 							<thead>
 								<tr>
-									<th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Order ID
 									</th>
-									<th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Date
 									</th>
-									<th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Price
 									</th>
-									<th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Payment
 									</th>
-									<th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Delivery
 									</th>
-									<th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Details
 									</th>
-									<th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Invoice
 									</th>
 								</tr>
@@ -127,8 +131,8 @@ const OrderTable = (props: OrderTableProps) => {
 					{}
 					{totalOrderCount > 5 ? (
 						<button
-							className={`mt-3 p-2 rounded-md bg-blue-600 py-1.5 font-medium text-blue-50 hover:bg-blue-500 '
-						}`}
+							className={`mt-3 rounded-md bg-blue-600 p-2 py-1.5 font-medium text-blue-50 hover:bg-blue-500 
+						`}
 							onClick={() => setShowMore(!showMore)}>
 							{showMore ? 'Show less' : 'Show more'}
 						</button>

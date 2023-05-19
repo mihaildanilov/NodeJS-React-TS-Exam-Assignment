@@ -6,6 +6,8 @@ import { productRouter } from './routes/productRouter';
 import { userRouter } from './routes/userRouter';
 import { orderRouter } from './routes/orderRouter';
 import { keyRouter } from './routes/keyRouter';
+import { contactUsRouter } from './routes/contactUsRouter';
+import { emailRouter } from './routes/emailRouter';
 
 dotenv.config();
 
@@ -36,7 +38,8 @@ app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/keys', keyRouter);
-
+app.use('/api/contact-us', contactUsRouter);
+app.use('/api/email', emailRouter);
 const PORT = 4000;
 app.listen(PORT, () => {
 	console.log(`Server started at http://localhost:${PORT}`);

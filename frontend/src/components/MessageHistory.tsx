@@ -1,51 +1,59 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useGetOrderHistoryQuery } from '../hooks/';
+import { useGetMessageHistoryQuery } from '../hooks/';
 import { Fragment, useState } from 'react';
 
 import { Menu, Transition } from '@headlessui/react';
 import { formatDate } from '../utils';
 
-const OrderHistory = () => {
+const MessageHistory = () => {
 	const navigate = useNavigate();
-	const { data: orders } = useGetOrderHistoryQuery();
+	const { data: messages } = useGetMessageHistoryQuery();
 	const [showMore, setShowMore] = useState(false);
 
-	const orderHistory = orders
+	const orderHistory = messages
 		?.slice()
 		.reverse()
-		.map((order) => {
+		.map((message, index) => {
 			return (
-				<div key={order._id} className="mt-2">
-					<h2 className="sr-only">Recent orders</h2>
+				<div key={index} className="mt-2">
+					<h2 className="sr-only">Recent messages</h2>
 					<div className="mx-auto max-w-7xl sm:px-2 lg:px-8">
 						<div className="mx-auto max-w-2xl space-y-8 sm:px-4 lg:max-w-4xl lg:px-0">
 							<div className="border-y border-gray-200 bg-white shadow-sm sm:rounded-lg sm:border">
 								<h3 className="sr-only">
-									Order placed on <time dateTime={formatDate(order.createdAt)} />
+									Message sent on{' '}
+									<time dateTime={formatDate(message.createdAt)} />
 								</h3>
 
 								<div className="flex items-center border-b border-gray-200 p-4 sm:grid sm:grid-cols-4 sm:gap-x-6 sm:p-6">
 									<dl className="grid flex-1 grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
 										<div className="mr-6 sm:mr-0">
 											<dt className="font-medium text-gray-900">
-												Order number
+												Message id
 											</dt>
-											<dd className="mt-1 text-gray-500">{order._id}</dd>
+											<dd className="mt-1 text-gray-500">{message._id}</dd>
 										</div>
 										<div className="ml-[6rem] hidden sm:block sm:pr-0">
 											<dt className="whitespace-nowrap font-medium text-gray-900">
-												Date placed
+												Subject
 											</dt>
 											<dd className="mt-1 whitespace-nowrap text-gray-500">
-												<time>{formatDate(order.createdAt)}</time>
+												{message.subject}
 											</dd>
 										</div>
 										<div className="ml-[7rem] sm:pr-0">
 											<dt className="whitespace-nowrap font-medium text-gray-900">
-												Total amount
+												Status
 											</dt>
-											<dd className="mt-1 whitespace-nowrap text-gray-500">
-												${order.totalPrice.toFixed(2)}
+											<dd className="mt-1 font-medium text-gray-900">
+												<span
+													className={`inline-flex items-center rounded-full px-3.5 py-1.5 text-xs font-medium ${
+														message.isAnswered
+															? 'bg-green-100 text-green-800'
+															: 'bg-red-100 text-red-800'
+													}`}>
+													{message.isAnswered ? 'Answered' : 'Pending'}
+												</span>
 											</dd>
 										</div>
 									</dl>
@@ -91,26 +99,13 @@ const OrderHistory = () => {
 														<Menu.Item>
 															{({ active }) => (
 																<NavLink
-																	to={`/order/${order._id}`}
+																	to={`/message/${message._id}`}
 																	className={`${
 																		active
 																			? 'bg-gray-100 text-gray-900'
 																			: 'text-gray-700'
 																	} block px-4 py-2 text-sm`}>
 																	View
-																</NavLink>
-															)}
-														</Menu.Item>
-														<Menu.Item>
-															{({ active }) => (
-																<NavLink
-																	to={`/invoice/${order._id}`}
-																	className={`${
-																		active
-																			? 'bg-gray-100 text-gray-900'
-																			: 'text-gray-700'
-																	} block px-4 py-2 text-sm`}>
-																	Invoice
 																</NavLink>
 															)}
 														</Menu.Item>
@@ -125,19 +120,11 @@ const OrderHistory = () => {
 											className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
 											<span
 												onClick={() => {
-													navigate(`/order/${order._id}`);
+													navigate(`/message/${message._id}`);
 												}}>
-												View Order
+												View Message
 											</span>
-											<span className="sr-only">{order._id}</span>
-										</a>
-										<a
-											onClick={() => {
-												navigate(`/invoice/${order._id}`);
-											}}
-											className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-											<span>View Invoice</span>
-											<span className="sr-only">for order {order._id}</span>
+											<span className="sr-only">{message._id}</span>
 										</a>
 									</div>
 								</div>
@@ -153,11 +140,10 @@ const OrderHistory = () => {
 			<div className="mx-auto max-w-7xl sm:px-2 lg:px-8">
 				<div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
 					<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-						Order history
+						Message history
 					</h1>
 					<p className="mt-2 text-sm text-gray-500">
-						Check the status of recent orders, manage returns, and discover similar
-						products.
+						Check the status of your recent messages.
 					</p>
 					{showMore ? orderHistory : orderHistory?.slice(0, 3)}
 					<button
@@ -174,4 +160,4 @@ const OrderHistory = () => {
 	);
 };
 
-export default OrderHistory;
+export default MessageHistory;

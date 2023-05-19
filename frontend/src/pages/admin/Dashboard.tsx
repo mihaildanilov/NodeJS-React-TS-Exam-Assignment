@@ -5,10 +5,15 @@ import {
 	AverageOrderValueChart,
 } from '../../components/charts';
 import { LoadingBox, MessageBoxError } from '../../components/toasts';
-import { useGetAllUsersQuery, useGetAllOrdersQuery, useGetProductQuery } from '../../hooks';
+import {
+	useGetAllUsersQuery,
+	useGetAllOrdersQuery,
+	useGetProductQuery,
+	useGetAllContactUsMessages,
+} from '../../hooks';
 import { ApiError } from '../../types';
 import { getError } from '../../utils';
-import { faBoxesPacking, faChalkboardUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faChalkboardUser, faDollarSign, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
 	const { data: users, isLoading: isLoadingUsers, error: errorUsers } = useGetAllUsersQuery();
@@ -18,32 +23,43 @@ const Dashboard = () => {
 		isLoading: isLoadingProducts,
 		error: errorProducts,
 	} = useGetProductQuery();
-
-	const deliveredOrderCount = orders?.filter((order) => order.isDelivered === true).length;
 	const undeliveredOrderCount = orders?.filter((order) => order.isDelivered === false).length;
+	const {
+		data: messages,
+		isLoading: isLoadingMessages,
+		error: errorMessages,
+	} = useGetAllContactUsMessages();
+	const unansweredMessageCount = messages?.filter(
+		(message) => message.isAnswered === false
+	).length;
 
-	return isLoadingUsers || isLoadingOrders || isLoadingProducts ? (
+	let totalEarnings = 0;
+	orders?.forEach((order) => {
+		totalEarnings += order.totalPrice;
+	});
+
+	return isLoadingUsers || isLoadingOrders || isLoadingProducts || isLoadingMessages ? (
 		<div className="pt-[3.25rem] sm:ml-[20rem]">
 			<LoadingBox text="Action in progress" />
 		</div>
-	) : errorUsers || errorOrders || errorProducts ? (
+	) : errorUsers || errorOrders || errorProducts || errorMessages ? (
 		<div className="pt-[3.25rem] sm:ml-[20rem]">
 			<MessageBoxError message={getError(errorUsers as unknown as ApiError)} />
 		</div>
 	) : (
-		<div className="p-4 sm:ml-64">
-			<div className="border-gray-200 pt-3 p-4 bg-gray-50 border-b rounded-md mb-6">
-				<h1 className=" text-gray-500 pb-1 text-4xl font-bold">Dashboard</h1>
-				<p className="mt-2 text-lg pb-2 text-gray-500">
+		<div>
+			<div className="mb-6 rounded-md border-b border-gray-200 bg-gray-50 p-4 pt-3">
+				<h1 className=" pb-1 text-4xl font-bold text-gray-500">Dashboard</h1>
+				<p className="mt-2 pb-2 text-lg text-gray-500">
 					Welcome to the dashboard of your e-commerce store! Here, you can easily track
 					your store&apos;s performance and make informed decisions.
 				</p>
 			</div>
 			<div>
-				<div className="flex flex-wrap -mx-6">
-					<div className="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-							<div className="p-3 rounded-full bg-pink-600 bg-opacity-75">
+				<div className="mx-6 flex flex-wrap justify-between sm:justify-start">
+					<div className="w-full  px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0 lg:mb-6 xl:w-1/3">
+						<div className="flex items-center rounded-md bg-white px-5 py-6 shadow-sm">
+							<div className="rounded-full bg-pink-600 bg-opacity-75 p-3">
 								<svg
 									className="h-8 w-8 text-white"
 									viewBox="0 0 28 28"
@@ -68,13 +84,13 @@ const Dashboard = () => {
 								<h4 className="text-2xl font-semibold text-gray-700">
 									{products?.length}
 								</h4>
-								<div className="text-gray-500">Available Products</div>
+								<div className="text-gray-500">Available products</div>
 							</div>
 						</div>
 					</div>
-					<div className="w-full px-6 sm:w-1/2 xl:w-1/3">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-							<div className="p-3 rounded-full bg-indigo-600 bg-opacity-75">
+					<div className="w-full px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0  lg:mb-6 xl:w-1/3">
+						<div className="flex items-center rounded-md bg-white px-5 py-6 shadow-sm">
+							<div className="rounded-full bg-indigo-600 bg-opacity-75 p-3">
 								<svg
 									className="h-8 w-8 text-white"
 									viewBox="0 0 28 30"
@@ -116,11 +132,11 @@ const Dashboard = () => {
 						</div>
 					</div>
 
-					<div className="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-							<div className="flex items-center justify-center p-3 rounded-full bg-orange-600 bg-opacity-75">
+					<div className="w-full px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0 lg:mb-6 xl:w-1/3">
+						<div className="flex items-center rounded-md bg-white px-5 py-6 shadow-sm">
+							<div className="flex items-center justify-center rounded-full bg-orange-600 bg-opacity-75 p-3">
 								<svg
-									className="h-8 w-8 text-white pt-1"
+									className="h-8 w-8 pt-1 text-white"
 									viewBox="0 0 28 28"
 									fill="none"
 									xmlns="http://www.w3.org/2000/svg">
@@ -143,33 +159,33 @@ const Dashboard = () => {
 								<h4 className="text-2xl font-semibold text-gray-700">
 									{orders?.length}
 								</h4>
-								<div className="text-gray-500">Total Orders</div>
+								<div className="text-gray-500">Total orders</div>
 							</div>
 						</div>
 					</div>
 
-					<div className="w-full pt-6 px-6 sm:w-1/2 xl:w-1/3">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-							<div className="p-3 w-14 h-14 rounded-full bg-emerald-500 bg-opacity-75">
+					<div className="w-full px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0 lg:mb-6 xl:w-1/3">
+						<div className="flex items-center rounded-md bg-white px-5 py-6 shadow-sm">
+							<div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 bg-opacity-75 p-3">
 								<FontAwesomeIcon
-									className="text-white text-[23px] pt-1"
-									icon={faBoxesPacking}
+									className="text-[27px] text-white"
+									icon={faDollarSign}
 								/>
 							</div>
 
 							<div className="mx-5">
 								<h4 className="text-2xl font-semibold text-gray-700">
-									{deliveredOrderCount}
+									{totalEarnings.toFixed(2)}$
 								</h4>
-								<div className="text-gray-500">Total shipped orders</div>
+								<div className="text-gray-500">Total earnings</div>
 							</div>
 						</div>
 					</div>
-					<div className="w-full pt-6 px-6 sm:w-1/2 xl:w-1/3">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-							<div className="flex items-center justify-center p-3 w-14 h-14 rounded-full bg-amber-300 bg-opacity-75">
+					<div className="w-full px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0  lg:mb-6 xl:w-1/3">
+						<div className="flex items-center rounded-md bg-white px-5 py-6 shadow-sm">
+							<div className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-300 bg-opacity-75 p-3">
 								<FontAwesomeIcon
-									className="text-white text-[23px]"
+									className="text-[23px] text-white"
 									icon={faChalkboardUser}
 								/>
 							</div>
@@ -182,30 +198,31 @@ const Dashboard = () => {
 							</div>
 						</div>
 					</div>
-					<div className="w-full pt-6 px-6 sm:w-1/2 xl:w-1/3">
-						<div className="flex items-center px-5 py-6 shadow-sm rounded-md bg-white">
-							<div className=" flex items-center justify-center p-3 w-14 h-14 rounded-full bg-cyan-400 bg-opacity-75">
+					<div className="w-full px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0  lg:mb-6 xl:w-1/3">
+						<div className="flex items-center rounded-md bg-white px-5 py-6 shadow-sm">
+							<div className=" flex h-14 w-14 items-center justify-center rounded-full bg-cyan-400 bg-opacity-75 p-3">
 								<FontAwesomeIcon
-									className="text-white text-[27px] "
+									className="text-[27px] text-white "
 									icon={faEnvelope}
 								/>
 							</div>
 
 							<div className="mx-5">
 								<h4 className="text-2xl font-semibold text-gray-700">
-									{undeliveredOrderCount}
+									{unansweredMessageCount}
 								</h4>
 								<div className="text-gray-500">New letters</div>
 							</div>
 						</div>
 					</div>
-					<div className="pt-6 px-6 sm:w-1/2 xl:w-1/3">
+
+					<div className="w-full px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0 lg:mb-6 xl:w-1/3">
 						<TotalSalesChart />
 					</div>
-					<div className="pt-6 px-6 sm:w-1/2 xl:w-1/3">
+					<div className="w-full px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0 lg:mb-6 xl:w-1/3">
 						<OrdersPerDayChart />
 					</div>
-					<div className="pt-6 px-6 sm:w-1/2 xl:w-1/3">
+					<div className="w-full px-6 pt-6 sm:mb-6 sm:w-1/2 sm:pt-0 lg:mb-6  xl:w-1/3">
 						<AverageOrderValueChart />
 					</div>
 				</div>
