@@ -215,7 +215,7 @@ const ProductManagement = () => {
 									/>
 								</div>
 								<div className="flex flex-col">
-									<label>Category:</label>
+									<label>Color:</label>
 									<input
 										type="text"
 										className="rounded-md border border-gray-400 px-3 py-2 focus:border-blue-500 focus:outline-none"

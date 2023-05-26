@@ -9,8 +9,9 @@ const MessageHistory = () => {
 	const navigate = useNavigate();
 	const { data: messages } = useGetMessageHistoryQuery();
 	const [showMore, setShowMore] = useState(false);
-
-	const orderHistory = messages
+	const messageAmount = messages?.length;
+	if (!messageAmount) return null;
+	const messageHistory = messages
 		?.slice()
 		.reverse()
 		.map((message, index) => {
@@ -139,19 +140,22 @@ const MessageHistory = () => {
 		<>
 			<div className="mx-auto max-w-7xl sm:px-2 lg:px-8">
 				<div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
-					<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+					<h1 className="text-xl font-bold tracking-tight text-gray-900 sm:text-3xl">
 						Message history
 					</h1>
 					<p className="mt-2 text-sm text-gray-500">
 						Check the status of your recent messages.
 					</p>
-					{showMore ? orderHistory : orderHistory?.slice(0, 3)}
-					<button
-						onClick={() => setShowMore(!showMore)}
-						className={`ml-7 mt-2 rounded-md bg-blue-600 p-2 py-1.5 font-medium text-blue-50 hover:bg-blue-500 
+					{showMore ? messageHistory : messageHistory?.slice(0, 3)}
+
+					{messageAmount > 3 ? (
+						<button
+							onClick={() => setShowMore(!showMore)}
+							className={`ml-7 mt-2 rounded-md bg-blue-600 p-2 py-1.5 font-medium text-blue-50 hover:bg-blue-500 
 						`}>
-						{showMore ? 'Show less' : 'Show more'}
-					</button>
+							{showMore ? 'Show less' : 'Show more'}
+						</button>
+					) : null}
 				</div>
 			</div>
 

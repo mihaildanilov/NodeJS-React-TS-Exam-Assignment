@@ -1,21 +1,7 @@
 import { useState } from 'react';
 import apiClient from '../api/apiClient';
 import { useQuery } from '@tanstack/react-query';
-
-interface ContactUs {
-	_id: string;
-	user?: {
-		_id: string;
-		name: string;
-		email: string;
-	};
-	subject: string;
-	customersMessage: string;
-	replyMessage?: string;
-	createdAt: string;
-	isAnswered: boolean;
-	answeredAt?: string;
-}
+import { ContactUs } from '../types/';
 
 export const useContactUs = () => {
 	const [isLoading, setIsLoading] = useState(false);
