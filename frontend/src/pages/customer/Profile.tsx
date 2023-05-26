@@ -23,7 +23,7 @@ const Profile = () => {
 				</h2>
 				<div className="pt-16 sm:pt-24">
 					{isLoadingMessageHistory ? (
-						<LoadingBox text="Loading order history" />
+						<LoadingBox text="Loading message history" />
 					) : errorMessageHistory ? (
 						<MessageBoxError message={getError(errorMessageHistory as ApiError)} />
 					) : (

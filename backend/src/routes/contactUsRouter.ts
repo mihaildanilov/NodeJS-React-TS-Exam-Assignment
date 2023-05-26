@@ -25,7 +25,7 @@ contactUsRouter.post('/', isAuth, async (req: Request, res: Response) => {
 
 contactUsRouter.put('/message/:id', isAuth, async (req: Request, res: Response) => {
 	const { id } = req.params;
-	const { replyMessage, isAnswered } = req.body;
+	const { replyMessage } = req.body;
 	try {
 		const contactUs = await ContactUsModel.findById(id);
 
@@ -40,7 +40,7 @@ contactUsRouter.put('/message/:id', isAuth, async (req: Request, res: Response) 
 		}
 
 		contactUs.replyMessage = replyMessage;
-		contactUs.isAnswered = isAnswered;
+		contactUs.isAnswered = true;
 		contactUs.answeredAt = new Date();
 
 		const updatedContactUs = await contactUs.save();

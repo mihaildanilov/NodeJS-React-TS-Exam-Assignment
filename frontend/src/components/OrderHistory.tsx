@@ -147,12 +147,12 @@ const OrderHistory = () => {
 				</div>
 			);
 		});
-
+	if (!orderHistory) return null;
 	return (
 		<>
 			<div className="mx-auto max-w-7xl sm:px-2 lg:px-8">
 				<div className="mx-auto max-w-2xl px-4 lg:max-w-4xl lg:px-0">
-					<h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+					<h1 className="text-xl font-bold tracking-tight text-gray-900 sm:text-3xl">
 						Order history
 					</h1>
 					<p className="mt-2 text-sm text-gray-500">
@@ -160,12 +160,14 @@ const OrderHistory = () => {
 						products.
 					</p>
 					{showMore ? orderHistory : orderHistory?.slice(0, 3)}
-					<button
-						onClick={() => setShowMore(!showMore)}
-						className={`ml-7 mt-2 rounded-md bg-blue-600 p-2 py-1.5 font-medium text-blue-50 hover:bg-blue-500 
+					{orderHistory?.length > 3 ? (
+						<button
+							onClick={() => setShowMore(!showMore)}
+							className={`ml-7 mt-2 rounded-md bg-blue-600 p-2 py-1.5 font-medium text-blue-50 hover:bg-blue-500 
 						`}>
-						{showMore ? 'Show less' : 'Show more'}
-					</button>
+							{showMore ? 'Show less' : 'Show more'}
+						</button>
+					) : null}
 				</div>
 			</div>
 
