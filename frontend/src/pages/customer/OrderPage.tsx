@@ -104,8 +104,8 @@ const OrderPage = () => {
 		<MessageBoxError message="Order Not Found" />
 	) : (
 		<PageComponent title={`Order ${orderId}`}>
-			<div className="bg-gray-100 px-6 pb-3 pt-16 sm:px-8 lg:px-12">
-				<div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-4 md:grid-cols-3">
+			<div className="bg-gray-100 px-6 pb-3 pt-[20px] sm:px-8 lg:px-12">
+				<div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 md:grid-cols-3">
 					<div className="col-span-2 space-y-6">
 						<div className="rounded-lg bg-white p-6 shadow-md">
 							<h2 className="mb-4 text-lg font-medium">Shipping</h2>

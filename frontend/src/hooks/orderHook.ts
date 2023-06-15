@@ -2,6 +2,7 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import apiClient from '../api/apiClient';
 import { Order, CartItem, ShippingAddress } from '../types';
+import { useState } from 'react';
 
 export const useGetOrderDetailsQuery = (id: string) =>
 	useQuery({
@@ -71,3 +72,33 @@ export const useDeliverOrderMutation = () =>
 		);
 		return data.order;
 	});
+
+interface OrderDeletionHook {
+	isLoading: boolean;
+	error: string | null;
+	deleteOrder: (orderId: string) => void;
+}
+
+export const useOrderDeletion = (): OrderDeletionHook => {
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+
+	const deleteOrder = async (orderId: string) => {
+		setIsLoading(true);
+		setError(null);
+
+		try {
+			await apiClient.delete(`/api/orders/${orderId}`);
+		} catch (error) {
+			setError('An error occurred while deleting the order');
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	return {
+		isLoading,
+		error,
+		deleteOrder,
+	};
+};

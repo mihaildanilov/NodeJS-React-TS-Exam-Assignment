@@ -118,3 +118,24 @@ orderRouter.put(
 		}
 	})
 );
+
+orderRouter.delete('/:id', isAuth, async (req: Request, res: Response) => {
+	const orderId = req.params.id;
+
+	try {
+		// Find the order by ID
+		const order = await OrderModel.findById(orderId);
+
+		if (!order) {
+			return res.status(404).json({ message: 'Order not found' });
+		}
+
+		// Delete the order
+		await OrderModel.findByIdAndDelete(orderId);
+
+		return res.status(200).json({ message: 'Order deleted successfully' });
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: 'Internal server error' });
+	}
+});

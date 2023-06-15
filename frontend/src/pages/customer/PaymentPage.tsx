@@ -50,6 +50,7 @@ const PaymentPage = () => {
 							<div className="mb-3">
 								<label className="block">
 									<input
+										disabled
 										type="radio"
 										id="Stripe"
 										name="paymentMethod"
@@ -58,7 +59,7 @@ const PaymentPage = () => {
 										onChange={(e) => setPaymentMethodName(e.target.value)}
 										className="mr-2 leading-tight"
 									/>
-									<span className="text-sm">Stripe</span>
+									<span className="text-sm">Stripe - temporarly disabled</span>
 								</label>
 							</div>
 							<div className="mb-3">
