@@ -8,7 +8,8 @@ import ModalWarning from '../modals/ModalWarning';
 interface OrderTableProps {
 	ordersToDisplay: Order[] | undefined;
 	tableName: string;
-	ModalProceedAction: (action: string) => void;
+	ModalDeliver: (action: string) => void;
+	ModalDelete: (action: string) => void;
 }
 const OrderTable = (props: OrderTableProps) => {
 	let totalOrderCount = 0;
@@ -73,12 +74,21 @@ const OrderTable = (props: OrderTableProps) => {
 								buttonText="Deliver package"
 								warningText="Are you sure you want to deliver package: "
 								successMessage="Package Successfully delivered!"
-								ProceedAction={props.ModalProceedAction}
+								ProceedAction={props.ModalDeliver}
 								itemName={order._id}
 							/>
 						</td>
 					)}
-
+					<td className=" whitespace-nowrap border-b py-4 text-sm leading-5">
+						<ModalWarning
+							title="Delete order"
+							buttonText="Delete order"
+							warningText="Are you sure you want to delete this order: "
+							successMessage="Order successfully deleted!"
+							ProceedAction={props.ModalDelete}
+							itemName={order._id}
+						/>
+					</td>
 					<td className="whitespace-nowrap border-b px-6 py-4  text-sm leading-5 text-gray-500">
 						<NavLink to={`/order/${order._id}`}>Details</NavLink>
 					</td>
@@ -113,6 +123,9 @@ const OrderTable = (props: OrderTableProps) => {
 									</th>
 									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Delivery
+									</th>
+									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
+										Delete
 									</th>
 									<th className="border-b border-gray-200 bg-gray-50 px-6 py-3 text-left text-xs font-medium uppercase leading-4 tracking-wider text-gray-500">
 										Details

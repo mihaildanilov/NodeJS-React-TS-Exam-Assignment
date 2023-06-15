@@ -8,7 +8,6 @@ declare namespace Express {
 			isAdmin: boolean;
 			token: string;
 		};
-		file?: Express.Multer.File;
 		body: {
 			name: string;
 			slug: string;

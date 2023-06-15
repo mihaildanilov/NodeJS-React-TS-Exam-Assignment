@@ -3,6 +3,7 @@ import { useDeliverOrderMutation, useGetAllOrdersQuery } from '../../hooks';
 import { ApiError } from '../../types';
 import { getError } from '../../utils';
 import OrderTable from '../../components/tables/OrderTable';
+import { useOrderDeletion } from '../../hooks/orderHook';
 
 const OrderManagement = () => {
 	const { data: orders, isLoading, error } = useGetAllOrdersQuery();
@@ -13,9 +14,10 @@ const OrderManagement = () => {
 
 	const handleDeliverOrder = async (orderId: string) => {
 		await deliverOrder({ orderId });
-		// setTimeout(() => {
-		// 	window.location.reload();
-		// }, 4000);
+	};
+	const { isLoading: isLoadingDelete, error: errorDelete, deleteOrder } = useOrderDeletion();
+	const handleDelete = async (orderId: string) => {
+		await deleteOrder(orderId);
 	};
 
 	return (
@@ -29,15 +31,16 @@ const OrderManagement = () => {
 				</p>
 			</div>
 
-			{isLoading ? (
+			{isLoading && isLoadingDelete ? (
 				<LoadingBox text="Action in progress" />
-			) : error ? (
+			) : error && errorDelete ? (
 				<MessageBoxError message={getError(error as unknown as ApiError)} />
 			) : (
 				<>
 					{undeliveredOrders?.length != 0 ? (
 						<OrderTable
-							ModalProceedAction={handleDeliverOrder}
+							ModalDeliver={handleDeliverOrder}
+							ModalDelete={handleDelete}
 							tableName="Undelivered Orders"
 							ordersToDisplay={undeliveredOrders}
 						/>
@@ -50,7 +53,8 @@ const OrderManagement = () => {
 					)}
 
 					<OrderTable
-						ModalProceedAction={handleDeliverOrder}
+						ModalDelete={handleDelete}
+						ModalDeliver={handleDeliverOrder}
 						tableName="Delivered Orders"
 						ordersToDisplay={deliveredOrders}
 					/>
