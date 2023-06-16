@@ -5,14 +5,14 @@ import { useDeliverOrderMutation } from '../../hooks';
 import { toast } from 'react-toastify';
 
 interface ModalDeliverPackageProps {
-	itemName: string;
+	itemname: string;
 }
 
 const ModalDeliverPackage = (props: ModalDeliverPackageProps) => {
 	const { mutate: deliverOrder } = useDeliverOrderMutation();
 
 	const handleDeliverOrder = async () => {
-		await deliverOrder({ orderId: props.itemName });
+		await deliverOrder({ orderId: props.itemname });
 	};
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +71,7 @@ const ModalDeliverPackage = (props: ModalDeliverPackageProps) => {
 									<div className="mt-2">
 										<p className="text-sm text-gray-500">
 											Are you sure that you want to deliver order:
-											{props.itemName}
+											{props.itemname}
 										</p>
 									</div>
 

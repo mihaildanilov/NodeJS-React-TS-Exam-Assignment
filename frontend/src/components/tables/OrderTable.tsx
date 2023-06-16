@@ -71,22 +71,22 @@ const OrderTable = (props: OrderTableProps) => {
 						<td className=" whitespace-nowrap border-b py-4 text-sm leading-5">
 							<ModalWarning
 								title="Package delivery"
-								buttonText="Deliver package"
-								warningText="Are you sure you want to deliver package: "
+								buttontext="Deliver package"
+								warningtext="Are you sure you want to deliver package: "
 								successMessage="Package Successfully delivered!"
-								ProceedAction={props.ModalDeliver}
-								itemName={order._id}
+								proceedaction={props.ModalDeliver}
+								itemname={order._id}
 							/>
 						</td>
 					)}
 					<td className=" whitespace-nowrap border-b py-4 text-sm leading-5">
 						<ModalWarning
 							title="Delete order"
-							buttonText="Delete order"
-							warningText="Are you sure you want to delete this order: "
+							buttontext="Delete order"
+							warningtext="Are you sure you want to delete this order: "
 							successMessage="Order successfully deleted!"
-							ProceedAction={props.ModalDelete}
-							itemName={order._id}
+							proceedaction={props.ModalDelete}
+							itemname={order._id}
 						/>
 					</td>
 					<td className="whitespace-nowrap border-b px-6 py-4  text-sm leading-5 text-gray-500">

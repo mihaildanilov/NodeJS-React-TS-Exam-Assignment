@@ -9,7 +9,6 @@ import {
 } from '../pages/admin';
 import {
 	Profile,
-	Settings,
 	CartPage,
 	ShippingPage,
 	PaymentPage,
@@ -111,10 +110,6 @@ const router = createBrowserRouter([
 			{
 				path: 'profile',
 				element: <ProtectedRoute component={Profile} />,
-			},
-			{
-				path: 'settings',
-				element: <ProtectedRoute component={Settings} />,
 			},
 
 			{

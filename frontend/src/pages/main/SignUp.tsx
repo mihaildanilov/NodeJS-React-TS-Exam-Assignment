@@ -132,7 +132,7 @@ const SignUp = () => {
 										aria-hidden="true"
 									/>
 								</span>
-								Sign in
+								Sign up
 							</button>
 						</div>
 					</form>

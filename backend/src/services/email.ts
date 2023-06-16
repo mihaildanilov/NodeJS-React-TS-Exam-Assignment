@@ -17,7 +17,7 @@ export async function sendEmail(to: string, subject: string, text: string, html:
 	};
 	try {
 		await sgMail.send(msg);
-		console.log('Email sent');
+		// console.log('Email sent');
 	} catch (error) {
 		console.error(error);
 	}
