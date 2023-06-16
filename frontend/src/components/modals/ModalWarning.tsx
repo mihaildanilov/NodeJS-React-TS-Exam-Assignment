@@ -8,7 +8,8 @@ interface ModalDeliverPackageProps {
 	warningText: string;
 	itemName: string;
 	buttonText: string;
-	successMessage: string;
+	successMessage?: string;
+	className?: string;
 	ProceedAction: (info: string) => void;
 }
 
@@ -18,7 +19,7 @@ const ModalWarning = (props: ModalDeliverPackageProps) => {
 	function closeModalAndProceed() {
 		props.ProceedAction(props.itemName);
 		setIsOpen(false);
-		toast.success(props.successMessage);
+		if (props.successMessage) toast.success(props.successMessage);
 	}
 	function closeModal() {
 		setIsOpen(false);
@@ -33,7 +34,8 @@ const ModalWarning = (props: ModalDeliverPackageProps) => {
 				<button
 					className="inline-flex items-center rounded-full bg-red-100 px-3.5 py-1.5 text-xs font-medium text-red-800 hover:bg-red-300"
 					type="button"
-					onClick={openModal}>
+					onClick={openModal}
+					{...props}>
 					{props.buttonText}
 				</button>
 			</div>

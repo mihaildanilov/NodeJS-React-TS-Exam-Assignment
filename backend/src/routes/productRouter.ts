@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { ProductModel } from '../models/ProductModel';
 import { isAuth } from '../utils/utils';
-import multer from 'multer';
 
 export const productRouter = express.Router();
 // /api/prodcuts
@@ -52,20 +51,7 @@ productRouter.put(
 	})
 );
 
-// Define a storage strategy for Multer
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, 'uploads/');
-	},
-	filename: function (req, file, cb) {
-		cb(null, file.fieldname + '-' + Date.now());
-	},
-});
-
-// Initialize the Multer middleware
-const upload = multer({ storage: storage });
-
-productRouter.post('/', upload.single('imageSrc'), async (req, res) => {
+productRouter.post('/', async (req, res) => {
 	try {
 		// Check if a product with the same name and slug already exists
 		const existingProduct = await ProductModel.findOne({
@@ -135,5 +121,21 @@ productRouter.put('/slug/:slug', async (req, res) => {
 		} else {
 			res.status(500).json({ message: 'An unknown error occurred' });
 		}
+	}
+});
+
+productRouter.delete('/slug/:slug', isAuth, async (req: Request, res: Response) => {
+	const productSlug = req.params.slug;
+	try {
+		// Find and delete the product
+		const deletedProduct = await ProductModel.findOneAndDelete({ slug: productSlug });
+
+		if (deletedProduct) {
+			res.status(200).json({ message: 'Product deleted successfully' });
+		} else {
+			res.status(404).json({ message: 'Product not found' });
+		}
+	} catch (error) {
+		res.status(500).json({ message: 'Internal server error' });
 	}
 });

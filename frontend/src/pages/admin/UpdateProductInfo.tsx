@@ -1,16 +1,18 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import apiClient from '../../api/apiClient';
 import { LoadingBox, MessageBoxError } from '../../components/toasts';
-import { useGetProductDetailsBySlugQuery } from '../../hooks/productHook';
+import { deleteProduct, useGetProductDetailsBySlugQuery } from '../../hooks/productHook';
 import { ApiError } from '../../types';
 import { getError, toBase64 } from '../../utils';
 import { PageNotFound } from '../main';
+import ModalWarning from '../../components/modals/ModalWarning';
 
 const UpdateProductInfo = () => {
 	const { slug } = useParams<{ slug: string }>();
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const navigate = useNavigate();
 	const { data: product, isLoading, error } = useGetProductDetailsBySlugQuery(slug!);
 	const [name, setName] = useState(product?.name);
 	const [newSlug, setNewSlug] = useState(slug);
@@ -87,10 +89,16 @@ const UpdateProductInfo = () => {
 		try {
 			await apiClient.put(`/api/products/slug/${product.slug}`, formData);
 			toast.success('Product updated successfully');
+			navigate('/admin/products');
 		} catch (err) {
 			toast.error(getError(err as unknown as ApiError));
 		}
 	};
+	const handleDelete = () => {
+		deleteProduct(slug!);
+		navigate('/admin/products');
+	};
+
 	return isLoading ? (
 		<LoadingBox text="Action in progress" />
 	) : error ? (
@@ -261,6 +269,16 @@ const UpdateProductInfo = () => {
 						</button>
 					</div>
 				</form>
+				<div className="mt-4 flex justify-end">
+					<ModalWarning
+						className="w-[200px] rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
+						title="Delete order"
+						buttonText="Delete order"
+						warningText="Are you sure you want to delete this product: "
+						ProceedAction={handleDelete}
+						itemName={product.name}
+					/>
+				</div>
 			</div>
 		</div>
 	);
