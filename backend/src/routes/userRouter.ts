@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
 import { User, UserModel } from '../models/UserModel';
-import { generateToken } from '../utils/utils';
+import { generateToken, isAuth } from '../utils/utils';
 import jwt from 'jsonwebtoken';
 
 /* 
@@ -39,6 +39,7 @@ userRouter.post(
 					name: user.name,
 					email: user.email,
 					isAdmin: user.isAdmin,
+					subscribedToNewsletter: user.subscribedToNewsletter,
 					token: generateToken(user),
 				});
 				return;
@@ -69,27 +70,11 @@ userRouter.post(
 		});
 	})
 );
-// GET /api/users/profile retrieves the user's profile information.
-userRouter.get(
-	'/profile',
-	asyncHandler(async (req: Request, res: Response) => {
-		const user = await UserModel.findById(req.user._id);
-		if (user) {
-			res.json({
-				_id: user._id,
-				name: user.name,
-				email: user.email,
-				isAdmin: user.isAdmin,
-			});
-		} else {
-			res.status(404).json({ message: 'User not found' });
-		}
-	})
-);
 
 // PUT /api/users/profile used by a user to update their own information
 userRouter.put(
 	'/profile',
+	isAuth,
 	asyncHandler(async (req: Request, res: Response) => {
 		const user = await UserModel.findById(req.user._id);
 		if (user) {
@@ -98,6 +83,8 @@ userRouter.put(
 			if (req.body.password) {
 				user.password = bcrypt.hashSync(req.body.password);
 			}
+			user.subscribedToNewsletter =
+				req.body.subscribedToNewsletter ?? user.subscribedToNewsletter; // Update the subscription status
 			const updatedUser = await user.save();
 			const token = jwt.sign({ userId: updatedUser._id }, process.env.JWT_SECRET!, {
 				expiresIn: '1d',
@@ -107,6 +94,7 @@ userRouter.put(
 				name: updatedUser.name,
 				email: updatedUser.email,
 				isAdmin: updatedUser.isAdmin,
+				subscribedToNewsletter: updatedUser.subscribedToNewsletter,
 				token,
 			});
 		} else {
@@ -116,22 +104,25 @@ userRouter.put(
 );
 
 // GET /api/users/:id retrieves a user's profile information by ID.
-userRouter.get(
-	'/:id',
-	asyncHandler(async (req: Request, res: Response) => {
-		const user = await UserModel.findById(req.params.id);
-		if (user) {
-			res.json({
-				_id: user._id,
-				name: user.name,
-				email: user.email,
-				isAdmin: user.isAdmin,
-			});
-		} else {
-			res.status(404).json({ message: 'User not found' });
-		}
-	})
-);
+// userRouter.get(
+// 	'/:id',
+// 	isAuth,
+// 	asyncHandler(async (req: Request, res: Response) => {
+// 		const user = await UserModel.findById(req.params.id);
+// 		console.log(`User endpoint called with ID: ${req.params.id}`);
+// 		if (user) {
+// 			res.json({
+// 				_id: user._id,
+// 				name: user.name,
+// 				email: user.email,
+// 				isAdmin: user.isAdmin,
+// 				subscribedToNewsletter: user.subscribedToNewsletter,
+// 			});
+// 		} else {
+// 			res.status(404).json({ message: 'User not found' });
+// 		}
+// 	})
+// );
 
 //DELETE /api/users/:id Deletes a specific user by their ID.
 userRouter.delete(
@@ -155,32 +146,21 @@ userRouter.get(
 	})
 );
 
-// POST /api/users/:id/change-password: Changes a specific user's password by their ID.
-userRouter.post(
-	'/:id/change-password',
-	asyncHandler(async (req: Request, res: Response) => {
-		const user = await UserModel.findById(req.params.id);
-		if (user) {
-			const password = req.body.password;
-			if (!password || typeof password !== 'string') {
-				throw new Error('Invalid password');
-			}
-			user.password = bcrypt.hashSync(password);
-			res.json({ message: 'Password updated' });
-		} else {
-			res.status(404).json({ message: 'User not found' });
-		}
-	})
-);
-// PUT /api/users/:id: used by an admin to update any user's information,
 userRouter.put(
 	'/:id',
+	isAuth,
 	asyncHandler(async (req: Request, res: Response) => {
 		const user = await UserModel.findById(req.params.id);
 		if (user) {
 			user.name = req.body.name || user.name;
 			user.email = req.body.email || user.email;
-			user.isAdmin = req.body.isAdmin !== undefined ? req.body.isAdmin : user.isAdmin;
+
+			if (user.isAdmin) {
+				user.isAdmin = false;
+			} else {
+				user.isAdmin = true;
+			}
+
 			const updatedUser = await user.save();
 			res.json({
 				_id: updatedUser._id,

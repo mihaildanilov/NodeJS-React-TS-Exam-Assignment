@@ -15,9 +15,9 @@ emailRouter.post('/send-email-all', isAuth, async (req: Request, res: Response) 
 		// Send email to each user
 		for (const user of users) {
 			await sendEmail(user.email, subject, text, html);
-			console.log(user.email);
+			// console.log(user.email);
 		}
-		console.log(subject, text, html);
+		// console.log(subject, text, html);
 
 		res.send({ message: 'Email sent successfully' });
 	} catch (error) {

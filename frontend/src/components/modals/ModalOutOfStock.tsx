@@ -1,7 +1,7 @@
 interface ModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	itemName: string;
+	itemname: string;
 }
 
 const ModalOutOfStock = (props: ModalProps) => {
@@ -38,11 +38,11 @@ const ModalOutOfStock = (props: ModalProps) => {
 								<h3
 									className="text-lg font-medium leading-6 text-gray-900"
 									id="modal-headline">
-									{props.itemName} is out of stock
+									{props.itemname} is out of stock
 								</h3>
 								<div className="mt-2">
 									<p className="text-sm leading-5 text-gray-500">
-										Unfortunately, {props.itemName} is currently out of stock.
+										Unfortunately, {props.itemname} is currently out of stock.
 									</p>
 								</div>
 							</div>

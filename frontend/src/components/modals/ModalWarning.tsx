@@ -5,19 +5,20 @@ import { toast } from 'react-toastify';
 
 interface ModalDeliverPackageProps {
 	title: string;
-	warningText: string;
-	itemName: string;
-	buttonText: string;
+	warningtext: string;
+	itemname: string;
+	buttontext: string;
 	successMessage?: string;
 	className?: string;
-	ProceedAction: (info: string) => void;
+	disabled?: boolean;
+	proceedaction: (info: string) => void;
 }
 
 const ModalWarning = (props: ModalDeliverPackageProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	function closeModalAndProceed() {
-		props.ProceedAction(props.itemName);
+		props.proceedaction(props.itemname);
 		setIsOpen(false);
 		if (props.successMessage) toast.success(props.successMessage);
 	}
@@ -32,11 +33,15 @@ const ModalWarning = (props: ModalDeliverPackageProps) => {
 		<>
 			<div>
 				<button
-					className="inline-flex items-center rounded-full bg-red-100 px-3.5 py-1.5 text-xs font-medium text-red-800 hover:bg-red-300"
+					className={
+						props.className
+							? props.className
+							: 'inline-flex items-center rounded-full bg-red-100 px-3.5 py-1.5 text-xs font-medium text-red-800 hover:bg-red-300'
+					}
 					type="button"
-					onClick={openModal}
-					{...props}>
-					{props.buttonText}
+					disabled={props.disabled}
+					onClick={openModal}>
+					{props.buttontext}
 				</button>
 			</div>
 			<Transition appear show={isOpen} as={Fragment}>
@@ -70,8 +75,8 @@ const ModalWarning = (props: ModalDeliverPackageProps) => {
 									</Dialog.Title>
 									<div className="mt-2">
 										<p className="text-sm text-gray-500">
-											{props.warningText}
-											{props.itemName}
+											{props.warningtext}
+											{props.itemname}
 										</p>
 									</div>
 

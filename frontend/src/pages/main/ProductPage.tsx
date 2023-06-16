@@ -90,7 +90,7 @@ const ProductPage = () => {
 										<ModalOutOfStock
 											isOpen={isOutOfStock}
 											onClose={() => setIsOutOfStock(false)}
-											itemName={product.name}
+											itemname={product.name}
 										/>
 									</>
 								) : (

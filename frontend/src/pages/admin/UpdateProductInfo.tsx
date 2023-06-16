@@ -273,10 +273,10 @@ const UpdateProductInfo = () => {
 					<ModalWarning
 						className="w-[200px] rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
 						title="Delete order"
-						buttonText="Delete order"
-						warningText="Are you sure you want to delete this product: "
-						ProceedAction={handleDelete}
-						itemName={product.name}
+						buttontext="Delete order"
+						warningtext="Are you sure you want to delete this product: "
+						proceedaction={handleDelete}
+						itemname={product.name}
 					/>
 				</div>
 			</div>

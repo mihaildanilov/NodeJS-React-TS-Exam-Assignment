@@ -101,7 +101,7 @@ const CartPage = () => {
 											<ModalOutOfStock
 												isOpen={isOutOfStock}
 												onClose={() => setIsOutOfStock(false)}
-												itemName={item.name}
+												itemname={item.name}
 											/>
 											<span className="px-3">{item.quantity}</span>
 											<span
