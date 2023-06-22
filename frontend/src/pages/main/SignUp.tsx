@@ -32,7 +32,7 @@ const SignUp = () => {
 			dispatch({ type: 'USER_SIGNIN', payload: data });
 			localStorage.setItem('userInfo', JSON.stringify(data));
 			navigate(redirect);
-			toast.success('Successful registration !', {
+			toast.success('Successful registration!', {
 				position: toast.POSITION.TOP_CENTER,
 			});
 		} catch (err) {

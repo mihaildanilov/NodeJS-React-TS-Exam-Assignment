@@ -1,6 +1,6 @@
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 import { ContextProvider } from './context/ContextProvider';
 import { RouterProvider } from 'react-router-dom';
@@ -15,7 +15,7 @@ const App = () => {
 				<PayPalScriptProvider options={{ 'client-id': 'sb' }} deferLoading={true}>
 					<QueryClientProvider client={queryClient}>
 						<RouterProvider router={router} />
-						<ReactQueryDevtools initialIsOpen={false} />
+						{/* <ReactQueryDevtools initialIsOpen={false} /> */}
 					</QueryClientProvider>
 				</PayPalScriptProvider>
 			</ContextProvider>

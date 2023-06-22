@@ -59,7 +59,7 @@ const PaymentPage = () => {
 										onChange={(e) => setPaymentMethodName(e.target.value)}
 										className="mr-2 leading-tight"
 									/>
-									<span className="text-sm">Stripe - temporarly disabled</span>
+									<span className="text-sm">Stripe - temporarily disabled</span>
 								</label>
 							</div>
 							<div className="mb-3">

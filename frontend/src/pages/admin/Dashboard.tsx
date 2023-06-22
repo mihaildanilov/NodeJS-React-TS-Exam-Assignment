@@ -48,7 +48,7 @@ const Dashboard = () => {
 		</div>
 	) : (
 		<div>
-			<div className="mb-6 rounded-md border-b border-gray-200 bg-gray-50 p-4 pt-3">
+			<div className="mb-6 rounded-md border-b border-gray-200 bg-gray-50 p-4  pt-3">
 				<h1 className=" pb-1 text-4xl font-bold text-gray-500">Dashboard</h1>
 				<p className="mt-2 pb-2 text-lg text-gray-500">
 					Welcome to the dashboard of your e-commerce store! Here, you can easily track

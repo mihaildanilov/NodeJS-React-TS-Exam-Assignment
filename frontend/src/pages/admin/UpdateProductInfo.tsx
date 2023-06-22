@@ -272,8 +272,8 @@ const UpdateProductInfo = () => {
 				<div className="mt-4 flex justify-end">
 					<ModalWarning
 						className="w-[200px] rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
-						title="Delete order"
-						buttontext="Delete order"
+						title="Delete product"
+						buttontext="Delete product"
 						warningtext="Are you sure you want to delete this product: "
 						proceedaction={handleDelete}
 						itemname={product.name}
