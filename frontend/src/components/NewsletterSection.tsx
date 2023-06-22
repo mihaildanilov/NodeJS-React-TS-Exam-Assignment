@@ -11,10 +11,6 @@ const NewsletterSection = () => {
 						<h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
 							Subscribe to our newsletter by registering your account.
 						</h2>
-						<p className="mt-4 text-lg leading-8 text-gray-300">
-							Nostrud amet eu ullamco nisi aute in ad minim nostrud adipisicing velit
-							quis. Duis tempor incididunt dolore.
-						</p>
 					</div>
 					<dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
 						<div className="flex flex-col items-start">
@@ -28,8 +24,8 @@ const NewsletterSection = () => {
 								Weekly updates on products
 							</dt>
 							<dd className="mt-2 leading-7 text-gray-400">
-								Non laboris consequat cupidatat laborum magna. Eiusmod non irure
-								cupidatat duis commodo amet.
+								You will receive weekly updates on our products. Including news
+								about upcoming products.
 							</dd>
 						</div>
 						<div className="flex flex-col items-start">
@@ -38,8 +34,8 @@ const NewsletterSection = () => {
 							</div>
 							<dt className="mt-4 font-semibold text-white">No spam</dt>
 							<dd className="mt-2 leading-7 text-gray-400">
-								Officia excepteur ullamco ut sint duis proident non adipisicing.
-								Voluptate incididunt anim.
+								Our company uses nospam policy. We won&apos;t spam you with multiple
+								emails a day.
 							</dd>
 						</div>
 					</dl>

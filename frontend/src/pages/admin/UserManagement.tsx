@@ -119,6 +119,7 @@ const UserManagement = () => {
 										</td>
 										<td className=" whitespace-nowrap border-b py-4 text-sm leading-5">
 											<ModalWarning
+												disabled={user.isAdmin == true ? true : false}
 												title="Delete user"
 												buttontext="Delete user"
 												warningtext="Are you sure you want to delete this user: "
