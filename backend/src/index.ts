@@ -27,7 +27,7 @@ app.use(express.json({ limit: '500mb' }));
 app.use(
 	cors({
 		credentials: true,
-		origin: ['http://localhost:3000'],
+		origin: ['kicks-avenue.mihaildanilov.com'],
 	})
 );
 
