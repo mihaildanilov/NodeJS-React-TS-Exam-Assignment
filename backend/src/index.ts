@@ -43,7 +43,7 @@ app.use('/api/orders', orderRouter);
 app.use('/api/keys', keyRouter);
 app.use('/api/contact-us', contactUsRouter);
 app.use('/api/email', emailRouter);
-// const PORT = 4000;
-// app.listen(PORT, () => {
-// 	console.log(`Server started at http://localhost:${PORT}`);
-// });
+const PORT = 4000;
+app.listen(PORT, () => {
+	console.log(`Server started at http://localhost:${PORT}`);
+});
