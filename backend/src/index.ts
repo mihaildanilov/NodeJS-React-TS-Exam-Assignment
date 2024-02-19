@@ -23,11 +23,14 @@ mongoose
 	});
 
 const app = express();
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+	? process.env.ALLOWED_ORIGINS.split(',').map((origin) => origin.trim())
+	: []; // Default to an empty array if not set
 app.use(express.json({ limit: '500mb' }));
 app.use(
 	cors({
 		credentials: true,
-		origin: ['kicks-avenue.mihaildanilov.com'],
+		origin: allowedOrigins,
 	})
 );
 
