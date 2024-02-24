@@ -11,10 +11,10 @@ import { emailRouter } from './routes/emailRouter';
 
 dotenv.config();
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/kicksavenuedb';
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost/kicksavenuedb';
 mongoose.set('strictQuery', true);
 mongoose
-	.connect(MONGODB_URI)
+	.connect(MONGODB_URL)
 	.then(() => {
 		console.log('Succesful connection to MongoDB!');
 	})

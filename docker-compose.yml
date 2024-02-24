@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      args:
+        - MONGODB_URL=mongodb://$MONGO_INITDB_ROOT_USERNAME:$MONGO_INITDB_ROOT_PASSWORD@mongo:27017/ecommerce?authSource=admin
+        - JWT_SECRET=$JWT_SECRET
+        - PAYPAL_CLIENT_ID=$PAYPAL_CLIENT_ID
+        - SENDGRID_API_KEY=$SENDGRID_API_KEY
+        - ALLOWED_ORIGIN=$ALLOWED_ORIGIN    
+    ports:
+      - 4000:4000 
+    depends_on:
+      - mongo
+    networks:
+      - mongo_network
+      - nginxproxymanager_nginx-proxy-manager-nw
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - VITE_APP_API_URL=$VITE_APP_API_URL
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    networks:
+      - nginxproxymanager_nginx-proxy-manager-nw
+
+  mongo:
+    image: 'mongo:7'
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_INITDB_ROOT_USERNAME
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_INITDB_ROOT_PASSWORD
+    volumes:
+      - 'mongo:/data/db'
+    networks:
+      - mongo_network
+
+networks:
+  mongo_network:
+  nginxproxymanager_nginx-proxy-manager-nw:
+    external: true
+
+volumes:
+  mongo:
