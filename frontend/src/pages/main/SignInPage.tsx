@@ -24,7 +24,6 @@ const SignInPage = () => {
 		try {
 			const data = await signIn(email, password);
 			dispatch({ type: 'USER_SIGNIN', payload: data });
-			console.log(email, password);
 			localStorage.setItem('userInfo', JSON.stringify(data));
 			navigate(redirect);
 			toast.success('Successful login!', {
