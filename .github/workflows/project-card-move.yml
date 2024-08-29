@@ -1,0 +1,18 @@
+name: Project Card Movement
+
+on:
+  project_card:
+    types: [moved]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send webhook on project card movement
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d '{
+            "project_card": "${{ github.event.project_card }}",
+            "column_name": "${{ github.event.changes.column_id.to.name }}"
+          }' $WEBHOOK_URL
