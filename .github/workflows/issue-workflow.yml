@@ -8,16 +8,9 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send webhook on project card action
+      - name: Send webhook with full event payload
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{
-            "action": "${{ github.event.action }}",
-            "project_card_id": "${{ github.event.project_card.id }}",
-            "project_url": "${{ github.event.project_card.project_url }}",
-            "column_id": "${{ github.event.project_card.column_id }}",
-            "previous_column_id": "${{ github.event.changes.column_id.from }}",
-            "new_column_id": "${{ github.event.changes.column_id.to }}",
-            "card_content_url": "${{ github.event.project_card.content_url }}"
-          }' $WEBHOOK_URL
+          echo "${{ toJSON(github.event) }}" > event.json
+          curl -X POST -H "Content-Type: application/json" -d @event.json $WEBHOOK_URL
