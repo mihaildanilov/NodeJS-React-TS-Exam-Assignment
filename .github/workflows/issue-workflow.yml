@@ -13,4 +13,7 @@ jobs:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
           echo "${{ toJSON(github.event) }}" > event.json
-          curl -X POST -H "Content-Type: application/json" -d @event.json $WEBHOOK_URL
+          cat event.json
+          curl -X POST $WEBHOOK_URL \
+            -H "Content-Type: application/json" \
+            -d @event.json
