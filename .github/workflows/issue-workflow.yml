@@ -1,8 +1,8 @@
-name: Project Card Actions
+name: Issue workflow
 
 on:
-  project_card:
-    types: [created, edited, moved, converted, deleted]
+  issues:
+    types: [opened, edited, deleted, transferred, pinned, unpinned, closed, reopened, assigned, unassigned, labeled, unlabeled, locked, unlocked, milestoned, demilestoned]
 
 jobs:
   notify:
