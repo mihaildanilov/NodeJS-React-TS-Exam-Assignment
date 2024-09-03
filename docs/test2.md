@@ -1,5 +1,1 @@
----
-**Type**: TSX
-**Name**: test2
----
-
+[object Promise]
