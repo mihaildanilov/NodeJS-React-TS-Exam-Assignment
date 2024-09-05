@@ -1,6 +1,0 @@
-**Type**: TSX
-
-**Name**: testwithspace
-
----
-
