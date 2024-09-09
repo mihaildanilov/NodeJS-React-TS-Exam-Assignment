@@ -1,4 +1,4 @@
-name: Issue workflow
+name: Issue workflow test
 
 on:
   issues:
